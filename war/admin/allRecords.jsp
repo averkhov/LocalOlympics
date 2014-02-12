@@ -30,7 +30,7 @@
 <html>
 
   <head>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/record.css" />
   </head>
 
   <body>
@@ -38,11 +38,11 @@
 		List<Entity> allRecords = Record.getFirstRecords(100);
 		if (allRecords.isEmpty()) {
 	%>
-	<h3>No Records Entered</h3>
+	<h1>No Records Entered</h1>
 	<%
 		}else{	
 	%>
-	<h3>All Records</h3>
+	<h1>All Records</h1>
 	<table border="1">
 		<tr>
 			<td>Record</td>
