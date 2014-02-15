@@ -5,8 +5,22 @@ xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 
-    <!-- ADMIN SERVLET: Record -->
     
+<!--  
+   Copyright 2014 - 
+   Licensed under the Academic Free License version 3.0
+   http://opensource.org/licenses/AFL-3.0
+
+   Authors: Alex Verkhovtsev, Karen
+   
+   Version 0.1 - Spring 2014
+-->
+    
+    
+
+    <!-- ADMIN SERVLET: Record -->
+
+
 	<servlet>
 		<servlet-name>AddRecordServlet</servlet-name>
 		<servlet-class>localolympics.servlet.AddRecordServlet</servlet-class>
@@ -32,16 +46,42 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/admin/updateRecord</url-pattern>
 	</servlet-mapping>
 
+
+
+
+
+
+
+    <!-- ADMIN SERVLET: Participant -->
+
+	<servlet>
+	    <servlet-name>UpdateParticipantServlet</servlet-name>
+	    <servlet-class>localolympics.servlet.UpdateParticipantServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>UpdateParticipantServlet</servlet-name>
+	    <url-pattern>/admin/updateparticipant</url-pattern>
+	</servlet-mapping>
 	
 	
+	<servlet>
+	    <servlet-name>DeleteParticipantServlet</servlet-name>
+	    <servlet-class>localolympics.servlet.DeleteParticipantServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>DeleteParticipantServlet</servlet-name>
+	    <url-pattern>/admin/deleteparticipant</url-pattern>
+	</servlet-mapping>
 	
-	
-	
-	
-	
-	
-	
-	
+	<servlet>
+	    <servlet-name>AddParticipantServlet</servlet-name>
+	    <servlet-class>localolympics.servlet.AddParticipantServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>AddParticipantServlet</servlet-name>
+	    <url-pattern>/admin/addparticipant</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
