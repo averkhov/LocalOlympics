@@ -17,7 +17,7 @@ public class DeleteParticipantServlet extends HttpServlet{
 
 	        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-	                boolean result=Participant.deleteParticipantCommand(req.getParameter("participantID"));
+	                boolean result=Participant.deleteParticipantCommand(req.getParameter("ParticipantID"));
 	                resp.setStatus((result)?HttpServletResponse.SC_OK:HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 	        }
 	}

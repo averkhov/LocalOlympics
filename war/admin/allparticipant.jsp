@@ -196,25 +196,8 @@ function cancelEditParticipant(ParticipantID) {
 		<div class="menu_item">
 			<a href="/admin/allRecords.jsp">Records</a>
 		</div>
-		<div class="menu_item">
-			<%
-	
-	
-		List<Entity> allParticipants1 = Participant.getFirstParticipants(100);
-	
-	%>
 		
-		
-	<table>
-		<%
-			for (Entity participant : allParticipants1) {
-					String participantName = Participant.getName(participant);
-					String id = Participant.getStringID(participant);}
-		%>
-		</table>
-		</div>
-		
-	</div>}
+	</div>
 	<table id="main">
 		<tr>
 			<th class="ParticipantOperationsList">Operations</th>
@@ -223,10 +206,10 @@ function cancelEditParticipant(ParticipantID) {
 		</tr>
 		<%
 			for (Entity Participant1 : allParticipants) {
-					String ParticipantName = Participant.getName(Participant1);
-					String ParticipantID = Participant.getStringID(Participant1);
-					String ParticipantLoginID = Participant.getLoginID(Participant1);
-					
+				String ParticipantName = Participant.getName(Participant1);
+				String ParticipantID = Participant.getStringID(Participant1);
+				String ParticipantLoginID = Participant.getLoginID(Participant1);
+				
 					
 		%>
 

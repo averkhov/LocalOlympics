@@ -18,7 +18,7 @@ import localolympics.db.Participant;
 public class AddParticipantServlet extends HttpServlet {
         
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-                String participantID = req.getParameter("participantID");
+                String participantID = req.getParameter("ParticipantLoginID");
                 Participant.createParticipant(participantID);
                 resp.sendRedirect("/admin/allparticipant.jsp");
         }

@@ -102,8 +102,9 @@ public class Participant {
      * @return a String with the permit type. 
      */
     public static String getLoginID(Entity participant) {
-            Object val=participant.getProperty(LOGIN_ID_PROPERTY);
-            if (val==null) return "";
+            Object val = participant.getProperty(LOGIN_ID_PROPERTY);
+            if (val == null) 
+            	val = "test1";
             return (String) val;
     }
     
@@ -231,12 +232,12 @@ public class Participant {
      * @param loginID The login ID of the user as a String.
      * @return true if succeed and false otherwise
      */
-    public static boolean updateParticipantCommand(String participantID, String name, String record) {
+    public static boolean updateParticipantCommand(String participantID, String name, String participantLoginID) {
             Entity participant = null;
             try {
             		participant = getParticipant(participantID);
             		participant.setProperty(NAME_PROPERTY, name);
-            		participant.setProperty(RECORD_PROPERTY, record);
+            		participant.setProperty(LOGIN_ID_PROPERTY, participantLoginID);
                     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
                     datastore.put(participant);
             } catch (Exception e) {

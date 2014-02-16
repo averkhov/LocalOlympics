@@ -17,8 +17,8 @@ public class UpdateParticipantServlet extends HttpServlet {
 	
 	
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-                Participant.updateParticipantCommand(req.getParameter("participantID"), req.getParameter("participantName"),
-                                req.getParameter("participantLoginID"));
+                Participant.updateParticipantCommand(req.getParameter("ParticipantID"), req.getParameter("ParticipantName"),
+                                req.getParameter("ParticipantLoginID"));
 
                 resp.sendRedirect("/admin/allparticipant.jsp");
         }
