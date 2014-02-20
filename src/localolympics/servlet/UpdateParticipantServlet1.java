@@ -1,0 +1,27 @@
+package localolympics.servlet;
+
+import java.io.IOException;
+
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import localolympics.db.Participant1;
+import javax.servlet.http.HttpServlet;
+
+public class UpdateParticipantServlet1 extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+	
+	 protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String id = req.getParameter("id");
+		String participantName = req.getParameter("participantName");
+        Participant1.updateParticipant(id, participantName);
+        resp.sendRedirect("/admin/allParticipant1.jsp");
+    }
+	public UpdateParticipantServlet1() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

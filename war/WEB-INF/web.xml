@@ -81,6 +81,53 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	    <servlet-name>AddParticipantServlet</servlet-name>
 	    <url-pattern>/admin/addparticipant</url-pattern>
 	</servlet-mapping>
+	
+	
+	
+	<!-- participant1 -->
+	
+	<servlet>
+		<servlet-name>AddParticipantServlet1</servlet-name>
+		<servlet-class>localolympics.servlet.AddParticipantServlet1</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddParticipantServlet1</servlet-name>
+		<url-pattern>/admin/addParticipant1</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DeleteParticipantServlet1</servlet-name>
+		<servlet-class>localolympics.servlet.DeleteParticipantServlet1</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteParticipantServlet1</servlet-name>
+		<url-pattern>/admin/deleteParticipant1</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UpdateParticipantServlet1</servlet-name>
+		<servlet-class>localolympics.servlet.UpdateParticipantServlet1</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateParticipantServlet1</servlet-name>
+		<url-pattern>/admin/updateParticipant1</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	<!-- ACTIVITY -->
+	<servlet>
+		<servlet-name>AddActivityServlet</servlet-name>
+		<servlet-class>localolympics.servlet.AddActivityServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddActivityServlet</servlet-name>
+		<url-pattern>/admin/addActivity</url-pattern>
+	</servlet-mapping>
+	
+	
+
+	<!-- WELCOME FILE -->
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
