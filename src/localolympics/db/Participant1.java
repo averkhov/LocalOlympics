@@ -3,8 +3,9 @@
  * Licensed under the Academic Free License version 3.0
  * http://opensource.org/licenses/AFL-3.0
  * 
- * Authors: Alex Verkhovtsev
+ * Authors: Anugh
  */
+
 package localolympics.db;
 
 import java.util.List;

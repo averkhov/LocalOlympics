@@ -32,6 +32,8 @@
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/record.css" />
   </head>
+  
+  	<a href="/index.html">home</a>
 
   <body>
 	<%

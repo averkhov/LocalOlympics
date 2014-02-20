@@ -14,11 +14,27 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+<!--  
+   Copyright 2014 - 
+   Licensed under the Academic Free License version 3.0
+   http://opensource.org/licenses/AFL-3.0
+
+   Authors: Anugh
+   
+   Version 0.1 - Spring 2014
+-->
+
+
 <html>
 <head>
 	<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
 </head>
 <body>
+
+	<a href="/index.html">home</a>
+
 	<%
 		List<Entity> allParticipants = Participant1.getFirstParticipants(100);
 		if (allParticipants.isEmpty()) {

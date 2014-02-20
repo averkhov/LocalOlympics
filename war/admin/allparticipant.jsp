@@ -170,7 +170,13 @@ function cancelEditParticipant(ParticipantID) {
 </script>
 
 </head>
+
 <body>
+
+
+	<a href="/index.html">home</a>
+	
+	
 	<%
 		List<Entity> allParticipants = Participant.getFirstParticipants(100);
 		if (allParticipants.isEmpty()) {
