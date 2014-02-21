@@ -152,6 +152,33 @@ public final class Activity {
 		}
 		return Activity;
 	}
+	
+
+
+	
+	      
+	      
+      //
+      // DELETE ACTIVITY
+      //
+
+      /**
+      * Delete the activity if not linked to anything else.
+      *
+      * @param activityID A string with the activity ID (a long).
+      * @return True if succeed, false otherwise.
+      */
+      public static boolean deleteActivity(String activityID) {
+	try {
+	  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	  datastore.delete(getKey(activityID));
+	} catch (Exception e) {
+	return false;
+	}
+	return true;
+      }
+
+
 
 	public static boolean UpdateActivity(String ActivityID, String name) {
 		Entity activityInput = null;
