@@ -36,6 +36,26 @@
   	<a href="/index.html">home</a>
 
   <body>
+  
+  <%
+    UserService userService = UserServiceFactory.getUserService();
+    User user = userService.getCurrentUser();
+    if (user != null) {
+      pageContext.setAttribute("user", user);
+	%>
+	<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
+	<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+	<%
+	    } else {
+	%>
+	<p>Hello!
+	<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
+	to include your name with greetings you post.</p>
+	<%
+	    }
+	%>
+  
+  
 	<%
 		List<Entity> allRecords = Record.getFirstRecords(100);
 		if (allRecords.isEmpty()) {
