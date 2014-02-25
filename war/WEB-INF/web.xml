@@ -124,6 +124,24 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>AddActivityServlet</servlet-name>
 		<url-pattern>/admin/addActivity</url-pattern>
 	</servlet-mapping>
+	<servlet>
+	    <servlet-name>UpdateActivityServlet</servlet-name>
+	    <servlet-class>localolympics.servlet.UpdateActivityServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>UpdateActivityServlet</servlet-name>
+		<url-pattern>/admin/UpdateActivity</url-pattern>
+		</servlet-mapping>
+	<servlet>
+	    <servlet-name>DeleteActivityServlet</servlet-name>
+	    <servlet-class>localolympics.servlet.DeleteActivityServlet</servlet-class>
+	    
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>DeleteActivityServlet</servlet-name>
+	    <url-pattern>/admin/deleteActivity</url-pattern>
+	</servlet-mapping>
+	
 	
 	
 	
