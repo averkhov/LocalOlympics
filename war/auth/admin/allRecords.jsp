@@ -30,10 +30,11 @@
 <html>
 
   <head>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/record.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
   
-  	<a href="/index.html">home</a>
+  	<a href="admin.jsp">return to admin main</a>
+  	<a href="/index.jsp">home</a>
 
   <body>
   
@@ -41,16 +42,13 @@
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
     if (user != null) {
-      pageContext.setAttribute("user", user);
+      	pageContext.setAttribute("user", user);
 	%>
-	<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
-	<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
 	<%
 	    } else {
 	%>
-	<p>Hello!
-	<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-	to include your name with greetings you post.</p>
+		<p>Hello! <a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a></p>
 	<%
 	    }
 	%>

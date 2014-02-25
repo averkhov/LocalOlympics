@@ -1,3 +1,13 @@
+/**
+ * Copyright 2014 -
+ * Licensed under the Academic Free License version 3.0
+ * http://opensource.org/licenses/AFL-3.0
+ * 
+ * Authors: Alex Verkhovtsev
+ */
+
+
+
 package localolympics.servlet;
 
 
@@ -47,8 +57,10 @@ public class LoginRequiredServlet extends HttpServlet {
                         .getRequestURI(), null, providerUrl, attributes);
                 out.println("[<a href=\"" + loginUrl + "\">" + providerName + "</a>] ");
             }
+            resp.sendRedirect("/index.jsp");
         } else {
-        	out.println("Login successful return to <a href=\"../index.html\">home</a>");
+        	out.println("Login successful return to <a href=\"/index.jsp\">home</a>");
+        	resp.sendRedirect("/index.jsp");
         }
     }
     
