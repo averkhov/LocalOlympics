@@ -23,7 +23,7 @@ public class DeleteRecordServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String id = req.getParameter("id");
         Record.deleteRecord(id);
-        resp.sendRedirect("/admin/allRecords.jsp");
+        resp.sendRedirect("allRecords.jsp");
 		
     }
 	
@@ -31,7 +31,7 @@ public class DeleteRecordServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String id = req.getParameter("id");
         Record.deleteRecord(id);
-        resp.sendRedirect("/admin/allRecords.jsp");
+        resp.sendRedirect("allRecords.jsp");
 		
     }
 	

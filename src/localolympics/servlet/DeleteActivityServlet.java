@@ -23,7 +23,7 @@ public class DeleteActivityServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String id = req.getParameter("id");
         Activity.deleteActivity(id);
-        resp.sendRedirect("/admin/allActivity.jsp");
+        resp.sendRedirect("allActivity.jsp");
 		
     }
 	
@@ -31,7 +31,7 @@ public class DeleteActivityServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String id = req.getParameter("id");
         Activity.deleteActivity(id);
-        resp.sendRedirect("/admin/allActivity.jsp");
+        resp.sendRedirect("allActivity.jsp");
 		
     }
 	

@@ -10,9 +10,11 @@ package localolympics.servlet;
 
 import javax.servlet.http.*;
 import javax.servlet.ServletException;
+
 import java.io.IOException;
 
 import localolympics.db.Activity;
+import localolympics.db.Record;
 
 public class AddActivityServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -21,7 +23,16 @@ public class AddActivityServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String ActivityName = req.getParameter("ActivityName");
 		Activity.createActivity(ActivityName);
-		resp.sendRedirect("/admin/allActivity.jsp");
+		resp.sendRedirect("allActivity.jsp");
 	}
+	
+	
+	@Override
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String ActivityName = req.getParameter("ActivityName");
+		Activity.createActivity(ActivityName);
+		resp.sendRedirect("allActivity.jsp");
+		
+    }
 
 }

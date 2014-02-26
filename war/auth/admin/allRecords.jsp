@@ -79,20 +79,20 @@
 		<tr>
 			<td><%=recordTime%></td>
 			<td>
-				<form action="/admin/deleteRecord" method="post">
+				<form action="deleteRecord" method="post">
 					<input type="hidden" name="id" value="<%=id%>" />
 					<input type="submit" value="Delete" />
 				</form>
 			</td>
 			<td>
-				<form action="/admin/updateRecord" method="post">
+				<form action="updateRecord" method="post">
 					<input type="hidden" name="id" value="<%=id%>" />
 					<input type="text" name="recordTime" size="20" />
 					<input type="submit" value="Update" />
 				</form>
 			</td>
 			<td>
-				<a href="/admin/deleteRecord?id=<%=id%>">delete</a>
+				<a href="deleteRecord?id=<%=id%>">delete</a>
 			</td>
 
 		</tr>
@@ -108,7 +108,7 @@
 
 
 	<hr />
-    <form action="/admin/addRecord" method="post">
+    <form action="addRecord" method="post">
       <div><input type="text" name="recordTime" size="50" /></div>
       <div><input type="submit" value="Add Record" /></div>
     </form>

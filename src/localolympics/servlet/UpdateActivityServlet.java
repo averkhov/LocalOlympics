@@ -24,8 +24,8 @@ private static final long serialVersionUID = 1L;
 String id = req.getParameter("activityID");
 String activityName = req.getParameter("activityName");
         Activity.UpdateActivity(id, activityName);
-        resp.sendRedirect("/admin/allActivity.jsp");
+        resp.sendRedirect("allActivity.jsp");
     }
 
 
-});
+}

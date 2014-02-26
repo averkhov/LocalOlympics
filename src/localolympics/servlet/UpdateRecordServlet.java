@@ -24,7 +24,7 @@ public class UpdateRecordServlet extends HttpServlet {
 		String id = req.getParameter("id");
 		String recordTime = req.getParameter("recordTime");
         Record.updateRecord(id, recordTime);
-        resp.sendRedirect("/admin/allRecords.jsp");
+        resp.sendRedirect("allRecords.jsp");
     }
 	
 

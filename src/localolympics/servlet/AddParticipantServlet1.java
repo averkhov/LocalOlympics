@@ -20,7 +20,7 @@ public class AddParticipantServlet1 extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String participantName = req.getParameter("participantName");
         Participant1.createParticipant(participantName);
-        resp.sendRedirect("/admin/allParticipant1.jsp");
+        resp.sendRedirect("allParticipant1.jsp");
 }
 
 	

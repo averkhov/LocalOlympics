@@ -23,7 +23,7 @@ public class AddRecordServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String recordTime = req.getParameter("recordTime");
         Record.createRecord(recordTime);
-        resp.sendRedirect("/admin/allRecords.jsp");
+        resp.sendRedirect("allRecords.jsp");
 }
 	
 	

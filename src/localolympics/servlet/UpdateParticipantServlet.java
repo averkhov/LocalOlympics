@@ -29,6 +29,6 @@ public class UpdateParticipantServlet extends HttpServlet {
                 Participant.updateParticipantCommand(req.getParameter("ParticipantID"), req.getParameter("ParticipantName"),
                                 req.getParameter("ParticipantLoginID"));
 
-                resp.sendRedirect("/admin/allparticipant.jsp");
+                resp.sendRedirect("allparticipant.jsp");
         }
 }

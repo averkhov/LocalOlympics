@@ -27,7 +27,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AddRecordServlet</servlet-name>
-		<url-pattern>/admin/addRecord</url-pattern>
+		<url-pattern>/auth/admin/addRecord</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>DeleteRecordServlet</servlet-name>
@@ -35,7 +35,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DeleteRecordServlet</servlet-name>
-		<url-pattern>/admin/deleteRecord</url-pattern>
+		<url-pattern>/auth/admin/deleteRecord</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>UpdateRecordServlet</servlet-name>
@@ -43,7 +43,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UpdateRecordServlet</servlet-name>
-		<url-pattern>/admin/updateRecord</url-pattern>
+		<url-pattern>/auth/admin/updateRecord</url-pattern>
 	</servlet-mapping>
 
 
@@ -60,7 +60,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 	    <servlet-name>UpdateParticipantServlet</servlet-name>
-	    <url-pattern>/admin/updateparticipant</url-pattern>
+	    <url-pattern>/auth/admin/updateparticipant</url-pattern>
 	</servlet-mapping>
 	
 	
@@ -70,7 +70,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 	    <servlet-name>DeleteParticipantServlet</servlet-name>
-	    <url-pattern>/admin/deleteparticipant</url-pattern>
+	    <url-pattern>/auth/admin/deleteparticipant</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -79,7 +79,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 	    <servlet-name>AddParticipantServlet</servlet-name>
-	    <url-pattern>/admin/addparticipant</url-pattern>
+	    <url-pattern>/auth/admin/addparticipant</url-pattern>
 	</servlet-mapping>
 	
 	
@@ -92,7 +92,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AddParticipantServlet1</servlet-name>
-		<url-pattern>/admin/addParticipant1</url-pattern>
+		<url-pattern>/auth/admin/addParticipant1</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -101,7 +101,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DeleteParticipantServlet1</servlet-name>
-		<url-pattern>/admin/deleteParticipant1</url-pattern>
+		<url-pattern>/auth/admin/deleteParticipant1</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -110,7 +110,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UpdateParticipantServlet1</servlet-name>
-		<url-pattern>/admin/updateParticipant1</url-pattern>
+		<url-pattern>/auth/admin/updateParticipant1</url-pattern>
 	</servlet-mapping>
 	
 	
@@ -122,7 +122,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AddActivityServlet</servlet-name>
-		<url-pattern>/admin/addActivity</url-pattern>
+		<url-pattern>/auth/admin/addActivity</url-pattern>
 	</servlet-mapping>
 	<servlet>
 	    <servlet-name>UpdateActivityServlet</servlet-name>
@@ -130,7 +130,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 	    <servlet-name>UpdateActivityServlet</servlet-name>
-		<url-pattern>/admin/UpdateActivity</url-pattern>
+		<url-pattern>/auth/admin/UpdateActivity</url-pattern>
 		</servlet-mapping>
 	<servlet>
 	    <servlet-name>DeleteActivityServlet</servlet-name>
@@ -139,7 +139,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 	    <servlet-name>DeleteActivityServlet</servlet-name>
-	    <url-pattern>/admin/deleteActivity</url-pattern>
+	    <url-pattern>/auth/admin/deleteActivity</url-pattern>
 	</servlet-mapping>
 	
 	

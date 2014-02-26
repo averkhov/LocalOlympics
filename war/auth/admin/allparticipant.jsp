@@ -122,7 +122,7 @@ var selectedParticipantForDelete=null;
 
 function confirmDeleteParticipant(ParticipantID) {
 	selectedParticipantForDelete=ParticipantID;
-	$.post("/admin/deleteparticipant", 
+	$.post("deleteparticipant", 
 			{ParticipantID: ParticipantID}, 
 			function (data,status) {
 				//alert("Data "+data+" status "+status);
@@ -184,10 +184,10 @@ function cancelEditParticipant(ParticipantID) {
 	<h1>No Participant  Defined</h1>
 	<div class="menu">
 		<div class="menu_item">
-			<a href="/admin/allActivity.jsp">Activities</a>
+			<a href="allActivity.jsp">Activities</a>
 		</div>
 		<div class="menu_item">
-			<a href="/admin/allRecords.jsp">Records</a>
+			<a href="allRecords.jsp">Records</a>
 		</div>
 		
 	</div>
@@ -197,10 +197,10 @@ function cancelEditParticipant(ParticipantID) {
 	<h1>ALL Participants</h1>
 	<div class="menu">
 		<div class="menu_item">
-			<a href="/admin/allActivity.jsp">Activities</a>
+			<a href="allActivity.jsp">Activities</a>
 		</div>
 		<div class="menu_item">
-			<a href="/admin/allRecords.jsp">Records</a>
+			<a href="allRecords.jsp">Records</a>
 		</div>
 		
 	</div>
@@ -231,7 +231,7 @@ function cancelEditParticipant(ParticipantID) {
 
 				<div id="edit<%=ParticipantID%>" style="display: none">
 
-					<form action="/admin/updateparticipant" method="get">
+					<form action="updateparticipant" method="get">
 						<input type="hidden" value="<%=ParticipantID%>"
 							name="ParticipantID" />
 						<table class="editTable">
@@ -278,7 +278,7 @@ function cancelEditParticipant(ParticipantID) {
 			<tr>
 				<td colspan="2" class="footer">
 					<form name="addParticipantForm"
-						action="/admin/addparticipant" method="get">
+						action="addparticipant" method="get">
 						New Participant  Login ID: <input id="addParticipantInput"
 							type="text" name="ParticipantLoginID" size="50" /> <input
 							id="addParticipantButton" type="submit" value="Add"

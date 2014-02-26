@@ -25,7 +25,7 @@ public class DeleteParticipantServlet1 extends HttpServlet{
 
 		 String id = req.getParameter("participantID");
          Participant1.deleteParticipant(id);
-         resp.sendRedirect("/admin/allParticipant1.jsp");
+         resp.sendRedirect("allParticipant1.jsp");
  }
 	
 

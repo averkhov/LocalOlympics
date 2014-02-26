@@ -24,10 +24,10 @@ public class UpdateParticipantServlet1 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	 protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String id = req.getParameter("id");
-		String participantName = req.getParameter("participantName");
+		String id = req.getParameter("participantID");
+		String participantName = req.getParameter(id);
         Participant1.updateParticipant(id, participantName);
-        resp.sendRedirect("/admin/allParticipant1.jsp");
+        resp.sendRedirect("allParticipant1.jsp");
     }
 	public UpdateParticipantServlet1() {
 		// TODO Auto-generated constructor stub
