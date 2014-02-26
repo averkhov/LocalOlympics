@@ -10,7 +10,7 @@
 <%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
 <%@ page import="com.google.appengine.api.datastore.Key" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
-<%@ page import="localolympics.db.Participant" %>
+<%@ page import="localolympics.db.Participant1" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,7 +20,7 @@
 </head>
 <body>
 	<%
-		List<Entity> allParticipants = Participant.getFirstParticipants(100);
+		List<Entity> allParticipants = Participant1.getFirstParticipants(100);
 		if (allParticipants.isEmpty()) {
 	%>
 	<h1>No Participants Entered</h1>
@@ -34,8 +34,8 @@
 	
 		<%
 			for (Entity participant : allParticipants) {
-					String participantName = Participant.getName(participant);
-					String id = Participant.getStringID(participant);
+					String participantName = Participant1.getName(participant);
+					String id = Participant1.getStringID(participant);
 		%>
 		<tr>
 
@@ -62,8 +62,8 @@
     <form action = "deleteParticipant1" method = "post">
     <%
 			for (Entity participant : allParticipants) {
-					String participantName = Participant.getName(participant);
-					String id = Participant.getStringID(participant);
+					String participantName = Participant1.getName(participant);
+					String id = Participant1.getStringID(participant);
 		%>
 		
 			
@@ -83,8 +83,8 @@
    <form action = "updateParticipant1" method = "post">
    <%
    for (Entity participant : allParticipants) {
-		String participantName = Participant.getName(participant);
-		String id = Participant.getStringID(participant);
+		String participantName = Participant1.getName(participant);
+		String id = Participant1.getStringID(participant);
    %>
    <input type= "radio" name= "participantID" value= "<%=id%>" /> 
    <input type= "text" name= "<%=id%>" value= "<%=participantName%>"/> <br/>

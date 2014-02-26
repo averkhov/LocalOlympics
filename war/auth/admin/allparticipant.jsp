@@ -212,7 +212,7 @@ function cancelEditParticipant(ParticipantID) {
 		</tr>
 		<%
 			for (Entity Participant1 : allParticipants) {
-				String ParticipantName = Participant.getName(Participant1);
+				String ParticipantName = Participant.getFirstName(Participant1);
 				String ParticipantID = Participant.getStringID(Participant1);
 				String ParticipantLoginID = Participant.getLoginID(Participant1);
 				

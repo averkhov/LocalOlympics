@@ -168,6 +168,42 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</security-constraint>
 	
 	
+	
+	
+	
+	    <!-- USER SERVLET: Participant -->
+
+	<servlet>
+	    <servlet-name>UpdateParticipantServlet</servlet-name>
+	    <servlet-class>localolympics.servlet.UpdateParticipantServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>UpdateParticipantServlet</servlet-name>
+	    <url-pattern>/auth/user/updateParticipant</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+	    <servlet-name>DeleteParticipantServlet</servlet-name>
+	    <servlet-class>localolympics.servlet.DeleteParticipantServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>DeleteParticipantServlet</servlet-name>
+	    <url-pattern>/auth/user/deleteParticipant</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+	    <servlet-name>AddParticipantServlet</servlet-name>
+	    <servlet-class>localolympics.servlet.AddParticipantServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>AddParticipantServlet</servlet-name>
+	    <url-pattern>/auth/user/addParticipant</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	
 
 	<!-- WELCOME FILE -->
 

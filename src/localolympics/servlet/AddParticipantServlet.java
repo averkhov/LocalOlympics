@@ -32,4 +32,13 @@ public class AddParticipantServlet extends HttpServlet {
                 Participant.createParticipant(participantID);
                 resp.sendRedirect("allparticipant.jsp");
         }
+        
+        
+        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            String participantID = req.getParameter("ParticipantLoginID");
+            String participantFirstName = req.getParameter("participantFirstName");
+            String participantLastName = req.getParameter("participantLastName");
+            Participant.createParticipant(participantID, participantFirstName, participantLastName);
+            resp.sendRedirect("profile.jsp");
+    }
 }

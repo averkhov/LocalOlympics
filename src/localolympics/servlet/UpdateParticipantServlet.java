@@ -31,4 +31,11 @@ public class UpdateParticipantServlet extends HttpServlet {
 
                 resp.sendRedirect("allparticipant.jsp");
         }
+        
+        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            Participant.updateParticipantCommand(req.getParameter("ParticipantID"), req.getParameter("participantFirstName"),
+                            req.getParameter("participantLastName"), req.getParameter("ParticipantLoginID"));
+
+            resp.sendRedirect("profile.jsp");
+    }
 }

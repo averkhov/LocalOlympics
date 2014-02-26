@@ -63,24 +63,48 @@ public class Participant {
     }
     
     //
-    // NAME
+    // FIRST NAME
     //
     
     /**
      * The property name for the <b>name</b> of the user profile.
      */
-    private static final String NAME_PROPERTY = "name";
+    private static final String FIRSTNAME_PROPERTY = "firstName";
     
     /**
      * Return the name of the user. 
      * @param user The GAE Entity storing the user.
      * @return the name of the user. 
      */
-    public static String getName(Entity participant) {
-	        Object name = participant.getProperty(NAME_PROPERTY);
-	        if (name == null) name = "";
-	        return (String)name;
+    public static String getFirstName(Entity participant) {
+	        Object firstName = participant.getProperty(FIRSTNAME_PROPERTY);
+	        if (firstName == null) firstName = "";
+	        return (String)firstName;
     }
+    
+    
+    //
+    // LAST NAME
+    //
+    
+    /**
+     * The property name for the <b>name</b> of the user profile.
+     */
+    private static final String LASTNAME_PROPERTY = "lastName";
+    
+    /**
+     * Return the name of the user. 
+     * @param user The GAE Entity storing the user.
+     * @return the name of the user. 
+     */
+    public static String getLastName(Entity participant) {
+	        Object lastName = participant.getProperty(LASTNAME_PROPERTY);
+	        if (lastName == null) lastName = "";
+	        return (String)lastName;
+    }
+    
+   
+   
     
     /**
      * The regular expression pattern for the name of the admin profile.
@@ -172,6 +196,41 @@ public class Participant {
             return participant;
     }
     
+    
+    
+    public static Entity createParticipant(String loginID, String firstName, String lastName) {
+        Entity participant = null;
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Transaction txn = datastore.beginTransaction();
+        try {
+        
+                participant = getParticipantWithLoginID(loginID);
+                if (participant!=null) {
+                        return null;
+                }
+                
+                participant = new Entity(ENTITY_KIND);
+                participant.setProperty(LOGIN_ID_PROPERTY, loginID);
+                participant.setProperty(FIRSTNAME_PROPERTY, firstName);
+                participant.setProperty(LASTNAME_PROPERTY, lastName);
+                datastore.put(participant);
+
+            txn.commit();
+        } finally {
+            if (txn.isActive()) {
+                txn.rollback();
+            }
+        }
+        
+        return participant;
+}
+    
+    
+    
+    
+    
+    
+    
     //
     // GET USER
     //
@@ -216,7 +275,7 @@ public class Participant {
             try {
                     
                     Filter hasLoginID =
-                                      new FilterPredicate(NAME_PROPERTY,
+                                      new FilterPredicate(LOGIN_ID_PROPERTY,
                                                           FilterOperator.EQUAL,
                                                           loginID);
                     Query query = new Query(ENTITY_KIND);
@@ -242,11 +301,42 @@ public class Participant {
      * @param loginID The login ID of the user as a String.
      * @return true if succeed and false otherwise
      */
-    public static boolean updateParticipantCommand(String participantID, String name, String participantLoginID) {
+    public static boolean updateParticipantCommand(String participantID, String firstName, String participantLoginID) {
             Entity participant = null;
             try {
             		participant = getParticipant(participantID);
-            		participant.setProperty(NAME_PROPERTY, name);
+            		participant.setProperty(FIRSTNAME_PROPERTY, firstName);
+            		participant.setProperty(LOGIN_ID_PROPERTY, participantLoginID);
+                    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+                    datastore.put(participant);
+            } catch (Exception e) {
+                    return false;
+            }
+            return true;
+    }
+    
+    
+    
+    
+    
+    
+    //
+    // UPDATE USER
+    //
+    
+    /**
+     * Update the current description of the User.
+     * @param userID A string with the user ID (a long).
+     * @param name The name of the user as a String.
+     * @param loginID The login ID of the user as a String.
+     * @return true if succeed and false otherwise
+     */
+    public static boolean updateParticipantCommand(String participantID, String firstName, String lastName, String participantLoginID) {
+            Entity participant = null;
+            try {
+            		participant = getParticipant(participantID);
+            		participant.setProperty(FIRSTNAME_PROPERTY, firstName);
+            		participant.setProperty(LASTNAME_PROPERTY, lastName);
             		participant.setProperty(LOGIN_ID_PROPERTY, participantLoginID);
                     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
                     datastore.put(participant);
