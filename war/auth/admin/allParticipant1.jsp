@@ -19,6 +19,9 @@
 	<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
 </head>
 <body>
+	<a href="admin.jsp">return to admin main</a>
+  	<a href="/index.jsp">home</a>
+  	
 	<%
 		List<Entity> allParticipants = Participant1.getFirstParticipants(100);
 		if (allParticipants.isEmpty()) {

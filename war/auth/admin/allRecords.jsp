@@ -33,10 +33,13 @@
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
   
-  	<a href="admin.jsp">return to admin main</a>
-  	<a href="/index.jsp">home</a>
+  	
 
   <body>
+  
+  
+  	<a href="admin.jsp">return to admin main</a>
+  	<a href="/index.jsp">home</a>
   
   <%
     UserService userService = UserServiceFactory.getUserService();

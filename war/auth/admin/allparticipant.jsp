@@ -174,7 +174,8 @@ function cancelEditParticipant(ParticipantID) {
 <body>
 
 
-	<a href="/index.html">home</a>
+	<a href="admin.jsp">return to admin main</a>
+  	<a href="/index.jsp">home</a>
 	
 	
 	<%
