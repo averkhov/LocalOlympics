@@ -84,37 +84,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	
 	
-	<!-- participant1 -->
-	
-	<servlet>
-		<servlet-name>AddParticipantServlet1</servlet-name>
-		<servlet-class>localolympics.servlet.AddParticipantServlet1</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AddParticipantServlet1</servlet-name>
-		<url-pattern>/auth/admin/addParticipant1</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>DeleteParticipantServlet1</servlet-name>
-		<servlet-class>localolympics.servlet.DeleteParticipantServlet1</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DeleteParticipantServlet1</servlet-name>
-		<url-pattern>/auth/admin/deleteParticipant1</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>UpdateParticipantServlet1</servlet-name>
-		<servlet-class>localolympics.servlet.UpdateParticipantServlet1</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>UpdateParticipantServlet1</servlet-name>
-		<url-pattern>/auth/admin/updateParticipant1</url-pattern>
-	</servlet-mapping>
-	
-	
-	
 	<!-- ACTIVITY -->
 	<servlet>
 		<servlet-name>AddActivityServlet</servlet-name>
@@ -202,7 +171,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	
+		<!--  LOGOUT  -->
 	
+	<servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>localolympics.servlet.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
 	
 
 	<!-- WELCOME FILE -->

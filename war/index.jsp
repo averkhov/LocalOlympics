@@ -15,9 +15,9 @@
 <%@ page import="java.util.HashSet" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
 
 
-<%@ page import="localolympics.db.Record" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
@@ -26,7 +26,7 @@
    Licensed under the Academic Free License version 3.0
    http://opensource.org/licenses/AFL-3.0
 
-   Authors: Alex Verkhovtsev, Karen B...
+   Authors: Alex Verkhovtsev, Karen Bacon
    
    Version 0.1 - Spring 2014
 -->
@@ -52,7 +52,7 @@
 				    if (user != null) {
 				      	pageContext.setAttribute("user", user);
 					%>
-						<p>Welcome, ${fn:escapeXml(user.nickname)}! (You can <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+						<p>Welcome, ${fn:escapeXml(user.nickname)}! (You can <a href="/logout">sign out</a>.)</p>
 					
 				</td>
 				</tr>
@@ -68,6 +68,7 @@
 					    	%>
 			    	<p>Sign in with any web account below!</p>
 					    	<%
+					    	
 					    	final Map<String, String> openIdProviders;
 					            openIdProviders = new HashMap<String, String>();
 					            openIdProviders.put("Google", "https://www.google.com/accounts/o8/id");
@@ -77,9 +78,7 @@
 					            openIdProviders.put("MyOpenId.com", "myopenid.com");
 					    	
 					    	for (String providerName : openIdProviders.keySet()) {
-				                String providerUrl = openIdProviders.get(providerName);
-				                String loginUrl = userService.createLoginURL("/index.jsp", null, providerUrl, null);
-				                out.println("[<a href=\"" + loginUrl + "\">" + providerName + "</a>] ");
+				                out.println("[<a href=\"/_ah/login_required?provider=" + providerName + "\">" + providerName + "</a>] ");
 				            }
 
 					    }

@@ -51,7 +51,6 @@
     
     <p><a href="allRecords.jsp">Show all records</a>
     <p><a href="allActivity.jsp">Show all activities</a>
-	<p><a href="allparticipant.jsp">Participants Karen</a>
-	<p><a href="allParticipant1.jsp">All Participants Anugh</a>
+	<p><a href="allparticipant.jsp">Show all participants</a>
   </body>
 </html>

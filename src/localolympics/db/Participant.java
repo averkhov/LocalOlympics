@@ -198,6 +198,17 @@ public class Participant {
     
     
     
+    
+    
+    //
+    // CREATE USER - ADDIITONAL FEILDS
+    //
+
+    /**
+     * Create a new user if the login ID is correct and none exists with this id.
+     * @param loginID The id for this user.
+     * @return the Entity created with this id or null if error
+     */
     public static Entity createParticipant(String loginID, String firstName, String lastName) {
         Entity participant = null;
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -321,7 +332,7 @@ public class Participant {
     
     
     //
-    // UPDATE USER
+    // UPDATE USER - ADDITIONAL FIELDS
     //
     
     /**

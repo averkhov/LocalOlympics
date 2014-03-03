@@ -21,6 +21,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -40,26 +41,21 @@ public class LoginRequiredServlet extends HttpServlet {
     }
 
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser(); // or req.getUserPrincipal()
         Set<String> attributes = new HashSet<String>();
 
-        resp.setContentType("text/html");
-        PrintWriter out = resp.getWriter();
+        String providerName = (String) req.getParameter("provider");
 
         if (user == null) {
-        	out.println("Sign in at: ");
-            for (String providerName : openIdProviders.keySet()) {
-                String providerUrl = openIdProviders.get(providerName);
-                String loginUrl = userService.createLoginURL(req
-                        .getRequestURI(), null, providerUrl, attributes);
-                out.println("[<a href=\"" + loginUrl + "\">" + providerName + "</a>] ");
-            }
-            resp.sendRedirect("/index.jsp");
+        	HttpSession session = req.getSession(false);
+        	session.setAttribute("user", user);
+            String providerUrl = openIdProviders.get(providerName);
+            String loginUrl = userService.createLoginURL("/index.jsp", null, providerUrl, attributes);
+            resp.sendRedirect(loginUrl);
         } else {
-        	out.println("Login successful return to <a href=\"/index.jsp\">home</a>");
+        	HttpSession session = req.getSession(false);
         	resp.sendRedirect("/index.jsp");
         }
     }
