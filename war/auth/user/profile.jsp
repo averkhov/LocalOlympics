@@ -21,7 +21,7 @@
    Licensed under the Academic Free License version 3.0
    http://opensource.org/licenses/AFL-3.0
 
-   Authors: Alex Verkhovtsev 
+   Authors: Alex Verkhovtsev, Karen, Anugh
    
    Version 0.1 - Spring 2014
 -->
@@ -57,44 +57,8 @@
     if(participant == null){
     	
     	%>
-    		<h2>Welcome Please create your profile below!</h2>
-    		<form action="addParticipant" method="post">
-    			<table>
-    				<tr>
-    					<td>First Name: </td><td><input type="text" name="participantFirstName" length="30" /></td>
-    				</tr>
-    				<tr>
-    					<td>Last Name: </td><td><input type="text" name="participantLastName" length="30" /></td>
-    				</tr>
-    			<tr> 
-    				<td>Gender: </td>
-					<td><input type = "radio" name = "gender" value = "male" checked/> Male</td>
-					<td><input type = "radio" name = "gender" value = "female" /> female</td>
-				</tr>
-				<td> Birthday: </td>
-					<td><input type = "text" name = "birthday" length="30" /> </td>
-				</tr>
-				<tr>
-					<td>Activity: </td>
-					<td><select name = "activity">
-							<option value = "Running" >Running </option>
-							<option value = "Walking">Walking</option>
-							<option value = "Swimming">Swimming</option>
-							<option value = "Hiking">Hiking</option>
-							</select>
-							</td>
-				</tr>
-				<tr>
-					<td> About Me: </td>
-					<td>
-						<textarea name = "aboutMe"> 
-						</textarea>
-					</td>
-				</tr>
-    			</table>
-    			<input type="hidden" name="ParticipantLoginID" value="<%=user.getNickname()%>" />
-    			<input type="submit" value="submit" />
-    		</form>
+    	
+    	<jsp:forward page="editProfile.jsp" />
     	
     	<%
     	
@@ -103,130 +67,34 @@
     	
     	
     	%>
-		<h2>Welcome Please edit your profile below!</h2>
-		<form action="updateParticipant" method="post">
+		<h2>Welcome <%=Participant.getFirstName(participant) %>.</h2>
 			<table>
 				<tr>
-					<td>First Name: </td><td><input type="text" name="participantFirstName" length="30" value="<%=Participant.getFirstName(participant) %>" /></td>
+					<td>First Name: </td>
+					<td><%=Participant.getFirstName(participant) %></td>
 				</tr>
 				<tr>
-					<td>Last Name: </td><td><input type="text" name="participantLastName" length="30" value="<%=Participant.getLastName(participant) %>" /></td>
-				</tr>
-				
-				<%
-				    if(Participant.getGender(participant) == "male")
-				    {
-				    	%>
-				    	<tr>
-					<td>Gender: </td> 
-					<td><input type = "radio" name = "gender" value = "male" checked/> Male</td>
-					<td><input type = "radio" name = "gender" value = "female" /> female</td>
-					</tr>
-					<% 
-				    }
-				    else if(Participant.getGender(participant) == "female")
-				    {
-				    	%>
-				    	<tr>
-					<td>Gender: </td> 
-					<td><input type = "radio" name = "gender" value = "male" /> Male</td>
-					<td><input type = "radio" name = "gender" value = "female" checked/> female</td>
-					</tr>
-					<%
-				    }
-				    else
-				    {
-				    	%>
-				    	<tr>
-					<td>Gender: </td> 
-					<td><input type = "radio" name = "gender" value = "male" /> Male</td>
-					<td><input type = "radio" name = "gender" value = "female" /> female</td>
-					</tr>
-					<% 
-				    }
-				%>
+					<td>Last Name: </td>
+					<td><%=Participant.getLastName(participant) %></td>
 				<tr> 
-					<td> Birthday: </td>
-					<td><input type = "text" name = "birthday" value = "<% Participant.getBirthday(participant);%>" /> </td>
+					<td>Gender: </td>
+					<td><%=Participant.getGender(participant)%></td>
+				</tr>
+				<tr> 
+					<td>Birthday: </td>
+					<td><%=Participant.getBirthday(participant)%></td>
 				</tr>
 				
-				<tr>
-					<td> Activity: </td>
-					<td>
-					<%
-					  if(Participant.getActivity(participant)=="Running")
-					  {
-						  %>
-						  <select name = "activity">
-							<option value = "Running" selected>Running </option>
-							<option value = "Walking">Walking</option>
-							<option value = "Swimming">Swimming</option>
-							<option value = "Hiking">Hiking</option>
-							</select>
-							<% 
-					  }
-					  else if(Participant.getActivity(participant)=="Walking")
-					  {
-						  %>
-						  <select name = "activity">
-					<option value = ""> </option>
-					<option value = "Running">Running </option>
-					<option value = "Walking" selected>Walking</option>
-					<option value = "Swimming">Swimming</option>
-					<option value = "Hiking">Hiking</option>
-					</select>
-						  
-						  <% 
-					  }
-					  else if(Participant.getActivity(participant)=="Swimming")
-					  {
-						  %>
-						  <select name = "activity">
-					<option value = ""> </option>
-					<option value = "Running">Running </option>
-					<option value = "Walking">Walking</option>
-					<option value = "Swimming" selected>Swimming</option>
-					<option value = "Hiking">Hiking</option>
-					</select>
-						  <%
-					  }
-					  else if (Participant.getActivity(participant)=="Hiking")
-					  { %>
-						  <select name = "activity">
-					<option value = ""> </option>
-					<option value = "Running">Running </option>
-					<option value = "Walking">Walking</option>
-					<option value = "Swimming">Swimming</option>
-					<option value = "Hiking" selected>Hiking</option>
-					</select>
-						  <%
-					  }
-					  else
-					  {
-						 %>
-						  <select name = "activity">
-					<option value = ""> </option>
-					<option value = "Running">Running </option>
-					<option value = "Walking">Walking</option>
-					<option value = "Swimming">Swimming</option>
-					<option value = "Hiking" >Hiking</option>
-					</select>
-						 <%  
-						  
-					  }
-					%>
-					</td>
+				<tr> 
+					<td>Activity: </td>
+					<td><%=Participant.getActivity(participant)%></td>
 				</tr>
-				<tr>
-					<td><textarea name = "aboutMe" >
-					<%Participant.getAboutMe(participant); %>
-					</textarea></td>
+				<tr> 
+					<td>About Me: </td>
+					<td><%=Participant.getAboutMe(participant)%></td>
 				</tr>
 			</table>
-			<input type="hidden" name="ParticipantLoginID" value="<%=user.getNickname()%>" />
-			<input type="hidden" name="ParticipantID" value="<%=Participant.getStringID(participant)%>" />
-			<input type="submit" value="update" />
-		</form>
+			<a href="editProfile.jsp">Edit your profile</a>
 
 	<%
     	
