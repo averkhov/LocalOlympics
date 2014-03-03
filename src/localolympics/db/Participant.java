@@ -3,7 +3,7 @@
  * Licensed under the Academic Free License version 3.0
  * http://opensource.org/licenses/AFL-3.0
  * 
- * Authors: Karen
+ * Authors: Karen and Anugh
  */
 
 
@@ -110,7 +110,7 @@ public class Participant {
      * The regular expression pattern for the name of the admin profile.
      */
     private static final Pattern NAME_PATTERN = Pattern.compile("\\A[A-Za-z]+([ -][A-Za-z]+){0,10}\\Z");
-	
+
     /**
      * Check if the name is correct for a user. 
      * @param name The checked string. 
@@ -197,19 +197,35 @@ public class Participant {
     }
     
     
+    private static final String GENDER_PROPERTY = "gender";
+    private static final String BIRTHDAY_PROPERTY = "birthday";
+    private static final String ACTIVITY_PROPERTY = "activity";
+    private static final String ABOUTME_PROPERTY = "aboutme";
     
+    public static String getGender(Entity participant) {
+        Object gender = participant.getProperty(GENDER_PROPERTY);
+        if (gender == null) gender = "";
+        return (String)gender;
+    }
     
+    public static String getBirthday(Entity participant) {
+        Object birthday = participant.getProperty(BIRTHDAY_PROPERTY);
+        if (birthday == null) birthday = "";
+        return (String)birthday;
+}
+    public static String getActivity(Entity participant) {
+        Object activity = participant.getProperty(ACTIVITY_PROPERTY);
+        if (activity == null) activity = "";
+        return (String)activity;
+}
+    public static String getAboutMe(Entity participant) {
+        Object aboutMe = participant.getProperty(ABOUTME_PROPERTY);
+        if (aboutMe == null) aboutMe = "";
+        return (String)aboutMe;
+}
     
-    //
-    // CREATE USER - ADDIITONAL FEILDS
-    //
-
-    /**
-     * Create a new user if the login ID is correct and none exists with this id.
-     * @param loginID The id for this user.
-     * @return the Entity created with this id or null if error
-     */
-    public static Entity createParticipant(String loginID, String firstName, String lastName) {
+    public static Entity createParticipant(String loginID, String firstName, String lastName, 
+    		String gender, String birthday, String activity, String aboutme) {
         Entity participant = null;
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Transaction txn = datastore.beginTransaction();
@@ -224,6 +240,10 @@ public class Participant {
                 participant.setProperty(LOGIN_ID_PROPERTY, loginID);
                 participant.setProperty(FIRSTNAME_PROPERTY, firstName);
                 participant.setProperty(LASTNAME_PROPERTY, lastName);
+                participant.setProperty(GENDER_PROPERTY, gender);
+                participant.setProperty(BIRTHDAY_PROPERTY, birthday);
+                participant.setProperty(ACTIVITY_PROPERTY, activity);
+                participant.setProperty(ABOUTME_PROPERTY, aboutme);
                 datastore.put(participant);
 
             txn.commit();
@@ -332,7 +352,7 @@ public class Participant {
     
     
     //
-    // UPDATE USER - ADDITIONAL FIELDS
+    // UPDATE USER
     //
     
     /**
@@ -342,12 +362,23 @@ public class Participant {
      * @param loginID The login ID of the user as a String.
      * @return true if succeed and false otherwise
      */
-    public static boolean updateParticipantCommand(String participantID, String firstName, String lastName, String participantLoginID) {
+    
+    /*private static final String GENDER_PROPERTY = "gender";
+    private static final String BIRTHDAY_PROPERTY = "birthday";
+    private static final String ACTIVITY_PROPERTY = "activity";
+    private static final String ABOUTME_PROPERTY = "aboutme";*/
+    
+    public static boolean updateParticipantCommand(String participantID, String firstName, String lastName, 
+    		String gender, String birthday, String activity, String aboutme, String participantLoginID) {
             Entity participant = null;
             try {
             		participant = getParticipant(participantID);
             		participant.setProperty(FIRSTNAME_PROPERTY, firstName);
             		participant.setProperty(LASTNAME_PROPERTY, lastName);
+            		participant.setProperty(GENDER_PROPERTY, gender);
+            		participant.setProperty(BIRTHDAY_PROPERTY, birthday);
+            		participant.setProperty(ACTIVITY_PROPERTY, activity);
+            		participant.setProperty(ABOUTME_PROPERTY, aboutme);
             		participant.setProperty(LOGIN_ID_PROPERTY, participantLoginID);
                     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
                     datastore.put(participant);
@@ -393,5 +424,3 @@ public class Participant {
     } 
    
 }
-
-

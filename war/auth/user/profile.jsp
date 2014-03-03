@@ -66,6 +66,31 @@
     				<tr>
     					<td>Last Name: </td><td><input type="text" name="participantLastName" length="30" /></td>
     				</tr>
+    			<tr> 
+    				<td>Gender: </td>
+					<td><input type = "radio" name = "gender" value = "male" checked/> Male</td>
+					<td><input type = "radio" name = "gender" value = "female" /> female</td>
+				</tr>
+				<td> Birthday: </td>
+					<td><input type = "text" name = "birthday" length="30" /> </td>
+				</tr>
+				<tr>
+					<td>Activity: </td>
+					<td><select name = "activity">
+							<option value = "Running" >Running </option>
+							<option value = "Walking">Walking</option>
+							<option value = "Swimming">Swimming</option>
+							<option value = "Hiking">Hiking</option>
+							</select>
+							</td>
+				</tr>
+				<tr>
+					<td> About Me: </td>
+					<td>
+						<textarea name = "aboutMe"> 
+						</textarea>
+					</td>
+				</tr>
     			</table>
     			<input type="hidden" name="ParticipantLoginID" value="<%=user.getNickname()%>" />
     			<input type="submit" value="submit" />
@@ -87,12 +112,122 @@
 				<tr>
 					<td>Last Name: </td><td><input type="text" name="participantLastName" length="30" value="<%=Participant.getLastName(participant) %>" /></td>
 				</tr>
+				
+				<%
+				    if(Participant.getGender(participant) == "male")
+				    {
+				    	%>
+				    	<tr>
+					<td>Gender: </td> 
+					<td><input type = "radio" name = "gender" value = "male" checked/> Male</td>
+					<td><input type = "radio" name = "gender" value = "female" /> female</td>
+					</tr>
+					<% 
+				    }
+				    else if(Participant.getGender(participant) == "female")
+				    {
+				    	%>
+				    	<tr>
+					<td>Gender: </td> 
+					<td><input type = "radio" name = "gender" value = "male" /> Male</td>
+					<td><input type = "radio" name = "gender" value = "female" checked/> female</td>
+					</tr>
+					<%
+				    }
+				    else
+				    {
+				    	%>
+				    	<tr>
+					<td>Gender: </td> 
+					<td><input type = "radio" name = "gender" value = "male" /> Male</td>
+					<td><input type = "radio" name = "gender" value = "female" /> female</td>
+					</tr>
+					<% 
+				    }
+				%>
+				<tr> 
+					<td> Birthday: </td>
+					<td><input type = "text" name = "birthday" value = "<% Participant.getBirthday(participant);%>" /> </td>
+				</tr>
+				
+				<tr>
+					<td> Activity: </td>
+					<td>
+					<%
+					  if(Participant.getActivity(participant)=="Running")
+					  {
+						  %>
+						  <select name = "activity">
+							<option value = "Running" selected>Running </option>
+							<option value = "Walking">Walking</option>
+							<option value = "Swimming">Swimming</option>
+							<option value = "Hiking">Hiking</option>
+							</select>
+							<% 
+					  }
+					  else if(Participant.getActivity(participant)=="Walking")
+					  {
+						  %>
+						  <select name = "activity">
+					<option value = ""> </option>
+					<option value = "Running">Running </option>
+					<option value = "Walking" selected>Walking</option>
+					<option value = "Swimming">Swimming</option>
+					<option value = "Hiking">Hiking</option>
+					</select>
+						  
+						  <% 
+					  }
+					  else if(Participant.getActivity(participant)=="Swimming")
+					  {
+						  %>
+						  <select name = "activity">
+					<option value = ""> </option>
+					<option value = "Running">Running </option>
+					<option value = "Walking">Walking</option>
+					<option value = "Swimming" selected>Swimming</option>
+					<option value = "Hiking">Hiking</option>
+					</select>
+						  <%
+					  }
+					  else if (Participant.getActivity(participant)=="Hiking")
+					  { %>
+						  <select name = "activity">
+					<option value = ""> </option>
+					<option value = "Running">Running </option>
+					<option value = "Walking">Walking</option>
+					<option value = "Swimming">Swimming</option>
+					<option value = "Hiking" selected>Hiking</option>
+					</select>
+						  <%
+					  }
+					  else
+					  {
+						 %>
+						  <select name = "activity">
+					<option value = ""> </option>
+					<option value = "Running">Running </option>
+					<option value = "Walking">Walking</option>
+					<option value = "Swimming">Swimming</option>
+					<option value = "Hiking" >Hiking</option>
+					</select>
+						 <%  
+						  
+					  }
+					%>
+					</td>
+				</tr>
+				<tr>
+					<td><textarea name = "aboutMe" >
+					<%Participant.getAboutMe(participant); %>
+					</textarea></td>
+				</tr>
 			</table>
 			<input type="hidden" name="ParticipantLoginID" value="<%=user.getNickname()%>" />
 			<input type="hidden" name="ParticipantID" value="<%=Participant.getStringID(participant)%>" />
 			<input type="submit" value="update" />
 		</form>
-	
+
 	<%
     	
     	

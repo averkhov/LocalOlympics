@@ -12,7 +12,6 @@ package localolympics.servlet;
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -49,13 +48,10 @@ public class LoginRequiredServlet extends HttpServlet {
         String providerName = (String) req.getParameter("provider");
 
         if (user == null) {
-        	HttpSession session = req.getSession(false);
-        	session.setAttribute("user", user);
             String providerUrl = openIdProviders.get(providerName);
             String loginUrl = userService.createLoginURL("/index.jsp", null, providerUrl, attributes);
             resp.sendRedirect(loginUrl);
         } else {
-        	HttpSession session = req.getSession(false);
         	resp.sendRedirect("/index.jsp");
         }
     }

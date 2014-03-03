@@ -27,18 +27,22 @@ import localolympics.db.Participant;
 @SuppressWarnings("serial")
 public class AddParticipantServlet extends HttpServlet {
         
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-                String participantID = req.getParameter("ParticipantLoginID");
-                Participant.createParticipant(participantID);
-                resp.sendRedirect("allparticipant.jsp");
-        }
-        
-        
-        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             String participantID = req.getParameter("ParticipantLoginID");
-            String participantFirstName = req.getParameter("participantFirstName");
-            String participantLastName = req.getParameter("participantLastName");
-            Participant.createParticipant(participantID, participantFirstName, participantLastName);
-            resp.sendRedirect("profile.jsp");
+            Participant.createParticipant(participantID);
+            resp.sendRedirect("allparticipant.jsp");
+    }
+        
+        
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String participantID = req.getParameter("ParticipantLoginID");
+        String participantFirstName = req.getParameter("participantFirstName");
+        String participantLastName = req.getParameter("participantLastName");
+        String gender = req.getParameter("gender");
+        String birthday = req.getParameter("birthday");
+        String activity = req.getParameter("activity");
+        String aboutme = req.getParameter("aboutme");
+        Participant.createParticipant(participantID, participantFirstName, participantLastName, gender, birthday, activity, aboutme);
+        resp.sendRedirect("profile.jsp"); 
     }
 }
