@@ -103,6 +103,28 @@ public class Participant {
 	        return (String)lastName;
     }
     
+    
+    
+    //
+    // ADDRESS
+    //
+    
+    /**
+     * The property name for the <b>name</b> of the user profile.
+     */
+    private static final String ADDRESS_PROPERTY = "address";
+    
+    /**
+     * Return the name of the user. 
+     * @param user The GAE Entity storing the user.
+     * @return the name of the user. 
+     */
+    public static String getAddress(Entity participant) {
+	        Object address = participant.getProperty(ADDRESS_PROPERTY);
+	        if (address == null) address = "";
+	        return (String)address;
+    }
+    
    
    
     
@@ -225,7 +247,7 @@ public class Participant {
 }
     
     public static Entity createParticipant(String loginID, String firstName, String lastName, 
-    		String gender, String birthday, String activity, String aboutme) {
+    		String gender, String birthday, String activity, String aboutme, String address) {
         Entity participant = null;
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Transaction txn = datastore.beginTransaction();
@@ -244,6 +266,7 @@ public class Participant {
                 participant.setProperty(BIRTHDAY_PROPERTY, birthday);
                 participant.setProperty(ACTIVITY_PROPERTY, activity);
                 participant.setProperty(ABOUTME_PROPERTY, aboutme);
+                participant.setProperty(ADDRESS_PROPERTY, address);
                 datastore.put(participant);
 
             txn.commit();
@@ -369,7 +392,7 @@ public class Participant {
     private static final String ABOUTME_PROPERTY = "aboutme";*/
     
     public static boolean updateParticipantCommand(String participantID, String firstName, String lastName, 
-    		String gender, String birthday, String activity, String aboutme, String participantLoginID) {
+    		String gender, String birthday, String activity, String aboutme, String address, String participantLoginID) {
             Entity participant = null;
             try {
             		participant = getParticipant(participantID);
@@ -380,6 +403,7 @@ public class Participant {
             		participant.setProperty(ACTIVITY_PROPERTY, activity);
             		participant.setProperty(ABOUTME_PROPERTY, aboutme);
             		participant.setProperty(LOGIN_ID_PROPERTY, participantLoginID);
+            		participant.setProperty(ADDRESS_PROPERTY, address);
                     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
                     datastore.put(participant);
             } catch (Exception e) {

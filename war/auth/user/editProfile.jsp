@@ -91,8 +91,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td><textarea name = "aboutme" cols="40" rows="6" >
-					</textarea></td>
+					<td><textarea name = "aboutme" cols="40" rows="6" ></textarea></td>
+				</tr>
+				<tr> 
+					<td>Address: </td>
+					<td><input type = "text" name = "address" /> </td>
 				</tr>
 			</table>
 			<input type="hidden" name="ParticipantLoginID" value="<%=user.getNickname()%>" />
@@ -219,9 +222,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td><textarea name = "aboutme"  cols="40" rows="6" >
-					<%=Participant.getAboutMe(participant)%>
-					</textarea></td>
+					<td><textarea name = "aboutme"  cols="40" rows="6" ><%=Participant.getAboutMe(participant)%></textarea></td>
+				</tr>
+				<tr> 
+					<td>Address: </td>
+					<td><input type = "text" name = "address" value="<%=Participant.getAddress(participant) %>"/> </td>
 				</tr>
 			</table>
 			<input type="hidden" name="ParticipantLoginID" value="<%=user.getNickname()%>" />

@@ -42,7 +42,8 @@ public class AddParticipantServlet extends HttpServlet {
         String birthday = req.getParameter("birthday");
         String activity = req.getParameter("activity");
         String aboutme = req.getParameter("aboutme");
-        Participant.createParticipant(participantID, participantFirstName, participantLastName, gender, birthday, activity, aboutme);
+        String address = req.getParameter("address");
+        Participant.createParticipant(participantID, participantFirstName, participantLastName, gender, birthday, activity, aboutme, address);
         resp.sendRedirect("profile.jsp"); 
     }
 }
