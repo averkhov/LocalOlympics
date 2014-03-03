@@ -57,7 +57,7 @@
     if(participant == null){
     	%>
     	
-    	<h2>Welcome <%=user.getNickname() %> Please create your profile below!</h2>
+    	<h2>Welcome <%=user.getNickname() %>! Please create your profile below.</h2>
 		<form action="addParticipant" method="post">
 			<table>
 				<tr>
@@ -91,6 +91,7 @@
 					</td>
 				</tr>
 				<tr>
+					<td>About Me</td>
 					<td><textarea name = "aboutme" cols="40" rows="6" ></textarea></td>
 				</tr>
 				<tr> 
@@ -107,7 +108,7 @@
     	
     	
     	%>
-		<h2>Welcome <%=Participant.getFirstName(participant) %> Please edit your profile below!</h2>
+		<h2>Welcome <%=Participant.getFirstName(participant) %>! Edit your profile below!</h2>
 		<form action="updateParticipant" method="post">
 			<table>
 				<tr>
@@ -222,6 +223,7 @@
 					</td>
 				</tr>
 				<tr>
+					<td>About Me</td>
 					<td><textarea name = "aboutme"  cols="40" rows="6" ><%=Participant.getAboutMe(participant)%></textarea></td>
 				</tr>
 				<tr> 
