@@ -75,15 +75,10 @@ $(document).ready(function(){ //test
 
 
 function updateSaveEditButton() {
-	if (editNameError||editLoginIDError) {
+	if (editLoginIDError) {
 		$("#saveEditParticipantButton"+selectedParticipantForEdit).attr("disabled","disabled");
 	} else {
 		$("#saveEditParticipantButton"+selectedParticipantForEdit).attr("disabled",null);
-	}
-	if (editNameError) {
-		$("#editParticipantNameError"+selectedParticipantForEdit).show();
-	} else {
-		$("#editParticipantNameError"+selectedParticipantForEdit).show();
 	}
 	
 }
@@ -122,7 +117,7 @@ var selectedParticipantForDelete=null;
 
 function confirmDeleteParticipant(ParticipantID) {
 	selectedParticipantForDelete=ParticipantID;
-	$.post("deleteparticipant", 
+	$.post("/admin/deleteparticipant", 
 			{ParticipantID: ParticipantID}, 
 			function (data,status) {
 				//alert("Data "+data+" status "+status);
@@ -185,10 +180,10 @@ function cancelEditParticipant(ParticipantID) {
 	<h1>No Participant  Defined</h1>
 	<div class="menu">
 		<div class="menu_item">
-			<a href="allActivity.jsp">Activities</a>
+			<a href="/admin/allActivity.jsp">Activities</a>
 		</div>
 		<div class="menu_item">
-			<a href="allRecords.jsp">Records</a>
+			<a href="/admin/allRecords.jsp">Records</a>
 		</div>
 		
 	</div>
@@ -198,10 +193,10 @@ function cancelEditParticipant(ParticipantID) {
 	<h1>ALL Participants</h1>
 	<div class="menu">
 		<div class="menu_item">
-			<a href="allActivity.jsp">Activities</a>
+			<a href="/admin/allActivity.jsp">Activities</a>
 		</div>
 		<div class="menu_item">
-			<a href="allRecords.jsp">Records</a>
+			<a href="/admin/allRecords.jsp">Records</a>
 		</div>
 		
 	</div>
@@ -213,9 +208,15 @@ function cancelEditParticipant(ParticipantID) {
 		</tr>
 		<%
 			for (Entity Participant1 : allParticipants) {
-				String ParticipantName = Participant.getFirstName(Participant1);
+				String ParticipantFirstName = Participant.getFirstName(Participant1);
+				String ParticipantLastName = Participant.getLastName(Participant1);
 				String ParticipantID = Participant.getStringID(Participant1);
 				String ParticipantLoginID = Participant.getLoginID(Participant1);
+				String birthday = Participant.getBirthday(Participant1);
+				String address = Participant.getAddress(Participant1);
+				String activityChoice = Participant.getActivity(Participant1);
+				String aboutme = Participant.getAboutMe(Participant1);
+				String gender = Participant.getGender(Participant1);
 				
 					
 		%>
@@ -242,15 +243,63 @@ function cancelEditParticipant(ParticipantID) {
 									value="<%=ParticipantLoginID%>" name="ParticipantLoginID" /></td>
 							</tr>
 							<tr>
-								<td class="editTable" width=90>Name:</td>
+								<td class="editTable" width=90>First Name:</td>
 								<td class="editTable"><input type="text"
-									id="editParticipantNameInput<%=ParticipantID%>"
-									class="editParticipantNameInput" value="<%=ParticipantName%>"
-									name="ParticipantName" />
-									<div id="editParticipantNameError<%=ParticipantID%>"
-										class="error" style="display: none">Invalid Participant
-										name (minimum 3 characters: letters, digits, spaces, -, ')</div></td>
+									id="editParticipantFirstNameInput<%=ParticipantID%>"
+									class="editParticipantNameInput" value="<%=ParticipantFirstName%>"
+									name="participantFirstName" />
+								</td>
+										
 							</tr>
+							<tr>
+								<td class="editTable" width=90>Last Name:</td>
+								<td class="editTable"><input type="text"
+									id="editParticipantLastNameInput<%=ParticipantID%>"
+									class="editParticipantNameInput" value="<%=ParticipantLastName%>"
+									name="participantLastName" />
+									</td>
+										
+							</tr>
+							<tr>
+							      <td class="editTable" width=90>Birthdate:</td>
+							      <td class="editTable">
+							      <div id="editParticipantBirthDateInput<%=ParticipantID%>"
+							      class="editParticipantBirthDateInput" ><input type=text value="<%=birthday%>"
+							      name="birthday" /></div></td>
+							</tr>
+								<tr>
+							      <td class="editTable" width=90>Address</td>
+							      <td class="editTable">
+							      <div id="editParticipantZipcodeInput<%=ParticipantID%>"
+							      class="editParticipantZipcodeInput"><input type="text" value="<%=address%>"
+							      name="address" /></div></td>
+							</tr>
+							
+							<tr>
+							      <td class="editTable" width=90>Activity Choice</td>
+							      <td class="editTable">
+							      <div id="editParticipantActivityInput<%=ParticipantID%>"
+							      class="editParticipantActivityInput"><input type="text" value="<%=activityChoice%>"
+							      name="activity" /></div></td>
+							</tr>
+							
+							
+							<tr>
+							      <td class="editTable" width=90>Info</td>
+							      <td class="editTable">
+							      <div id="editParticipantInfoInput<%=ParticipantID%>"
+							      class="editParticipantInfoInput"><input type="text" value="<%=aboutme%>"
+							      name="aboutme" /></div></td>
+							</tr>
+							
+							<tr>
+							      <td class="editTable" width=90>Gender</td>
+							      <td class="editTable">
+							      <div id="editParticipantGenderInput<%=ParticipantID%>"
+							      class="editParticipantGenderInput"><input type="text" value="<%=gender%>"
+							      name="gender" /></div></td>
+							</tr>
+							
 						</table>
 						<input id="saveEditParticipantButton<%=ParticipantID%>"
 							type="submit" value="Save" />
@@ -279,7 +328,7 @@ function cancelEditParticipant(ParticipantID) {
 			<tr>
 				<td colspan="2" class="footer">
 					<form name="addParticipantForm"
-						action="addparticipant" method="get">
+						action="/admin/addparticipant" method="get">
 						New Participant  Login ID: <input id="addParticipantInput"
 							type="text" name="ParticipantLoginID" size="50" /> <input
 							id="addParticipantButton" type="submit" value="Add"

@@ -25,9 +25,12 @@ import localolympics.db.Participant;
 public class UpdateParticipantServlet extends HttpServlet {
 
 
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-                Participant.updateParticipantCommand(req.getParameter("ParticipantID"), req.getParameter("ParticipantName"),
-                                req.getParameter("ParticipantLoginID"));
+		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	        Participant.updateParticipantCommand(req.getParameter("ParticipantID"), req.getParameter("participantFirstName"),
+                    req.getParameter("participantLastName"), req.getParameter("gender"),
+                    req.getParameter("birthday"), req.getParameter("activity"),
+                    req.getParameter("aboutme"), req.getParameter("address"), req.getParameter("ParticipantLoginID"));
+
 
                 resp.sendRedirect("allparticipant.jsp");
         }
