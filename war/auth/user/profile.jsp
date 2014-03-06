@@ -58,7 +58,7 @@
 		                position: results[0].geometry.location
 		            });
 		          } else {
-		            alert("Geocode was not successful for the following reason: " + status);
+		        	  map.setCenter(new google.maps.LatLng(38.849468, -77.306355));
 		          }
 		        });
 
@@ -126,7 +126,7 @@
 				</tr>
 				
 				<tr> 
-					<td>Activity: </td>
+					<td>Favorite Activity: </td>
 					<td><%=Participant.getActivity(participant)%></td>
 				</tr>
 				<tr> 
@@ -134,7 +134,7 @@
 					<td><%=Participant.getAboutMe(participant)%></td>
 				</tr>
 				<tr> 
-					<td>Address: </td>
+					<td>Zip Code: </td>
 					<td><%=Participant.getAddress(participant)%></td>
 				</tr>
 

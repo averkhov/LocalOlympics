@@ -73,8 +73,7 @@
 
 				 <tr>
 					<td>Gender: </td> 
-					<td><input type = "radio" name = "gender" value = "male" /> Male</td>
-					<td><input type = "radio" name = "gender" value = "female" /> female</td>
+					<td><input type = "radio" name = "gender" value = "male" /> Male     <input type = "radio" name = "gender" value = "female" /> Female</td>
 					</tr>
 				<tr> 
 					<td> Birthday: </td>
@@ -82,7 +81,7 @@
 				</tr>
 				
 				<tr>
-					<td> Activity: </td>
+					<td>Favorite Activity: </td>
 					<td>
 				    	<select name = "activity">
 							<option value = ""> </option>
@@ -98,7 +97,7 @@
 					<td><textarea name = "aboutme" cols="40" rows="6" ></textarea></td>
 				</tr>
 				<tr> 
-					<td>Address: </td>
+					<td>Zip Code: </td>
 					<td><input type = "text" name = "address" /> </td>
 				</tr>
 			</table>
@@ -159,7 +158,7 @@
 				</tr>
 				
 				<tr>
-					<td> Activity: </td>
+					<td>Favorite Activity: </td>
 					<td>
 					<%
 					  if(Participant.getActivity(participant).equals("Running"))
@@ -230,7 +229,7 @@
 					<td><textarea name = "aboutme"  cols="40" rows="6" ><%=Participant.getAboutMe(participant)%></textarea></td>
 				</tr>
 				<tr> 
-					<td>Address: </td>
+					<td>Zip Code: </td>
 					<td><input type = "text" name = "address" value="<%=Participant.getAddress(participant) %>"/> </td>
 				</tr>
 			</table>
