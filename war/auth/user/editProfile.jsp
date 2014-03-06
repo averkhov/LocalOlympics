@@ -126,8 +126,7 @@
 				    	%>
 				    	<tr>
 					<td>Gender: </td> 
-					<td><input type = "radio" name = "gender" value = "male" checked/> Male     
-					<input type = "radio" name = "gender" value = "female" /> female</td>
+					<td><input type = "radio" name = "gender" value = "male" checked/> Male     <input type = "radio" name = "gender" value = "female" /> female</td>
 					</tr>
 					<% 
 				    }
@@ -136,8 +135,7 @@
 				    	%>
 				    	<tr>
 					<td>Gender: </td> 
-					<td><input type = "radio" name = "gender" value = "male" /> Male</td>
-					<td><input type = "radio" name = "gender" value = "female" checked/> female</td>
+					<td><input type = "radio" name = "gender" value = "male" /> Male     <input type = "radio" name = "gender" value = "female" checked/> female</td>
 					</tr>
 					<%
 				    }
@@ -146,14 +144,13 @@
 				    	%>
 				    	<tr>
 					<td>Gender: </td> 
-					<td><input type = "radio" name = "gender" value = "male" /> Male     
-					<input type = "radio" name = "gender" value = "female" /> female</td>
+					<td><input type = "radio" name = "gender" value = "male" /> Male     <input type = "radio" name = "gender" value = "female" /> female</td>
 					</tr>
 					<% 
 				    }
 				%>
 				<tr> 
-					<td> Birthday: </td>
+					<td>Birthday: </td>
 					<td><input type = "text" name = "birthday" value = "<%=Participant.getBirthday(participant)%>" /> </td>
 				</tr>
 				
