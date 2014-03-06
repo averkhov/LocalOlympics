@@ -31,6 +31,9 @@
 
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    
+    <title>Local Olympics - All Records</title>
+    
   </head>
   
   	

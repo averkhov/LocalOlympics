@@ -34,6 +34,8 @@
   <body>
     <h1>Local Olympics Administration</h1>
     
+  	<a href="/index.jsp">home</a>
+    
     <%
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();

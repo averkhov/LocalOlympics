@@ -33,6 +33,8 @@
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
     
+    <title>Local Olympics</title>
+    
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     
     <script>

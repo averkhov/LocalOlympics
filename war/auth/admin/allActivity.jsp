@@ -32,7 +32,7 @@
 
 
 
-<title>Activity</title>
+<title>Local Olympics - All Activities</title>
 
 <script>
 

@@ -32,6 +32,9 @@
 
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    
+    <title>Local Olympics</title>
+    
   </head>
 
   	<a href="/index.jsp">home</a>

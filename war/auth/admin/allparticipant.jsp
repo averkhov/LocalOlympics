@@ -27,7 +27,7 @@
 <html>
 <head>
 
-<title>All Participants</title>
+<title>Local Olympics - All Participants</title>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 

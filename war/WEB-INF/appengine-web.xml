@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
   <application>localolympics</application>
+  
+  <!-- 
+  	Appengine Version
+   -->
   <version>2</version>
 
   <!--
