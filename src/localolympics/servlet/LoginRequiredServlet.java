@@ -49,10 +49,10 @@ public class LoginRequiredServlet extends HttpServlet {
 
         if (user == null) {
             String providerUrl = openIdProviders.get(providerName);
-            String loginUrl = userService.createLoginURL("/index.jsp", null, providerUrl, attributes);
+            String loginUrl = userService.createLoginURL("/home.jsp", null, providerUrl, attributes);
             resp.sendRedirect(loginUrl);
         } else {
-        	resp.sendRedirect("/index.jsp");
+        	resp.sendRedirect("/home.jsp");
         }
     }
     

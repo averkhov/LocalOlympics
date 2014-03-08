@@ -1,3 +1,4 @@
+<%@page import="com.google.appengine.repackaged.com.google.api.client.http.HttpRequest"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.appengine.api.users.User" %>
@@ -10,6 +11,8 @@
 <%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
 <%@ page import="com.google.appengine.api.datastore.Key" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
+<%@ page import="javax.servlet.http.*" %>
+<%@ page import="localolympics.db.Activity" %>
 <%@ page import="localolympics.db.Record" %>
 <%@ page import="localolympics.db.Participant" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -21,7 +24,7 @@
    Licensed under the Academic Free License version 3.0
    http://opensource.org/licenses/AFL-3.0
 
-   Authors: Alex Verkhovtsev, Karen, Anugh
+   Authors: Alex Verkhovtsev
    
    Version 0.1 - Spring 2014
 -->
@@ -33,7 +36,7 @@
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
     
-    <title>Local Olympics</title>
+    <title>Local Olympics - Activity</title>
     
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     
@@ -66,8 +69,7 @@
 	      }
 
 	    window.onload = function () {
-	        var address = document.getElementById("address").value;
-	        initializeMap(address);
+	        
 	    } 
     
     </script>
@@ -108,49 +110,76 @@
     	
     	%>
 		<h2>Welcome <%=Participant.getFirstName(participant) %>.</h2>
+			<p><a href="profile.jsp">View your profile</a></p>
+			
+			<br/>
+			<%
+				Entity activity = Activity.getActivity(request.getParameter("activityID"));
+			
+			%>
+			
 			<table>
 				<tr>
-					<td>First Name: </td>
-					<td><%=Participant.getFirstName(participant) %></td>
+					<td>Activity Name: <%=Activity.getName(activity)%></td>
 				</tr>
 				<tr>
-					<td>Last Name: </td>
-					<td><%=Participant.getLastName(participant) %></td>
-				<tr> 
-					<td>Gender: </td>
-					<td><%=Participant.getGender(participant)%></td>
+					<%
+					List<Entity> allRecords = Record.getActivityRecords(Activity.getStringID(activity), 100);
+					if (allRecords.isEmpty()) {
+					%>
+						<td><h1>No records entered</h1></td>
+						</tr>
+						</table>
+					<%
+					}else{	
+					%>
+					<table>
+						<tr>
+							<th>participant</th><th>record</th>
+						</tr>
+					<%
+						for (Entity record : allRecords) {
+							String value = Record.getValue(record);
+						%>
+						
+						<tr>
+							<td>TODO</td>
+							<td><%=value%></td>
+						</tr>
+						
+						<%
+    	
+    	
+						}
+						%>
+					</table>
 				</tr>
-				<tr> 
-					<td>Birthday: </td>
-					<td><%=Participant.getBirthday(participant)%></td>
-				</tr>
-				
-				<tr> 
-					<td>Favorite Activity: </td>
-					<td><%=Participant.getActivity(participant)%></td>
-				</tr>
-				<tr> 
-					<td>About Me: </td>
-					<td><%=Participant.getAboutMe(participant)%></td>
-				</tr>
-				<tr> 
-					<td>Zip Code: </td>
-					<td><%=Participant.getAddress(participant)%></td>
-				</tr>
-
 			</table>
-			
-			<p><a href="editProfile.jsp">Edit your profile</a></p>
-			<input type="hidden" id="address" value="<%=Participant.getAddress(participant) %>" />
-			<div id="map-canvas" class="map-canvas"></div>
 
 	<%
-    	
-    	
-    	
     
     
     }
+					
+				%>
+				<form action="addRecord" method="post">
+				<table>
+				<tr>
+				<td>Enter a new record for this activity.</td>
+				<tr>
+	    			<td><input type="hidden" name="participantID" value="<%=Participant.getStringID(participant) %>" />
+					<input type="hidden" name="activityID" value="<%=Activity.getStringID(activity)%>" />
+					<input type="text" name="recordTime" size="20" /></td>
+				</tr>
+				<td><input type="submit" value="Add Record" /></td>
+				</tr>
+				</table>
+				</form>
+				
+				
+				<% 
+    }
+    
     
 	%>
   

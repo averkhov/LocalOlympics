@@ -21,6 +21,9 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Transaction;
+import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 
 
 /**
@@ -285,5 +288,20 @@ public class Record {
 		List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(limit));
 		return result;
 	}
+	
+	/**
+	 * Return the requested number of records (e.g. 100) for an Activity.
+	 * 
+	 * @param limit The number of records to be returned.
+	 * @return A list of GAE {@link Entity entities}.
+	 */
+	public static List<Entity> getActivityRecords(String activityID, int limit) {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Filter activityFilter = new FilterPredicate("ActivityID", FilterOperator.EQUAL, activityID);
+		Query query = new Query(ENTITY_KIND).setFilter(activityFilter);
+		List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(limit));
+		return result;
+	}
+
 
 }

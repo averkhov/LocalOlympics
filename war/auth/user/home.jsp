@@ -10,7 +10,7 @@
 <%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
 <%@ page import="com.google.appengine.api.datastore.Key" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
-<%@ page import="localolympics.db.Record" %>
+<%@ page import="localolympics.db.Activity" %>
 <%@ page import="localolympics.db.Participant" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -21,7 +21,7 @@
    Licensed under the Academic Free License version 3.0
    http://opensource.org/licenses/AFL-3.0
 
-   Authors: Alex Verkhovtsev, Karen, Anugh
+   Authors: Alex Verkhovtsev
    
    Version 0.1 - Spring 2014
 -->
@@ -33,7 +33,7 @@
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
     
-    <title>Local Olympics</title>
+    <title>Local Olympics - Home</title>
     
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     
@@ -66,14 +66,13 @@
 	      }
 
 	    window.onload = function () {
-	        var address = document.getElementById("address").value;
-	        initializeMap(address);
+	        
 	    } 
     
     </script>
   </head>
 	<body>
-  	<a href="home.jsp">home</a>
+  	<a href="/index.jsp">home</a>
 
 
   
@@ -108,49 +107,65 @@
     	
     	%>
 		<h2>Welcome <%=Participant.getFirstName(participant) %>.</h2>
+			<p><a href="profile.jsp">View your profile</a></p>
+			
+			<br/>
+			
+			<%
+			List<Entity> allActivity = Activity.getFirstActivity(100);
+			if (allActivity.isEmpty()) {
+			%>
+				<h1>No Activities available at this time</h1>
+			<%
+			}else{	
+			%>
+			
+			
+			
+			
 			<table>
 				<tr>
-					<td>First Name: </td>
-					<td><%=Participant.getFirstName(participant) %></td>
+					<td><h3>Click on an activity to join in the fun!</h3></td>
 				</tr>
 				<tr>
-					<td>Last Name: </td>
-					<td><%=Participant.getLastName(participant) %></td>
-				<tr> 
-					<td>Gender: </td>
-					<td><%=Participant.getGender(participant)%></td>
+					<table>
+						<tr>
+							<th>Activity</th><th>Type</th><th>Location</th>
+						</tr>
+						<%
+						for (Entity activity : allActivity) {
+							String activityName = Activity.getName(activity);
+							String activityID = Activity.getStringID(activity);
+							String activityType = Activity.getType(activity);
+							String activityLocation = Activity.getLocation(activity);
+						%>
+						
+						<tr>
+							<td><a href="activity.jsp?activityID=<%=activityID%>"><%=activityName%></a></td>
+							<td><%=activityType%></td>
+							<td><%=activityLocation%></td>
+						</tr>
+						
+						<%
+    	
+    	
+						}
+						%>
+					</table>
 				</tr>
-				<tr> 
-					<td>Birthday: </td>
-					<td><%=Participant.getBirthday(participant)%></td>
-				</tr>
-				
-				<tr> 
-					<td>Favorite Activity: </td>
-					<td><%=Participant.getActivity(participant)%></td>
-				</tr>
-				<tr> 
-					<td>About Me: </td>
-					<td><%=Participant.getAboutMe(participant)%></td>
-				</tr>
-				<tr> 
-					<td>Zip Code: </td>
-					<td><%=Participant.getAddress(participant)%></td>
-				</tr>
-
 			</table>
 			
-			<p><a href="editProfile.jsp">Edit your profile</a></p>
-			<input type="hidden" id="address" value="<%=Participant.getAddress(participant) %>" />
+			
+			
+
 			<div id="map-canvas" class="map-canvas"></div>
 
 	<%
-    	
-    	
-    	
     
     
     }
+    }
+    
     
 	%>
   

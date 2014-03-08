@@ -25,7 +25,14 @@ public class AddRecordServlet extends HttpServlet {
         String activityID = req.getParameter("activityID");
         String participantID = req.getParameter("participantID");
         Record.createRecord(participantID, activityID, value);
-        resp.sendRedirect("allRecords.jsp");
+        
+        System.out.println(req.getRequestURI());
+        
+        if(req.getRequestURI().equals("/auth/admin/addRecord"))
+        	resp.sendRedirect("allRecords.jsp");
+        
+        if(req.getRequestURI().equals("/auth/user/addRecord"))
+        	resp.sendRedirect("activity.jsp?activityID=" + activityID);
 }
 	
 	

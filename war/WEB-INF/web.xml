@@ -171,6 +171,25 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	
+	
+	<!-- USER SERVLET: Record -->
+
+
+	<servlet>
+		<servlet-name>AddRecordServlet</servlet-name>
+		<servlet-class>localolympics.servlet.AddRecordServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddRecordServlet</servlet-name>
+		<url-pattern>/auth/user/addRecord</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	
+	
+	
+	
 		<!--  LOGOUT  -->
 	
 	<servlet>

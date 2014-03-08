@@ -21,7 +21,7 @@ public class AddActivityServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String ActivityName = req.getParameter("ActivityName");
-		String description = req.getParameter("desctiption");
+		String description = req.getParameter("description");
 		String type = req.getParameter("type");
 		String address = req.getParameter("address");
 		Activity.createActivity(ActivityName, description, type, address);
@@ -32,7 +32,7 @@ public class AddActivityServlet extends HttpServlet {
 	@Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String ActivityName = req.getParameter("ActivityName");
-		String description = req.getParameter("desctiption");
+		String description = req.getParameter("description");
 		String type = req.getParameter("type");
 		String address = req.getParameter("address");
 		Activity.createActivity(ActivityName, description, type, address);

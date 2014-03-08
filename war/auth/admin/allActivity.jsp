@@ -92,15 +92,21 @@ function cancelDeleteActivity(activityID) {
 		
 		
 	<table>
+		<tr>
+			<th>Activity Name</th><th>Activity Type</th><th>Activity Location</th>
+		</tr>
 		<%
 			for (Entity activity : allActivity) {
 					String activityName = Activity.getName(activity);
 					String activityID = Activity.getStringID(activity);
+					String activityType = Activity.getType(activity);
+					String activityLocation = Activity.getLocation(activity);
+					String activityDescription = Activity.getDescription(activity);
 		%>
 
 		<tr>
 
-			<td><%=activityName%></td>
+			<td><%=activityName%></td><td><%=activityType%></td><td><%=activityDescription%></td><td><%=activityLocation%></td>
 
 		</tr>
 		
@@ -161,7 +167,10 @@ function cancelDeleteActivity(activityID) {
 
 
     <form action="addActivity" method="get">
-      <div><input type="text" name="ActivityName" size="50" /></div>
+      <div>name<input type="text" name="ActivityName" size="50" /></div>
+      <div>type<input type="text" name="type" size="50" /></div>
+      <div>description<input type="text" name="description" size="50" /></div>
+      <div>location<input type="text" name="address" size="50" /></div>
       <div><input type="submit" value="Add Activity" /></div>
     </form>
 
