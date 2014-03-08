@@ -58,6 +58,7 @@
 				</tr>
 				<tr><td>
 					<p><a href="/auth/user/profile.jsp">View my profile.</a></p>
+					<p><a href="/auth/user/home.jsp">User Home Page</a></p>
 					<p><a href="/auth/admin/admin.jsp">Manage Local Olympics Application</a></p>
 				
 					
