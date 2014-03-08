@@ -9,6 +9,7 @@
 package localolympics.servlet;
 
 import javax.servlet.http.*;
+
 import java.io.IOException;
 
 import localolympics.db.Record;
@@ -22,8 +23,10 @@ public class UpdateRecordServlet extends HttpServlet {
 	@Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String id = req.getParameter("id");
-		String recordTime = req.getParameter("recordTime");
-        Record.updateRecord(id, recordTime);
+		String value = req.getParameter("recordTime");
+        String activityID = req.getParameter("activityID");
+        String participantID = req.getParameter("participantID");
+        Record.updateRecord(id, participantID, activityID, value);
         resp.sendRedirect("allRecords.jsp");
     }
 	
