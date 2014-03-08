@@ -34,6 +34,32 @@
     
     <title>Local Olympics - All Records</title>
     
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <script>
+	
+
+    function editButton(recordID) {
+    	document.getElementById("view"+recordID).style.display = "none";
+    	document.getElementById("edit"+recordID).style.display = "";
+    }
+    
+    function cancelButton(recordID) {
+    	document.getElementById("view"+recordID).style.display = "";
+    	document.getElementById("edit"+recordID).style.display = "none";
+    }
+    
+    function saveButton(recordID) {
+    	$("#recordIDUpdate").val(recordID);
+    	$("#participantIDUpdate").val($("#participantID"+recordID).val());
+    	$("#activityIDUpdate").val($("#activityID"+recordID).val());
+    	$("#recordTimeUpdate").val($("#recordTime"+recordID).val());
+    	document.forms["finalSubmit"].submit();
+    }
+    
+    </script>
+    
   </head>
   
   	
@@ -71,38 +97,33 @@
 	<h1>All Records</h1>
 	<table border="1">
 		<tr>
-			<td>Record</td>
-			<td>Delete</td>
-			<td>Update</td>
-			<td>Delete (Get) test</td>
+			<td>ParticipantID</td>
+			<td>ActivityID</td>
+			<td>Value</td>
+			<td>Edit</td>
 		</tr>
 		<%
 			for (Entity record : allRecords) {
-					String recordTime = Record.getTime(record);
-					String id = Record.getStringID(record);
+					String recordTime = Record.getValue(record);
+					String participantID = Record.getParticipantID(record);
+					String activityID = Record.getActivityID(record);
+					String recordID = Record.getStringID(record);
 		%>
 
-		<tr>
-			<td><%=recordTime%></td>
-			<td>
-				<form action="deleteRecord" method="post">
-					<input type="hidden" name="id" value="<%=id%>" />
-					<input type="submit" value="Delete" />
-				</form>
-			</td>
-			<td>
-				<form action="updateRecord" method="post">
-					<input type="hidden" name="id" value="<%=id%>" />
-					<input type="text" name="recordTime" size="20" />
-					<input type="submit" value="Update" />
-				</form>
-			</td>
-			<td>
-				<a href="deleteRecord?id=<%=id%>">delete</a>
-			</td>
-
+		<tr id="view<%=recordID%>">
+				<td><%=participantID%></td>
+				<td><%=activityID %></td>
+				<td><%=recordTime %></td>
+				<td><button type="button" onclick="editButton(<%=recordID%>)">Edit</button></td>
 		</tr>
-
+		
+		<tr id="edit<%=recordID%>" style="display: none">
+				<td><input id="participantID<%=recordID%>" type="text" name="participantID" value="<%=participantID%>" size="20" /></td>
+				<td><input id="activityID<%=recordID%>" type="text" name="activityID" value="<%=activityID%>" size="20" /></td>
+				<td><input id="recordTime<%=recordID%>" type="text" name="recordTime" value="<%=recordTime%>" size="20" /></td>
+				<td><button type="button" onclick="cancelButton(<%=recordID%>)">cancel</button><button type="button" onclick="saveButton(<%=recordID%>)">save</button></td>
+		</tr>
+		
 		<%
 			}
 
@@ -114,10 +135,30 @@
 
 
 	<hr />
-    <form action="addRecord" method="post">
-      <div><input type="text" name="recordTime" size="50" /></div>
-      <div><input type="submit" value="Add Record" /></div>
+	<form action="addRecord" method="post">
+	<table>
+		<tr>
+			<td>ParticipantID</td>
+			<td>ActivityID</td>
+			<td>Value</td>
+		</tr>
+		<tr>
+	    	<td><input type="text" name="participantID" size="20" /></td>
+			<td><input type="text" name="activityID" size="20" /></td>
+			<td><input type="text" name="recordTime" size="20" /></td>
+		</tr>
+	</table>
+		<input type="submit" value="Add Record" />
     </form>
+    
+    <div>
+    	<form id="finalSubmit" action="updateRecord" method="post">
+	    	<input id="recordIDUpdate" type="hidden" name="id" value="" />
+	    	<input id="participantIDUpdate" type="hidden" name="participantID" />
+			<input id="activityIDUpdate" type="hidden" name="activityID"  />
+			<input id="recordTimeUpdate" type="hidden" name="recordTime"  />
+    	</form>
+    </div>
 
   </body>
 </html>
