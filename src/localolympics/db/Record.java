@@ -8,7 +8,9 @@
 
 package localolympics.db;
 
+import java.util.Date;
 import java.util.List;
+
 
 
 
@@ -34,6 +36,7 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
  * - "participantID" a {@link String} with the participantid record for the Participant that entered record<br>
  * - "activityID" a {@link String} with the activityid record for the activity that the record is for<br>
  * - "value" a {@link String} with the value record for the record<br>
+ * - "date" a {@link String} with the date record for the record<br>
  */
 
 public class Record {
@@ -105,6 +108,11 @@ public class Record {
 	 */
 	private static final String ACTIVITYID_PROPERTY = "ActivityID";
 	
+	/**
+	 * The property activdateityID for the <b>date</b> value of the record.
+	 */
+	private static final String DATE_PROPERTY = "Date";
+	
 	
 	
 	
@@ -152,6 +160,19 @@ public class Record {
 		return (String) activityID;
 	}
 	
+	/**
+	 * Return the date for the record.
+	 * 
+	 * @param record The GAE Entity storing the attribute
+	 * @return the date in the record.
+	 */
+	public static String getDate(Entity record) {
+		Object date = record.getProperty(DATE_PROPERTY);
+		if (date == null)
+			date = "";
+		return (String) date;
+	}
+	
 
 	
 
@@ -177,6 +198,9 @@ public class Record {
 			record.setProperty(VALUE_PROPERTY, value);
 			record.setProperty(PARTICIPANTID_PROPERTY, participantID);
 			record.setProperty(ACTIVITYID_PROPERTY, activityID);
+			
+			Date date = new Date();
+			record.setProperty(DATE_PROPERTY, date.toString());
 			
 			datastore.put(record);
 
@@ -240,6 +264,9 @@ public class Record {
 			record.setProperty(VALUE_PROPERTY, value);
 			record.setProperty(ACTIVITYID_PROPERTY, activityID);
 			record.setProperty(PARTICIPANTID_PROPERTY, participantID);
+			
+			Date date = new Date();
+			record.setProperty(DATE_PROPERTY, date.toString());
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 			datastore.put(record);
 		} catch (Exception e) {

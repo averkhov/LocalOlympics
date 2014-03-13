@@ -20,162 +20,92 @@
    Licensed under the Academic Free License version 3.0
    http://opensource.org/licenses/AFL-3.0
 
-   Authors: Karen Bacon
+   Authors: Anugh
    
    Version 0.1 - Spring 2014
 -->
 
 <!-- test -->
-
 <html>
-<head>
 
+<head> 
+<title>Add Activity</title>
 
+   <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+   
+   </head>
+<body background="/stylesheets/medals.png">
+<div class="background" align="center">
 
-<title>Local Olympics - All Activities</title>
+<a href="admin.jsp">return to admin main</a>
+<a href="/index.jsp">home</a>
 
-<script>
+<% List<Entity>allActivity = Activity.getFirstActivity(100); 
 
-
-function deleteButton(activityID) {
+if(allActivity != null)
+{
 	
-	$("#delete"+activityID).show();
-}
-
-var selectedActivityForDelete=null;
-
-function confirmDeleteActivity(activityID) {
-	selectedActivityForDelete=activityID;
-	$.post("deleteActivity",
-			{
-			activityID: activityID, 
-			
-			}, 
-			function (data,status) {
-				//alert("Data "+data+" status "+status);
-				if (status="success") {
-					location.reload(true);
-				} else {
-					canceldeleteactivity(selectedactivityForDelete);
-					selectedActivity=null;
-				}
-			}
-			
-	);
-	
-}
-
-function cancelDeleteActivity(activityID) {
-	$("#delete"+activityID).hide();
-	disableAllButtons(false);
-}
-
-</script>
-</head>
-<body>
-
-
-	<a href="admin.jsp">return to admin main</a>
-  	<a href="/index.jsp">home</a>
-
-	
-	<%
-	
-	
-		List<Entity> allActivity = Activity.getFirstActivity(100);
-		if (allActivity.isEmpty()) {
 	%>
-	<h1>No Activities Entered</h1>
-	<%
-		}else{	
-	%>
-		
-		
 	<table>
 		<tr>
-			<th>Activity Name</th><th>Activity Type</th><th>Activity Location</th>
+			<th>Activity Name</th><th>Activity Type</th><th>Activity Description</th><th>Activity Location</th>
 		</tr>
-		<%
-			for (Entity activity : allActivity) {
-					String activityName = Activity.getName(activity);
-					String activityID = Activity.getStringID(activity);
-					String activityType = Activity.getType(activity);
-					String activityLocation = Activity.getLocation(activity);
-					String activityDescription = Activity.getDescription(activity);
-		%>
-
-		<tr>
+	<%
+	for (Entity activity : allActivity) {
+		String activityName = Activity.getName(activity);
+		String activityID = Activity.getStringID(activity);
+		String activityType = Activity.getType(activity);
+		String activityLocation = Activity.getLocation(activity);
+		String activityDescription = Activity.getDescription(activity);
+		
+	%>
+	<tr>
 
 			<td><%=activityName%></td><td><%=activityType%></td><td><%=activityDescription%></td><td><%=activityLocation%></td>
 
 		</tr>
-		
-		
-		<tr>
-			<td class="adminOperationsList">
-				<button class="editbutton" type="button"
-					onclick="editButton(<%=activityID%>, '<%=activityName%>')">Edit</button>
-				<button class="deletebutton" type="button" onclick="deleteButton(<%=activityID%>)">Delete</button>
-			</td>
-
-			<td><div id="view<%=activityID%>"><%=activityName%></div>
-
-				<div id="edit<%=activityID%>" style="display: none">
-
-					<form id="form<%=activityID%>" action="updateActivity" method="get">
-						
-						<input type="hidden" value="<%=activityID%>" name="activityID" />
-						
-
-						<table class="editTable">
-							<tr>
-								<td class="editTable" width=90>Name:</td>
-								<td class="editTable"><input type="text" id="editActivityNameInput<%=activityName%>" class="editActivityNameInput"
-										value="<%=activityName%>" name="activityName" />
-									<div id="editActivityNameError<%=activityID%>" class="error" style="display: none">Invalid activity name (minimum 3
-										characters: letters, digits, spaces, -, ')</div></td>
-							</tr>
-						
-							
-						</table>
-		
-					</form>
-				</div>
-
-				<div id="delete<%=activityID%>" style="display: none">
-					Do you want to delete this activity?
-					<button type="button" onclick="confirmDeleteActivity(<%=activityID%>)">Delete</button>
-					<button type="button" onclick="cancelDeleteActivity(<%=activityID%>)">Cancel</button>
-				</div></td>
-
-			
-		</tr>
-		
-		
-		
-		
-		
-
-		<%
-			}
-
-		}
-		%>
-
+	<%
+	}
+	%>
 	</table>
-	
+	<%
+}
+else
+{
+	%>
+	<h3>No Activities Listed</h3>
+	<% 
+}
+%>
+	<hr />
+	<h1> Hello Admin Create Activity</h1>
+	<form action = "addActivity" method = "post">
+	<table border="1">
+	 <tr>
+	 	<td>Activity Name: </td><td><input type = "text" name = "ActivityName" /></td>
+	</tr>
+	<tr>
+		<td>Description: </td><td><input type = "text" name = "description" /></td>
+	</tr>
+	<tr>
+		<td>Type: </td>
+		<td>
+		<select name = "type">
+		<option value = ""> </option>
+		<option value = "Running">Running </option>
+		<option value = "Walking" >Walking</option>
+		<option value = "Swimming">Swimming</option>
+		<option value = "Hiking">Hiking</option>
 
-
-    <form action="addActivity" method="get">
-      <div>name<input type="text" name="ActivityName" size="50" /></div>
-      <div>type<input type="text" name="type" size="50" /></div>
-      <div>description<input type="text" name="description" size="50" /></div>
-      <div>location<input type="text" name="address" size="50" /></div>
-      <div><input type="submit" value="Add Activity" /></div>
-    </form>
-
-
+		</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Zipcode: </td><td><input type = "text" name = "address"/></td>
+	</tr>
+	</table>
+	<input type="submit" value="Add Activity" />
+	</form>
+	</div>
 </body>
 </html>
-
-

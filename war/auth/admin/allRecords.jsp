@@ -64,8 +64,9 @@
   
   	
 
-  <body>
-  
+  <body background="/stylesheets/medals.png">
+  <div class="background" align="center">
+
   
   	<a href="admin.jsp">return to admin main</a>
   	<a href="/index.jsp">home</a>
@@ -76,7 +77,7 @@
     if (user != null) {
       	pageContext.setAttribute("user", user);
 	%>
-		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="/logout">sign out</a>.)</p>
 	<%
 	    } else {
 	%>
@@ -94,8 +95,9 @@
 	<%
 		}else{	
 	%>
+	
 	<h1>All Records</h1>
-	<table border="1">
+	<table class="myTable" border="1">
 		<tr>
 			<td>ParticipantID</td>
 			<td>ActivityID</td>
@@ -160,5 +162,7 @@
     	</form>
     </div>
 
+</div>
   </body>
+
 </html>

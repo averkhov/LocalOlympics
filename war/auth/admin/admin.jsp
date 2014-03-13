@@ -31,7 +31,8 @@
     <title>Local Olympics Administration</title>
   </head>
 
-  <body>
+   <body background="/stylesheets/medals.png">
+  <div class="background" align="center">
     <h1>Local Olympics Administration</h1>
     
   	<a href="/index.jsp">home</a>
@@ -42,7 +43,7 @@
     if (user != null) {
       	pageContext.setAttribute("user", user);
 	%>
-		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="/logout">sign out</a>.)</p>
 	<%
 	    } else {
 	%>
@@ -54,5 +55,6 @@
     <p><a href="allRecords.jsp">Show all records</a>
     <p><a href="allActivity.jsp">Show all activities</a>
 	<p><a href="allparticipant.jsp">Show all participants</a>
+	</div>
   </body>
 </html>

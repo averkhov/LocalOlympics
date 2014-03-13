@@ -32,7 +32,7 @@
 
 
 <html>
-
+	
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
     
@@ -74,7 +74,9 @@
     
     </script>
   </head>
-	<body>
+	  <body background="/stylesheets/medals.png">
+	  <div class="background" align="center">
+
   	<a href="home.jsp">home</a>
 
 
@@ -85,7 +87,7 @@
     if (user != null) {
       	pageContext.setAttribute("user", user);
 	%>
-		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="/logout">sign out</a>.)</p>
 	<%
 	    } else {
 	%>
@@ -123,6 +125,15 @@
 					<td>Activity Name: <%=Activity.getName(activity)%></td>
 				</tr>
 				<tr>
+					<td><%=Activity.getDescription(activity) %></td>
+				</tr>
+				<tr>
+					<td>Location: <%=Activity.getLocation(activity) %></td>
+				</tr>
+				<tr>
+				  <td> </td>
+				</tr>
+				<tr>
 					<%
 					List<Entity> allRecords = Record.getActivityRecords(Activity.getStringID(activity), 100);
 					if (allRecords.isEmpty()) {
@@ -135,16 +146,19 @@
 					%>
 					<table>
 						<tr>
-							<th>participant</th><th>record</th>
+							<th>participant</th><th>record</th><th>date</th>
 						</tr>
 					<%
 						for (Entity record : allRecords) {
 							String value = Record.getValue(record);
+							String username = Participant.getLoginID(Participant.getParticipant(Record.getParticipantID(record)));
+							String date = Record.getDate(record);
 						%>
 						
 						<tr>
-							<td>TODO</td>
+							<td><%=username%></td>
 							<td><%=value%></td>
+							<td><%=date %></td>
 						</tr>
 						
 						<%
@@ -162,6 +176,7 @@
     }
 					
 				%>
+				<hr />
 				<form action="addRecord" method="post">
 				<table>
 				<tr>
@@ -182,7 +197,7 @@
     
     
 	%>
-  
-
+  </div>
   </body>
+  
 </html>

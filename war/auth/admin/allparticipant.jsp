@@ -28,10 +28,10 @@
 <head>
 
 <title>Local Olympics - All Participants</title>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+<script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
-<script>s
+<script>
 
 
 var selectedParticipantForEdit = null  
@@ -166,7 +166,8 @@ function cancelEditParticipant(ParticipantID) {
 
 </head>
 
-<body>
+  <body background="/stylesheets/medals.png">
+  <div class="background" align="center">
 
 
 	<a href="admin.jsp">return to admin main</a>
@@ -178,28 +179,23 @@ function cancelEditParticipant(ParticipantID) {
 		if (allParticipants.isEmpty()) {
 	%>
 	<h1>No Participant  Defined</h1>
-	<div class="menu">
-		<div class="menu_item">
+
+
 			<a href="/admin/allActivity.jsp">Activities</a>
-		</div>
-		<div class="menu_item">
+
+
 			<a href="/admin/allRecords.jsp">Records</a>
-		</div>
-		
-	</div>
+
+
 	<%
 		} else {
 	%>
 	<h1>ALL Participants</h1>
-	<div class="menu">
-		<div class="menu_item">
+
 			<a href="/admin/allActivity.jsp">Activities</a>
-		</div>
-		<div class="menu_item">
+
 			<a href="/admin/allRecords.jsp">Records</a>
-		</div>
-		
-	</div>
+
 	<table id="main">
 		<tr>
 			<th class="ParticipantOperationsList">Operations</th>
@@ -341,7 +337,7 @@ function cancelEditParticipant(ParticipantID) {
 		</tfoot>
 
 	</table>
-
+</div>
 </body>
 </html>
 

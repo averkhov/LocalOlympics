@@ -29,7 +29,7 @@
 
 
 <html>
-
+  
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
     
@@ -37,9 +37,11 @@
     
   </head>
 
-  	<a href="/index.jsp">home</a>
+  	<a href="home.jsp">home</a>
 
-  <body>
+<body background="/stylesheets/medals.png">
+<div class="background" align="center">
+	 
   
   <%
     UserService userService = UserServiceFactory.getUserService();
@@ -47,7 +49,7 @@
     if (user != null) {
       	pageContext.setAttribute("user", user);
 	%>
-		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="/logout">sign out</a>.)</p>
 	<%
 	    } else {
 	%>
@@ -245,6 +247,7 @@
     
 	%>
   
-
+	</div>
   </body>
+ 
 </html>
