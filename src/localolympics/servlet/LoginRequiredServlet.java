@@ -46,13 +46,21 @@ public class LoginRequiredServlet extends HttpServlet {
         Set<String> attributes = new HashSet<String>();
 
         String providerName = (String) req.getParameter("provider");
+        
+        HttpSession session = req.getSession(false);
+        String url = req.getRequestURI();
 
-        if (user == null) {
-            String providerUrl = openIdProviders.get(providerName);
-            String loginUrl = userService.createLoginURL("/auth/user/home.jsp", null, providerUrl, attributes);
-            resp.sendRedirect(loginUrl);
+        if (user != null) {
+        	if(!session.getAttribute("user").equals(user.getUserId())){
+        		resp.sendRedirect("/index.jsp");
+        	}else{
+        		resp.sendRedirect(url);
+        	}
+            
         } else {
-        	resp.sendRedirect("/auth/user/home.jsp");
+        	String providerUrl = openIdProviders.get(providerName);
+            String loginUrl = userService.createLoginURL("/_login_session", null, providerUrl, attributes);
+            resp.sendRedirect(loginUrl);
         }
     }
     

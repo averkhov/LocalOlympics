@@ -12,27 +12,45 @@ package localolympics.servlet;
 
 
 import java.io.IOException;
-import javax.servlet.http.Cookie;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 @SuppressWarnings("serial")
-public class LogoutServlet extends HttpServlet {
+public class LoginSessionServlet extends HttpServlet {
+
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         UserService userService = UserServiceFactory.getUserService();
-
-        HttpSession session = req.getSession(false);
-        session.setAttribute("user", null);
-        session.invalidate();
+        User user = userService.getCurrentUser(); // or req.getUserPrincipal()
         
-        resp.sendRedirect(userService.createLogoutURL("/index.jsp"));
+        HttpSession session = req.getSession();
+        
+        synchronized (session) {
+			if (user == null) {
+				resp.sendRedirect("/error.html");
+			}else{
+				session.setAttribute("user", user.getUserId());
+				resp.sendRedirect("/auth/user/home.jsp");
+			}
+
+		}
+		
+    	resp.sendRedirect("/error.html");
+
     }
     
 }

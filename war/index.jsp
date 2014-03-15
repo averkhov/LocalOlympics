@@ -39,7 +39,10 @@
     <title>Local Olympics</title>
   </head>
 
-  <body background="/stylesheets/medals.png">
+<body style="background-image: url(/stylesheets/local.png);
+ background-position: center;
+ background-repeat: no-repeat;
+ background-attachment: fixed;">
 
 	  <table>
 	  		<tr>

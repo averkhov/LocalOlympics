@@ -11,14 +11,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
    Licensed under the Academic Free License version 3.0
    http://opensource.org/licenses/AFL-3.0
 
-   Authors: Alex Verkhovtsev, Karen
+   Authors: Alex Verkhovtsev, Karen Bacon
    
    Version 0.1 - Spring 2014
 -->
     
     
 
-    <!-- ADMIN SERVLET: Record -->
+    <!-- ADMIN: RECORD -->
 
 
 	<servlet>
@@ -52,7 +52,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 
 
 
-    <!-- ADMIN SERVLET: Participant -->
+    <!-- ADMIN: PARTICIPANT -->
 
 	<servlet>
 	    <servlet-name>UpdateParticipantServlet</servlet-name>
@@ -84,7 +84,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	
 	
-	<!-- ACTIVITY -->
+	<!-- ADMIN: ACTIVITY -->
 	<servlet>
 		<servlet-name>AddActivityServlet</servlet-name>
 		<servlet-class>localolympics.servlet.AddActivityServlet</servlet-class>
@@ -112,35 +112,40 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	
-	
-	
-	<!--  OPEN ID  -->
-	
+	<!-- ADMIN: AWARD -->
+
+
 	<servlet>
-        <servlet-name>LoginRequiredServlet</servlet-name>
-        <servlet-class>localolympics.servlet.LoginRequiredServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginRequiredServlet</servlet-name>
-        <url-pattern>/_ah/login_required</url-pattern>
-    </servlet-mapping>
+		<servlet-name>AddAwardServlet</servlet-name>
+		<servlet-class>localolympics.servlet.AddAwardServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddAwardServlet</servlet-name>
+		<url-pattern>/auth/admin/addAward</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>DeleteAwardServlet</servlet-name>
+		<servlet-class>localolympics.servlet.DeleteAwardServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteAwardServlet</servlet-name>
+		<url-pattern>/auth/admin/deleteAward</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>UpdateAwardServlet</servlet-name>
+		<servlet-class>localolympics.servlet.UpdateAwardServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateAwardServlet</servlet-name>
+		<url-pattern>/auth/admin/updateAward</url-pattern>
+	</servlet-mapping>
 	
 	
-	<security-constraint>
-	    <web-resource-collection>
-	        <web-resource-name>all</web-resource-name>
-	        <url-pattern>/auth/*</url-pattern>
-	    </web-resource-collection>
-	    <auth-constraint>
-	        <role-name>*</role-name>
-	    </auth-constraint>
-	</security-constraint>
 	
 	
 	
 	
-	
-	    <!-- USER SERVLET: Participant -->
+	    <!-- USER: PARTICIPANT -->
 
 	<servlet>
 	    <servlet-name>UpdateParticipantServlet</servlet-name>
@@ -172,7 +177,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	
 	
-	<!-- USER SERVLET: Record -->
+	<!-- USER: RECORD -->
 
 
 	<servlet>
@@ -188,6 +193,44 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	<!--  OPEN ID LOGIN -->
+	
+
+    
+    <servlet>
+        <servlet-name>LoginSessionServlet</servlet-name>
+        <servlet-class>localolympics.servlet.LoginSessionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginSessionServlet</servlet-name>
+        <url-pattern>/_login_session</url-pattern>
+    </servlet-mapping>
+	
+	
+	<servlet>
+        <servlet-name>LoginRequiredServlet</servlet-name>
+        <servlet-class>localolympics.servlet.LoginRequiredServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginRequiredServlet</servlet-name>
+        <url-pattern>/_ah/login_required</url-pattern>
+    </servlet-mapping>
+	
+	<filter>
+		<filter-name>LoginRequiredFilter</filter-name>
+		<filter-class>localolympics.servlet.LoginRequiredFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>LoginRequiredFilter</filter-name>
+		<url-pattern>/auth/*</url-pattern>
+	</filter-mapping>
 	
 	
 		<!--  LOGOUT  -->
