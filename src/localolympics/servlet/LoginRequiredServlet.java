@@ -51,7 +51,7 @@ public class LoginRequiredServlet extends HttpServlet {
         String url = req.getRequestURI();
 
         if (user != null) {
-        	if(!session.getAttribute("user").equals(user.getUserId())){
+        	if(session.getAttribute("user") == null | !session.getAttribute("user").equals(user.getUserId())){
         		resp.sendRedirect("/index.jsp");
         	}else{
         		resp.sendRedirect(url);
