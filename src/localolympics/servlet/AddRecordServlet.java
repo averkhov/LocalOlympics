@@ -21,13 +21,13 @@ public class AddRecordServlet extends HttpServlet {
 	
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String value = req.getParameter("recordTime");
+        String hour = req.getParameter("hour");
+        String minute = req.getParameter("minute");
+        String second = req.getParameter("second");
         String activityID = req.getParameter("activityID");
         String participantID = req.getParameter("participantID");
-        Record.createRecord(participantID, activityID, value);
-        
-        System.out.println(req.getRequestURI());
-        
+        Record.createRecord(participantID, activityID, hour, minute, second);
+                
         if(req.getRequestURI().equals("/auth/admin/addRecord"))
         	resp.sendRedirect("allRecords.jsp");
         

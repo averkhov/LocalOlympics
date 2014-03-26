@@ -113,7 +113,7 @@ public class Record {
 	 */
 	private static final String DATE_PROPERTY = "Date";
 	
-	
+	private static final String SECOND_VALUE = "Second";
 	
 	
 	
@@ -188,14 +188,53 @@ public class Record {
 	 * @param value The value for this record.
 	 * @return the Entity created with this id or null if error
 	 */
-	public static Entity createRecord(String participantID, String activityID, String value) {
+	public static Entity createRecord(String participantID, String activityID, String hour, String minute, String second) {
 		Entity record = null;
+		String value = " ";
+		int hour1;
+		int minute1;
+		int second1;
+		String secondAsign = "";
+		int totalSecond;
+		String storingHour = " ";
+		String storingMinute = " ";
+		String storingSecond = " ";
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Transaction txn = datastore.beginTransaction();
 		try {
-
+			hour1 = Integer.parseInt(hour);
+			minute1 = Integer.parseInt(minute);
+			second1 = Integer.parseInt(second);
+			totalSecond = secondCal(hour1, minute1, second1);
+			secondAsign = String.valueOf(totalSecond);
+			if(hour1>=0 && hour1 <=9)
+			{
+				storingHour = "0"+hour1;
+			}
+			else
+			{
+				storingHour = storingHour + hour1;
+			}
+			if(minute1>=0 && minute1 <=9)
+			{
+				storingMinute = "0"+minute1;
+			}
+			else
+			{
+				storingMinute = storingMinute + minute1;
+			}
+			if(second1>=0 && second1 <=9)
+			{
+				storingSecond = "0"+second1;
+			}
+			else
+			{
+				storingSecond = storingSecond + second1;
+			}
+			value = value + storingHour + ":" + storingMinute + ":" + storingSecond;
 			record = new Entity(ENTITY_KIND);
 			record.setProperty(VALUE_PROPERTY, value);
+			record.setProperty(SECOND_VALUE, secondAsign);
 			record.setProperty(PARTICIPANTID_PROPERTY, participantID);
 			record.setProperty(ACTIVITYID_PROPERTY, activityID);
 			
@@ -216,6 +255,20 @@ public class Record {
 		return record;
 	}
 
+	private static int secondCal(int hour, int minute, int second)
+	{
+		int totalSecond;
+		int hourConvert;
+		int minuteConvert;
+		
+		hourConvert = hour * 3600;
+		minuteConvert = minute * 60;
+		
+		totalSecond = hourConvert + minuteConvert + second;
+		
+		return totalSecond;
+		
+	}
 	
 	
 	//
@@ -329,6 +382,21 @@ public class Record {
 		List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(limit));
 		return result;
 	}
-
+	public static List<Entity> getParticipantRecords(String participantID, int limit) {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Filter participantFilter = new FilterPredicate("ParticipantID", FilterOperator.EQUAL, participantID);
+		Query query = new Query(ENTITY_KIND).setFilter(participantFilter);
+		List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(limit));
+		return result;
+	}
+	
+	public static int getParticipantRecordsNumber(String participantID, int limit) {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Filter participantFilter = new FilterPredicate("ParticipantID", FilterOperator.EQUAL, participantID);
+		Query query = new Query(ENTITY_KIND).setFilter(participantFilter);
+		List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(limit));
+		int amount = result.size();
+		return amount;
+	}
 
 }

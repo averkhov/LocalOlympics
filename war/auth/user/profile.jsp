@@ -12,6 +12,7 @@
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <%@ page import="localolympics.db.Record" %>
 <%@ page import="localolympics.db.Participant" %>
+<%@ page import="localolympics.db.Activity" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
@@ -146,13 +147,67 @@
 			<div id="map-canvas" class="map-canvas"></div>
 
 	<%
-    	
-    	
-    	
-    
-    
+  
     }
     
+	%>
+	
+	<% 
+	
+	List<Entity> allRecord = Record.getParticipantRecords(Participant.getStringID(participant), 100);
+	int num = Record.getParticipantRecordsNumber(Participant.getStringID(participant), 100);
+	
+	if(allRecord!=null && num !=0)
+	{
+		%>
+		<h3> Records for the activities that you have participated so far</h3>
+		<table>
+		<tr>
+			<th>Activity Name </th>
+			<th>Activity Type </th>
+			<th>Record </th>
+			<th>Date</th>
+			
+		</tr>
+		
+		<%
+			for(Entity record: allRecord) 
+			{
+				String activityID = Record.getActivityID(record);
+				Entity activity = Activity.getActivity(activityID);
+				String activityName = Activity.getName(activity);
+				String activityType = Activity.getType(activity);
+				String recordTime = Record.getValue(record);
+				String recordDate = Record.getDate(record);
+				
+			%>
+			<tr> 
+			
+				<td><%=activityName %> </td>
+				<td><%=activityType %> </td>
+				<td><%=recordTime %> </td>
+				<td><%=recordDate %> </td>
+			</tr>
+			<%
+				
+				//String activityName = Activity.getA
+			
+			}
+		%>
+		<tr>
+		
+		</tr>
+		
+		
+		</table>	
+		<%
+	}
+	else
+	{
+		%>
+		<h3> You have not yet participated in any activities</h3>
+		<%
+	}
 	%>
 
 </div>

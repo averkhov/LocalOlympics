@@ -184,7 +184,38 @@
 				<tr>
 	    			<td><input type="hidden" name="participantID" value="<%=Participant.getStringID(participant) %>" />
 					<input type="hidden" name="activityID" value="<%=Activity.getStringID(activity)%>" />
-					<input type="text" name="recordTime" size="20" /></td>
+					
+					Hour: <select name = "hour">
+					
+						<% for(int i = 0; i<25 ; i++)
+						{
+							%>
+							<option value = "<%=i %>"><%=i %></option>
+							<% 
+						}
+							%>
+					
+					</select>
+					Minute: <select name = "minute">
+						<% for(int i = 0; i<60 ; i++)
+						{
+							%>
+							<option value = "<%=i %>"><%=i %></option>
+							<% 
+						}
+							%>
+					
+					</select>
+					Second: <select name = "second">
+						<% for(int i = 0; i<60 ; i++)
+						{
+							%>
+							<option value = "<%=i %>"><%=i %></option>
+							<% 
+						}
+							%>
+					
+					</select>
 				</tr>
 				<td><input type="submit" value="Add Record" /></td>
 				</tr>
