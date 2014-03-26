@@ -41,6 +41,7 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
  * - "birthday" a {@link String} with the birthday record for the participant<br>
  * - "aboutMe" a {@link String} with the aboutme record for the participant<br>
  * - "address" a {@link String} with the address record for the participant<br>
+ * - "isAdmin" a {@link String} wiht the isadmin value for the participant<br>
  */
 
 
@@ -221,6 +222,7 @@ public class Participant {
     private static final String BIRTHDAY_PROPERTY = "birthday";
     private static final String ACTIVITY_PROPERTY = "activity";
     private static final String ABOUTME_PROPERTY = "aboutme";
+    private static final String ISADMIN_PROPERTY = "isAdmin";
     
     public static String getGender(Entity participant) {
         Object gender = participant.getProperty(GENDER_PROPERTY);
@@ -243,6 +245,11 @@ public class Participant {
         if (aboutMe == null) aboutMe = "";
         return (String)aboutMe;
 }
+    public static String getIsAdmin(Entity participant) {
+        Object isAdmin = participant.getProperty(ISADMIN_PROPERTY);
+        if (isAdmin == null) isAdmin = "";
+        return (String)isAdmin;
+    }
     
     public static Entity createParticipant(String loginID, String firstName, String lastName, 
     		String gender, String birthday, String activity, String aboutme, String address) {
@@ -390,7 +397,7 @@ public class Participant {
     private static final String ABOUTME_PROPERTY = "aboutme";*/
     
     public static boolean updateParticipantCommand(String participantID, String firstName, String lastName, 
-    		String gender, String birthday, String activity, String aboutme, String address, String participantLoginID) {
+    		String gender, String birthday, String activity, String aboutme, String address, String participantLoginID, String isAdmin) {
             Entity participant = null;
             try {
             		participant = getParticipant(participantID);
@@ -402,6 +409,7 @@ public class Participant {
             		participant.setProperty(ABOUTME_PROPERTY, aboutme);
             		participant.setProperty(LOGIN_ID_PROPERTY, participantLoginID);
             		participant.setProperty(ADDRESS_PROPERTY, address);
+            		participant.setProperty(ISADMIN_PROPERTY, isAdmin);
                     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
                     datastore.put(participant);
             } catch (Exception e) {

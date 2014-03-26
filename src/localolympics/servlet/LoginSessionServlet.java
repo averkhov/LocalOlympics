@@ -28,6 +28,8 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
+import localolympics.db.Participant;
+
 @SuppressWarnings("serial")
 public class LoginSessionServlet extends HttpServlet {
 
@@ -44,12 +46,19 @@ public class LoginSessionServlet extends HttpServlet {
 				resp.sendRedirect("/error.html");
 			}else{
 				session.setAttribute("user", user.getUserId());
-				resp.sendRedirect("/auth/user/home.jsp");
+				if(Participant.getParticipantWithLoginID(user.getNickname())==null){
+					session.setAttribute("isAdmin", "false");
+				}else if(Participant.getIsAdmin(Participant.getParticipantWithLoginID(user.getNickname())).equals("true")){
+					session.setAttribute("isAdmin", "true");
+				}else{
+					session.setAttribute("isAdmin", "false");
+				}
+				resp.sendRedirect("/index.jsp");
 			}
 
 		}
 		
-    	resp.sendRedirect("/error.html");
+    	resp.sendRedirect("/index.jsp");
 
     }
     
