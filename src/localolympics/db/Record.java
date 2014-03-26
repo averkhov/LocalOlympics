@@ -15,6 +15,7 @@ import java.util.List;
 
 
 
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -22,6 +23,7 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.Transaction;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
@@ -115,6 +117,8 @@ public class Record {
 	
 	private static final String SECOND_VALUE = "Second";
 	
+	private static final String RECORDAWARD_PROPERTY = "recordAward";
+	
 	
 	
 	//
@@ -173,6 +177,19 @@ public class Record {
 		return (String) date;
 	}
 	
+	
+	public static String getAward(Entity record){
+		
+		
+		
+		
+		Object recordAward = record.getProperty(RECORDAWARD_PROPERTY);
+		if (recordAward == null)
+			recordAward = "";
+		return (String) recordAward;
+		
+	}
+
 
 	
 
@@ -398,5 +415,111 @@ public class Record {
 		int amount = result.size();
 		return amount;
 	}
+	
+	
+	
+	
+	public static void updateAward(){
+	       
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Query query = new Query(ENTITY_KIND)
+        .addSort(VALUE_PROPERTY, SortDirection.ASCENDING);
+        Iterable<Entity> result3 = datastore.prepare(query).asIterable(FetchOptions.Builder.withLimit(100));
+        try{
+            for (Entity noAward: result3){
+               
+                noAward.setProperty(RECORDAWARD_PROPERTY, "no Award");
+                datastore.put(noAward);
+               
+            }}catch (Exception e){
+        }
+       
+        Iterable<Entity> result1 = datastore.prepare(query).asIterable(FetchOptions.Builder.withLimit(3));
+           
+            try {
+                for (Entity record1: result1){
+                   
+                record1.setProperty(RECORDAWARD_PROPERTY, "TOP THREE");
+                datastore.put(record1);
+            } }catch (Exception e) {
+               
+            }
+
+            Iterable<Entity> GOLDRESULT = datastore.prepare(query).asIterable(FetchOptions.Builder.withLimit(1));
+            try{
+                  for (Entity gold: GOLDRESULT){
+                     
+                      gold.setProperty(RECORDAWARD_PROPERTY, "GOLD");
+                      datastore.put(gold);
+                  }} catch (Exception e){}
+           
+ 
+       
+    }
+
+	
+	
+	
 
 }
+
+/**
+
+
+
+for(int i = 0; i < 3; i ++)
+{
+    int indexOf = i; 
+    
+    if(indexOf == 0 )
+    {
+    	result[0].setProperty(RECORDAWARD_PROPERTY, "GOLD");
+    }
+    else if (indexOf == 1){
+    	((PropertyContainer) result).setProperty(RECORDAWARD_PROPERTY, "SILVER");
+    }
+    else if (indexOf == 2){
+    	((PropertyContainer) result).setProperty(RECORDAWARD_PROPERTY, "BRONZE");
+    	
+    }
+    else {
+    	((PropertyContainer) result).setProperty(RECORDAWARD_PROPERTY, "NO AWARD");
+    }
+}
+/**
+Entity record = null;
+try{
+	record = getRecord(recordID);
+} catch (Exception e){
+	
+}
+DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+Query query = new Query(ENTITY_KIND)
+.addSort(VALUE_PROPERTY, SortDirection.ASCENDING);
+/**
+List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(3));
+ int[] indexOf = new int[3];
+ for (int i=0; i < 3; i++){
+	 
+	 indexOf[i] = result.indexOf(record);
+ }
+
+if (indexOf[0] == 0){
+record.setProperty(RECORDAWARD_PROPERTY, "GOLD");
+
+datastore.put(record);
+}
+else if (indexOf[1] == 1){
+	record.setProperty(RECORDAWARD_PROPERTY, "SILVER");
+}
+else if (indexOf[2] == 2)
+{
+	record.setProperty(RECORDAWARD_PROPERTY, "BRONZE");
+}
+return query;
+
+
+}
+}
+**/
+

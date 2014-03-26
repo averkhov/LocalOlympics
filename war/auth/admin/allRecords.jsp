@@ -102,6 +102,7 @@
 			<td>ParticipantID</td>
 			<td>ActivityID</td>
 			<td>Value</td>
+			<td>AwardLevel</td>
 			<td>Edit</td>
 		</tr>
 		<%
@@ -110,12 +111,15 @@
 					String participantID = Record.getParticipantID(record);
 					String activityID = Record.getActivityID(record);
 					String recordID = Record.getStringID(record);
+					String awardLevel = Record.getAward(record);
+					
 		%>
 
 		<tr id="view<%=recordID%>">
 				<td><%=participantID%></td>
 				<td><%=activityID %></td>
 				<td><%=recordTime %></td>
+				<td><%=awardLevel %></td>
 				<td><button type="button" onclick="editButton(<%=recordID%>)">Edit</button></td>
 		</tr>
 		
@@ -123,6 +127,7 @@
 				<td><input id="participantID<%=recordID%>" type="text" name="participantID" value="<%=participantID%>" size="20" /></td>
 				<td><input id="activityID<%=recordID%>" type="text" name="activityID" value="<%=activityID%>" size="20" /></td>
 				<td><input id="recordTime<%=recordID%>" type="text" name="recordTime" value="<%=recordTime%>" size="20" /></td>
+				
 				<td><button type="button" onclick="cancelButton(<%=recordID%>)">cancel</button><button type="button" onclick="saveButton(<%=recordID%>)">save</button></td>
 		</tr>
 		
@@ -143,11 +148,13 @@
 			<td>ParticipantID</td>
 			<td>ActivityID</td>
 			<td>Value</td>
+			
 		</tr>
 		<tr>
 	    	<td><input type="text" name="participantID" size="20" /></td>
 			<td><input type="text" name="activityID" size="20" /></td>
 			<td><input type="text" name="recordTime" size="20" /></td>
+			
 		</tr>
 	</table>
 		<input type="submit" value="Add Record" />
@@ -159,6 +166,7 @@
 	    	<input id="participantIDUpdate" type="hidden" name="participantID" />
 			<input id="activityIDUpdate" type="hidden" name="activityID"  />
 			<input id="recordTimeUpdate" type="hidden" name="recordTime"  />
+			<input id ="UpdateRecordAward" type="hidden" name="awardLevel" />
     	</form>
     </div>
 

@@ -234,7 +234,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	
 	
-	<!-- ADMIN FILTER - DISABLED FOR TESTING -->
+	<!-- ADMIN FILTER - DISABLED FOR TESTING 
     
     <filter>
 		<filter-name>AdminLoginFilter</filter-name>
@@ -247,7 +247,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</filter-mapping>
 	
 	
-	
+	-->
 	
 	
 	
