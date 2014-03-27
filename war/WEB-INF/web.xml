@@ -221,6 +221,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-name>LoginRequiredServlet</servlet-name>
         <url-pattern>/_ah/login_required</url-pattern>
     </servlet-mapping>
+    
+    <!-- GENERAL LOGIN FILTER - login required filter for all users -->
 	
 	<filter>
 		<filter-name>LoginRequiredFilter</filter-name>
@@ -234,7 +236,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	
 	
-	<!-- ADMIN FILTER - DISABLED FOR TESTING -->
+	<!-- ADMIN FILTER -->
     
     <filter>
 		<filter-name>AdminLoginFilter</filter-name>
@@ -260,6 +262,24 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+    
+    
+    
+    
+    <!--  VALIDATE EMAIL -->
+	
+
+    
+    <servlet>
+        <servlet-name>ValidateEmailServlet</servlet-name>
+        <servlet-class>localolympics.servlet.ValidateEmailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ValidateEmailServlet</servlet-name>
+        <url-pattern>/validateEmail</url-pattern>
+    </servlet-mapping>
+    
+    
 	
 
 	<!-- WELCOME FILE -->

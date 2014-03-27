@@ -17,6 +17,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
 import localolympics.db.Participant;
 
 
@@ -35,15 +47,52 @@ public class AddParticipantServlet extends HttpServlet {
         
         
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String participantID = req.getParameter("ParticipantLoginID");
-        String participantFirstName = req.getParameter("participantFirstName");
-        String participantLastName = req.getParameter("participantLastName");
-        String gender = req.getParameter("gender");
-        String birthday = req.getParameter("birthday");
-        String activity = req.getParameter("activity");
-        String aboutme = req.getParameter("aboutme");
-        String address = req.getParameter("address");
-        Participant.createParticipant(participantID, participantFirstName, participantLastName, gender, birthday, activity, aboutme, address);
-        resp.sendRedirect("profile.jsp"); 
+    	
+    	UserService userService = UserServiceFactory.getUserService();
+        User user = userService.getCurrentUser();
+    	
+    	if(sendValidationEmail(user.getEmail(), user.getUserId()) == true){
+    		
+	        String participantID = req.getParameter("ParticipantLoginID");
+	        String participantFirstName = req.getParameter("participantFirstName");
+	        String participantLastName = req.getParameter("participantLastName");
+	        String gender = req.getParameter("gender");
+	        String birthday = req.getParameter("birthday");
+	        String activity = req.getParameter("activity");
+	        String aboutme = req.getParameter("aboutme");
+	        String address = req.getParameter("address");
+	        Participant.createParticipant(participantID, participantFirstName, participantLastName, gender, birthday, activity, aboutme, address, "false");
+	        
+	        resp.sendRedirect("profile.jsp"); 
+    	}else{
+    		resp.sendRedirect("/error.html");
+    	}
+    }
+    
+    protected boolean sendValidationEmail(String email, String id){
+    	
+    	Properties props = new Properties();
+    	Session session = Session.getDefaultInstance(props, null);
+    	
+    	System.out.println(email);
+
+    	String msgBody = "<html><body><p>Please validate your email. Click <a href=\"localolympics.appspot.com/validateEmail?id=" + id + "\">here.</a></p></body></html>";
+
+    	try {
+    	    Message msg = new MimeMessage(session);
+    	    msg.setFrom(new InternetAddress("admin@localolympics.appspotmail.com"));
+    	    msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+    	    msg.setSubject("Validate your email account for LocalOlympics");
+    	    msg.setText(msgBody);
+    	    Transport.send(msg);
+
+    	} catch (AddressException e) {
+    	    return false;
+    	} catch (MessagingException e){
+    		return false;
+    	}
+    	
+    	
+    	return true;
     }
 }

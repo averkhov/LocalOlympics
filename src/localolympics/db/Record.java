@@ -8,13 +8,8 @@
 
 package localolympics.db;
 
-import java.util.Date;
-import java.util.List;
-
-
-
-
-
+import java.sql.Time;
+import java.util.*;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -118,6 +113,8 @@ public class Record {
 	private static final String SECOND_VALUE = "Second";
 	
 	private static final String RECORDAWARD_PROPERTY = "recordAward";
+	
+	private static final String LONGTIME_PROPERTY = "longTime";
 	
 	
 	
@@ -255,8 +252,13 @@ public class Record {
 			record.setProperty(PARTICIPANTID_PROPERTY, participantID);
 			record.setProperty(ACTIVITYID_PROPERTY, activityID);
 			
+			
+			
 			Date date = new Date();
 			record.setProperty(DATE_PROPERTY, date.toString());
+			
+			Time time = new Time(hour1, minute1, second1);
+			record.setProperty(LONGTIME_PROPERTY, time.getTime());
 			
 			datastore.put(record);
 
@@ -381,7 +383,7 @@ public class Record {
 	 */
 	public static List<Entity> getFirstRecords(int limit) {
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Query query = new Query(ENTITY_KIND);
+		Query query = new Query(ENTITY_KIND).addSort(LONGTIME_PROPERTY, SortDirection.ASCENDING);
 		List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(limit));
 		return result;
 	}
@@ -395,7 +397,8 @@ public class Record {
 	public static List<Entity> getActivityRecords(String activityID, int limit) {
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Filter activityFilter = new FilterPredicate("ActivityID", FilterOperator.EQUAL, activityID);
-		Query query = new Query(ENTITY_KIND).setFilter(activityFilter);
+		Query query = new Query(ENTITY_KIND).addSort(LONGTIME_PROPERTY, SortDirection.ASCENDING);
+		query.setFilter(activityFilter);
 		List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(limit));
 		return result;
 	}

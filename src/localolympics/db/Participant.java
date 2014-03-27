@@ -223,6 +223,7 @@ public class Participant {
     private static final String ACTIVITY_PROPERTY = "activity";
     private static final String ABOUTME_PROPERTY = "aboutme";
     private static final String ISADMIN_PROPERTY = "isAdmin";
+    private static final String VALIDATED_PROPERTY = "validated";
     
     public static String getGender(Entity participant) {
         Object gender = participant.getProperty(GENDER_PROPERTY);
@@ -251,8 +252,20 @@ public class Participant {
         return (String)isAdmin;
     }
     
+    public static String getValidatedEmail(Entity participant) {
+        Object validatedEmail = participant.getProperty(VALIDATED_PROPERTY);
+        if (validatedEmail == null) validatedEmail = "false";
+        return (String)validatedEmail;
+    }
+    
+    
+    public static void setValidatedEmail(Entity participant, String value) {
+        participant.setProperty(VALIDATED_PROPERTY, value);
+    }
+    
+    
     public static Entity createParticipant(String loginID, String firstName, String lastName, 
-    		String gender, String birthday, String activity, String aboutme, String address) {
+    		String gender, String birthday, String activity, String aboutme, String address, String validated) {
         Entity participant = null;
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Transaction txn = datastore.beginTransaction();
@@ -272,6 +285,7 @@ public class Participant {
                 participant.setProperty(ACTIVITY_PROPERTY, activity);
                 participant.setProperty(ABOUTME_PROPERTY, aboutme);
                 participant.setProperty(ADDRESS_PROPERTY, address);
+                participant.setProperty(VALIDATED_PROPERTY, validated);
                 datastore.put(participant);
 
             txn.commit();

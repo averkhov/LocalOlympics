@@ -214,6 +214,7 @@ function cancelEditParticipant(ParticipantID) {
 				String aboutme = Participant.getAboutMe(Participant1);
 				String gender = Participant.getGender(Participant1);
 				String isAdmin = Participant.getIsAdmin(Participant1);
+				String validated = Participant.getValidatedEmail(Participant1);
 				
 					
 		%>
@@ -303,6 +304,14 @@ function cancelEditParticipant(ParticipantID) {
 							      <div id="editParticipantIsAdminInput<%=ParticipantID%>"
 							      class="editParticipantIsAdminInput"><input type="text" value="<%=isAdmin%>"
 							      name="isAdmin" /></div></td>
+							</tr>
+							
+							<tr>
+							      <td class="editTable" width=90>Validated Email</td>
+							      <td class="editTable">
+							      <div id="editParticipantValidatedInput<%=ParticipantID%>"
+							      class="editParticipantValidatedInput"><input type="text" value="<%=validated%>"
+							      name="validated" /></div></td>
 							</tr>
 							
 						</table>
