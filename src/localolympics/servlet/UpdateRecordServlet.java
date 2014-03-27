@@ -25,8 +25,9 @@ public class UpdateRecordServlet extends HttpServlet {
 		String id = req.getParameter("id");
 		String value = req.getParameter("recordTime");
         String activityID = req.getParameter("activityID");
+        String awardLevel = req.getParameter("awardLevel");
         String participantID = req.getParameter("participantID");
-        Record.updateRecord(id, participantID, activityID, value);
+        Record.updateRecord(id, participantID, activityID, value, awardLevel);
         resp.sendRedirect("allRecords.jsp");
     }
 	

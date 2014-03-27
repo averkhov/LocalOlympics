@@ -50,11 +50,16 @@
     	document.getElementById("edit"+recordID).style.display = "none";
     }
     
+    function deleteButton(ID) {
+    	window.location = 'deleteRecord?id=' + ID;
+    }
+    
     function saveButton(recordID) {
     	$("#recordIDUpdate").val(recordID);
     	$("#participantIDUpdate").val($("#participantID"+recordID).val());
     	$("#activityIDUpdate").val($("#activityID"+recordID).val());
     	$("#recordTimeUpdate").val($("#recordTime"+recordID).val());
+    	$("#awardLevelUpdate").val($("#awardLevel"+recordID).val());
     	document.forms["finalSubmit"].submit();
     }
     
@@ -104,6 +109,7 @@
 			<td>Value</td>
 			<td>AwardLevel</td>
 			<td>Edit</td>
+			<td>Delete</td>
 		</tr>
 		<%
 			for (Entity record : allRecords) {
@@ -121,14 +127,17 @@
 				<td><%=recordTime %></td>
 				<td><%=awardLevel %></td>
 				<td><button type="button" onclick="editButton(<%=recordID%>)">Edit</button></td>
+				<td><button type="button" onclick="deleteButton(<%=recordID%>)">Delete</button></td>
 		</tr>
 		
 		<tr id="edit<%=recordID%>" style="display: none">
 				<td><input id="participantID<%=recordID%>" type="text" name="participantID" value="<%=participantID%>" size="20" /></td>
 				<td><input id="activityID<%=recordID%>" type="text" name="activityID" value="<%=activityID%>" size="20" /></td>
 				<td><input id="recordTime<%=recordID%>" type="text" name="recordTime" value="<%=recordTime%>" size="20" /></td>
+				<td><input id="awardLevel<%=recordID%>" type="text" name="awardLevel" value="<%=awardLevel%>" size="20" /></td>
 				
 				<td><button type="button" onclick="cancelButton(<%=recordID%>)">cancel</button><button type="button" onclick="saveButton(<%=recordID%>)">save</button></td>
+				<td><button type="button" onclick="deleteButton(<%=recordID%>)">Delete</button></td>
 		</tr>
 		
 		<%
@@ -166,7 +175,7 @@
 	    	<input id="participantIDUpdate" type="hidden" name="participantID" />
 			<input id="activityIDUpdate" type="hidden" name="activityID"  />
 			<input id="recordTimeUpdate" type="hidden" name="recordTime"  />
-			<input id ="UpdateRecordAward" type="hidden" name="awardLevel" />
+			<input id ="awardLevelUpdate" type="hidden" name="awardLevel" />
     	</form>
     </div>
 

@@ -236,7 +236,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	
 	
-	<!-- ADMIN FILTER -->
+	<!-- ADMIN FILTER 
     
     <filter>
 		<filter-name>AdminLoginFilter</filter-name>
@@ -248,6 +248,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/auth/admin/*</url-pattern>
 	</filter-mapping>
 	
+	-->
 	
 	
 	
