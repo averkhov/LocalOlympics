@@ -31,7 +31,7 @@
 <html>
 
   <head>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main1.css" />
     
     <title>Local Olympics - Home</title>
     
@@ -72,10 +72,13 @@
     </script>
   </head>
 	
-	  <body background="/stylesheets/medals.png">
-	  <div class="background" align="center">
+	  <body>
+	  <div class="background">
+	  
+	  	
+	  
 	   
-  	<a href="/index.jsp">index</a>
+  	
 
 
   
@@ -85,13 +88,19 @@
     if (user != null) {
       	pageContext.setAttribute("user", user);
 	%>
-		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="/logout">sign out</a>.)</p>
+		<div>
+		<div class="top" style="float:left"><a href="/index.jsp">INDEX</a></div><div class="top"></div>
+		<div class="top" style="float:right"><a href="profile.jsp">${fn:escapeXml(user.nickname)}</a> <a href="/logout">SIGN OUT</a></div>
+		</div>
 	<%
 	    } else {
 	%>
-		<p>Hello! <a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a></p>
+		<c:redirect url="/index.jsp" />
 	<%
 	    }
+    %>
+    
+    <%
     
        
     Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
@@ -109,8 +118,11 @@
     	
     	
     	%>
+    	<br />
+    	<br />
+    	<div class="main">
 		<h2>Welcome <%=Participant.getFirstName(participant) %>.</h2>
-			<p><a href="profile.jsp">View your profile</a></p>
+			
 			
 			<br/>
 			
@@ -129,9 +141,10 @@
 			<table>
 				<tr>
 					<td><h3>Click on an activity to join in the fun!</h3></td>
+					<td></td>
 				</tr>
 				<tr>
-					<table>
+					<table class="activitylist">
 						<tr>
 							<th>Activity</th><th>Type</th><th>Location</th>
 						</tr>
@@ -157,6 +170,7 @@
 					</table>
 				</tr>
 			</table>
+			</div>
 			
 			
 			

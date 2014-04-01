@@ -32,17 +32,15 @@
 -->
 
 <html>
-  <div class="background" align="center">
+  
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+        <link type="text/css" rel="stylesheet" href="/stylesheets/index.css" />
     <title>Local Olympics</title>
   </head>
 
-<body style="background-image: url(/stylesheets/local.png);
- background-position: center;
- background-repeat: no-repeat;
- background-attachment: fixed;">
+<body>
+	<div class="background" align="center">
 
 	  <table>
 	  		<tr>
@@ -94,7 +92,7 @@
 	  </table>
 
     
-
+	</div>
   </body>
-  </div>
+  
 </html>

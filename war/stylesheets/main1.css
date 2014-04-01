@@ -1,0 +1,112 @@
+@CHARSET "ISO-8859-1";
+
+/*  
+   Copyright 2014 - 
+   Licensed under the Academic Free License version 3.0
+   http://opensource.org/licenses/AFL-3.0
+
+   Authors: Alex Verkhovtsev
+   
+   Version 0.1 - Spring 2014
+*/
+
+
+
+.background{
+	background-color:white;
+	vertical-align:center;
+	width: 700px;
+	height: 100%;
+	padding: 3px;
+	margin: 0px auto;
+	color: black;
+	text-align: center;
+	background-color: white;
+	vertical-align: center;
+	
+}
+
+.top{
+	background-color:lightblue;
+	word-spacing: 10px;
+	padding: 2px;
+}
+
+.activitylist{
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 2px;
+}
+
+
+.main{
+	text-align: center;
+	padding: 2px;
+}
+
+
+body {
+	background-image: url("/stylesheets/medals.png");
+}
+
+h1 {
+	width: 690px;
+	padding: 5px;
+	margin: 0px;
+	color: black;
+	text-align: center;
+	margin-bottom: 3px;
+}
+
+
+form {
+	display: inline;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+	padding: 2px;
+	background-color:whi
+}
+
+th {
+	background-color: blue;
+	border: 1px solid black;
+	text-align: center;
+	padding: 2px;
+}
+
+td {
+	border-collapse: collapse;
+	text-align: center;
+	padding: 2px;
+	background-color:white;
+}
+
+th {
+	color: black;
+	background-color: white;
+}
+
+
+td {
+	color: black;
+	background-color: white;
+}
+
+.map-canvas {
+	width: 530px;
+	height: 400px;
+	background-color: white;
+}
+a:link{
+	
+	color:blue;
+	
+}
+
+a:hover {color: pink;}  
+a:active {color: white;}  
+a:visited{color: purple;}

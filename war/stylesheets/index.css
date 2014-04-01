@@ -1,0 +1,58 @@
+@CHARSET "ISO-8859-1";
+
+/*  
+   Copyright 2014 - 
+   Licensed under the Academic Free License version 3.0
+   http://opensource.org/licenses/AFL-3.0
+
+   Authors: Alex Verkhovtsev
+   
+   Version 0.1 - Spring 2014
+*/
+
+
+
+
+body {
+	background-image: url(/stylesheets/local.png);
+ 	background-position: center;
+ 	background-repeat: no-repeat;
+ 	background-attachment: fixed;
+	padding: 3px;
+	margin: 0px auto;
+	color: black;
+	text-align: center;
+	background-color: white;
+	vertical-align: center;
+}
+
+h1 {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 60px;
+	padding: 5px;
+	margin: 0px;
+	color: black;
+	text-align: center;
+	margin-bottom: 3px;
+}
+
+
+
+table,th,td,tfoot {
+	border-collapse: collapse;
+	text-align: center;
+	padding: 2px;
+	background-color:white;
+}
+
+th {
+	color: black;
+	background-color: white;
+}
+
+
+td {
+	color: black;
+	background-color: white;
+}
+
