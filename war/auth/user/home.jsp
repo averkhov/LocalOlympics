@@ -188,7 +188,7 @@
 								<td><hr/><%=description%></td>
 							</tr>
 							<tr>
-								<td>Located: <%=activityLocation%></td>
+								<td>Located: <a href="https://maps.google.com/maps?saddr=<%=activityLocation%>"><%=activityLocation%></a></td>
 							</tr>
 							</table>
 						</td>
