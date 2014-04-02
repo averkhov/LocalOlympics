@@ -16,12 +16,21 @@
 	background-color:EEEECC;
 	vertical-align:center;
 	width: 700px;
-	height: 100%;
 	padding: 3px;
 	margin: 0px auto;
 	color: black;
 	text-align: center;
 	vertical-align: center;
+	
+}
+
+.backgroundwrapper{
+	background-color:EEEECC;
+	vertical-align:center;
+	width: 700px;
+	height: 99%;
+	padding: 3px;
+	margin: 0px auto;
 	
 }
 
