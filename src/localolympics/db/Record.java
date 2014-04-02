@@ -347,35 +347,6 @@ public class Record {
 		return true;
 	}
 	
-	/**
-	 * Update the current description of the record
-	 * 
-	 * @param recordID A string with the record ID (a long).
-	 * @param participantID The participantID of the record as a String.
-	 * @param activityID The activityID of the record as a String.
-	 * @param value The value of the record as a String.
-	 * @param awardLevel the awardLevel of the record as a String
-	 * @return true if succeed and false otherwise
-	 */
-	public static boolean updateRecord(String recordID, String participantID, String activityID, String value, String awardLevel) {
-		Entity record = null;
-		try {
-			record = getRecord(recordID);
-			record.setProperty(VALUE_PROPERTY, value);
-			record.setProperty(ACTIVITYID_PROPERTY, activityID);
-			record.setProperty(PARTICIPANTID_PROPERTY, participantID);
-			record.setProperty(RECORDAWARD_PROPERTY, awardLevel);
-			
-			Date date = new Date();
-			record.setProperty(DATE_PROPERTY, date.toString());
-			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-			datastore.put(record);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-	
 	
 
 	//
@@ -434,8 +405,17 @@ public class Record {
 	public static List<Entity> getParticipantRecords(String participantID, int limit) {
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Filter participantFilter = new FilterPredicate("ParticipantID", FilterOperator.EQUAL, participantID);
-		Query query = new Query(ENTITY_KIND).setFilter(participantFilter);
+		Query query = new Query(ENTITY_KIND).setFilter(participantFilter).addSort(LONGTIME_PROPERTY, SortDirection.ASCENDING);
 		List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(limit));
+		 Iterable<Entity> GOLDRESULT = datastore.prepare(query).asIterable(FetchOptions.Builder.withLimit(1));
+         try{
+               for (Entity gold: GOLDRESULT){
+                  
+                   gold.setProperty(RECORDAWARD_PROPERTY, "GOLD");
+                   datastore.put(gold);
+               }} catch (Exception e){}
+		
+		
 		return result;
 	}
 	

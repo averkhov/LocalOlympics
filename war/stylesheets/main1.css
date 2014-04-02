@@ -13,7 +13,7 @@
 
 
 .background{
-	background-color:white;
+	background-color:EEEECC;
 	vertical-align:center;
 	width: 700px;
 	height: 100%;
@@ -21,15 +21,34 @@
 	margin: 0px auto;
 	color: black;
 	text-align: center;
-	background-color: white;
 	vertical-align: center;
 	
 }
 
-.top{
-	background-color:lightblue;
-	word-spacing: 10px;
+.topbar{
+	background-color:666666;
+	height: 40px;
+	width: 99%;
+	position: absolute;
+	top: 0;
+	left: 0;
 	padding: 2px;
+}
+
+.top{
+	background-color:666666;
+	padding: 2px;
+	padding-right: 10px;
+	padding-left: 10px;
+	position: relative;
+	z-index: 1; 
+}
+
+.popup{
+	border: 1px black solid;
+	background-color: white;
+	z-index: 2;
+	
 }
 
 .activitylist{
@@ -68,45 +87,51 @@ table {
 	border-collapse: collapse;
 	text-align: center;
 	padding: 2px;
-	background-color:whi
 }
 
 th {
-	background-color: blue;
 	border: 1px solid black;
 	text-align: center;
 	padding: 2px;
+	background-color: white;
 }
 
 td {
 	border-collapse: collapse;
 	text-align: center;
 	padding: 2px;
-	background-color:white;
+	color: black;
 }
 
 th {
 	color: black;
-	background-color: white;
 }
 
-
-td {
-	color: black;
-	background-color: white;
+ul{
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px:
 }
+
+.iconcell{
+	width: 125px;
+}
+
+.activityname{
+	font-size: 25px;
+}
+
+.activitylistrow{
+	border: 1px solid black;
+}
+
 
 .map-canvas {
 	width: 530px;
 	height: 400px;
 	background-color: white;
 }
-a:link{
-	
-	color:blue;
-	
-}
-
-a:hover {color: pink;}  
-a:active {color: white;}  
-a:visited{color: purple;}
+a:link{color:336666;}
+a:hover {color: 999966;}  
+a:active {color: 999966;}  
+a:visited{color: 66AA66;}

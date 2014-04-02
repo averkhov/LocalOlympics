@@ -36,6 +36,7 @@
     <title>Local Olympics - Home</title>
     
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     
     <script>
 
@@ -68,11 +69,28 @@
 	    window.onload = function () {
 	        
 	    } 
+	    
+	    
+	    function popup(){
+	    	var pos = $("#menudrop").position();
+	    	var wid = $("#menudrop").width();
+	    	$("#popup").css({
+	            position: "absolute",
+	            top: (pos.top + 15) + "px",
+	            left: pos.left + "px",
+	            width: wid + "px"
+	        }).show();
+	    	document.getElementById("popup").style.display = "";
+	    }
+	    function popoff(){
+	    	document.getElementById("popup").style.display = "none";
+	    }
     
     </script>
   </head>
 	
 	  <body>
+	  <div class="topbar"></div>
 	  <div class="background">
 	  
 	  	
@@ -85,17 +103,22 @@
   <%
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
+    Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
     if (user != null) {
       	pageContext.setAttribute("user", user);
 	%>
-		<div>
-		<div class="top" style="float:left"><a href="/index.jsp">INDEX</a></div><div class="top"></div>
-		<div class="top" style="float:right"><a href="profile.jsp">${fn:escapeXml(user.nickname)}</a> <a href="/logout">SIGN OUT</a></div>
+		<div class="top" style="float:left"><a href="/index.jsp">INDEX</a></div>
+		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></a></div>
+		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
+		<ul>
+			<li><a href="profile.jsp" >PROFILE</a></li>
+			<li><a href="/logout" onmouseover="popup();">LOGOUT</a></li>
+		</ul>
 		</div>
 	<%
 	    } else {
 	%>
-		<c:redirect url="/index.jsp" />
+		<jsp:forward page="/index.jsp" />
 	<%
 	    }
     %>
@@ -103,7 +126,7 @@
     <%
     
        
-    Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
+    
     
     if(participant == null){
     	
@@ -145,22 +168,30 @@
 				</tr>
 				<tr>
 					<table class="activitylist">
-						<tr>
-							<th>Activity</th><th>Type</th><th>Location</th>
-						</tr>
 						<%
 						for (Entity activity : allActivity) {
 							String activityName = Activity.getName(activity);
 							String activityID = Activity.getStringID(activity);
 							String activityType = Activity.getType(activity);
 							String activityLocation = Activity.getLocation(activity);
+							String description = Activity.getDescription(activity);
 						%>
 						
-						<tr>
-							<td><a href="activity.jsp?activityID=<%=activityID%>"><%=activityName%></a></td>
-							<td><%=activityType%></td>
-							<td><%=activityLocation%></td>
-						</tr>
+						<tr class= "activitylistrow">
+						<td class="iconcell"><img src="/stylesheets/runner.jpg" alt="running" height="123" width="124" /></td>
+						<td>
+							<table>
+							<tr>
+								<td class="activityname"><a href="activity.jsp?activityID=<%=activityID%>"><%=activityName%></a></td>
+							</tr>
+							<tr>
+								<td><hr/><%=description%></td>
+							</tr>
+							<tr>
+								<td>Located: <%=activityLocation%></td>
+							</tr>
+							</table>
+						</td>
 						
 						<%
     	
@@ -174,9 +205,6 @@
 			
 			
 			
-
-			<div id="map-canvas" class="map-canvas"></div>
-
 	<%
     
     

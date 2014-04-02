@@ -89,7 +89,7 @@
 	<%
 	    } else {
 	%>
-		<p>Hello! <a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a></p>
+		<jsp:forward page="/index.jsp" />
 	<%
 	    }
     
@@ -167,6 +167,7 @@
 			<th>Activity Type </th>
 			<th>Record </th>
 			<th>Date</th>
+			<td>AwardLevel</td>
 			
 		</tr>
 		
@@ -179,6 +180,7 @@
 				String activityType = Activity.getType(activity);
 				String recordTime = Record.getValue(record);
 				String recordDate = Record.getDate(record);
+						String awardLevel = Record.getAward(record);
 				
 			%>
 			<tr> 
@@ -187,6 +189,7 @@
 				<td><%=activityType %> </td>
 				<td><%=recordTime %> </td>
 				<td><%=recordDate %> </td>
+				<td><%=awardLevel %></td>
 			</tr>
 			<%
 				
