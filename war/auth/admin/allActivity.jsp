@@ -10,7 +10,7 @@
 <%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
 <%@ page import="com.google.appengine.api.datastore.Key" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
-
+<%@page import="localolympics.db.Participant"%>
 <%@page import="localolympics.db.Activity"%>
 
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -31,15 +31,76 @@
 <head> 
 <title>Add Activity</title>
 
-   <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+   <link type="text/css" rel="stylesheet" href="/stylesheets/admin.css" />
+   
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <script>
+	    function popup(){
+	    	var pos = $("#menudrop").position();
+	    	var wid = $("#menudrop").width();
+	    	$("#popup").css({
+	            position: "absolute",
+	            top: (pos.top + 15) + "px",
+	            left: pos.left + "px",
+	            width: wid + "px"
+	        }).show();
+	    	document.getElementById("popup").style.display = "";
+	    }
+	    function popoff(){
+	    	document.getElementById("popup").style.display = "none";
+	    }
+    </script>
    
    </head>
-<body background="/stylesheets/medals.png">
-<div class="background" align="center">
+<body>
+	  <div class="topbar"></div>
+	  <div class="backgroundwrapper">
+	  <div class="background">
 
-<a href="admin.jsp">return to admin main</a>
-<a href="/index.jsp">home</a>
+  
+  <%
+    UserService userService = UserServiceFactory.getUserService();
+    User user = userService.getCurrentUser();
+    
+    if (user == null) {
+    	
+    	%>
+			<jsp:forward page="/index.jsp" />
+		<%
+		
+    } else {
+    	
+    	Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
+      	pageContext.setAttribute("user", user);
+      	        
+        if(participant == null){
+        	
+        	%>
+        	
+        	<jsp:forward page="editProfile.jsp" />
+        	
+        	<%
+        	
+        }else{
+        	
+	%>
+		<div class="top" style="float:left">
+			<a href="/index.jsp">INDEX</a> | 
+			<a href="/auth/user/home.jsp">HOME</a> | 
+			<a href="/auth/admin/admin.jsp">ADMIN</a>
+		</div>
+		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
+		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
+		<ul>
+			<li><a href="profile.jsp" >PROFILE</a></li>
+			<li><a href="/logout" >LOGOUT</a></li>
+		</ul>
+		</div>
 
+    	<br />
+    	<br />
+    	
 <% List<Entity>allActivity = Activity.getFirstActivity(100); 
 
 if(allActivity != null)
@@ -78,7 +139,7 @@ else
 }
 %>
 	<hr />
-	<h1> Hello Admin Create Activity</h1>
+	<h1>Create Activity</h1>
 	<form action = "addActivity" method = "post">
 	<table border="1">
 	 <tr>
@@ -107,5 +168,11 @@ else
 	<input type="submit" value="Add Activity" />
 	</form>
 	</div>
+	</div>
+	<%
+        }
+    }
+	
+	%>
 </body>
 </html>

@@ -31,7 +31,7 @@
 <html>
 
   <head>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/main1.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/user.css" />
     
     <title>Local Olympics - Home</title>
     
@@ -93,57 +93,49 @@
 	  <div class="topbar"></div>
 	  <div class="backgroundwrapper">
 	  <div class="background">
-	  
-	  	
-	  
-	   
-  	
-
 
   
   <%
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
-    Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
-    if (user != null) {
+    
+    if (user == null) {
+    	
+    	%>
+			<jsp:forward page="/index.jsp" />
+		<%
+		
+    } else {
+    	
+    	Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
       	pageContext.setAttribute("user", user);
+      	        
+        if(participant == null){
+        	
+        	%>
+        	
+        	<jsp:forward page="editProfile.jsp" />
+        	
+        	<%
+        	
+        }else{
+        	
 	%>
-		<div class="top" style="float:left"><a href="/index.jsp">INDEX</a></div>
-		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></a></div>
+		<div class="top" style="float:left">
+			<a href="/index.jsp">INDEX</a> | 
+			<a href="/auth/user/home.jsp">HOME</a>
+		</div>
+		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
 		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
 		<ul>
 			<li><a href="profile.jsp" >PROFILE</a></li>
-			<li><a href="/logout" onmouseover="popup();">LOGOUT</a></li>
+			<li><a href="/logout">LOGOUT</a></li>
 		</ul>
 		</div>
-	<%
-	    } else {
-	%>
-		<jsp:forward page="/index.jsp" />
-	<%
-	    }
-    %>
-    
-    <%
-    
-       
-    
-    
-    if(participant == null){
-    	
-    	%>
-    	
-    	<jsp:forward page="editProfile.jsp" />
-    	
-    	<%
-    	
-    	
-    }else{
-    	
-    	
-    	%>
+
     	<br />
     	<br />
+    	
     	<div class="main">
 		<h2>Welcome <%=Participant.getFirstName(participant) %>.</h2>
 			
@@ -168,6 +160,7 @@
 					<td></td>
 				</tr>
 				<tr>
+				<td>
 					<table class="activitylist">
 						<%
 						for (Entity activity : allActivity) {
@@ -200,6 +193,7 @@
 						}
 						%>
 					</table>
+					</td>
 				</tr>
 			</table>
 			</div>
@@ -209,6 +203,7 @@
 	<%
     
     
+    }
     }
     }
     

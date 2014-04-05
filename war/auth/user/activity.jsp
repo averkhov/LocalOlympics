@@ -34,11 +34,12 @@
 <html>
 	
   <head>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/user.css" />
     
     <title>Local Olympics - Activity</title>
     
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     
     <script>
 
@@ -68,53 +69,71 @@
 
 	      }
 
-	    window.onload = function () {
-	        
-	    } 
+	    function popup(){
+	    	var pos = $("#menudrop").position();
+	    	var wid = $("#menudrop").width();
+	    	$("#popup").css({
+	            position: "absolute",
+	            top: (pos.top + 15) + "px",
+	            left: pos.left + "px",
+	            width: wid + "px"
+	        }).show();
+	    	document.getElementById("popup").style.display = "";
+	    }
+	    function popoff(){
+	    	document.getElementById("popup").style.display = "none";
+	    }
     
     </script>
   </head>
 	  <body background="/stylesheets/medals.png">
-	  <div class="background" align="center">
-
-  	<a href="home.jsp">home</a>
-
+	  <div class="topbar"></div>
+	  <div class="backgroundwrapper">
+	  <div class="background">
 
   
   <%
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
-    if (user != null) {
+    
+    if (user == null) {
+    	
+    	%>
+			<jsp:forward page="/index.jsp" />
+		<%
+		
+    } else {
+    	
+    	Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
       	pageContext.setAttribute("user", user);
+      	        
+        if(participant == null){
+        	
+        	%>
+        	
+        	<jsp:forward page="editProfile.jsp" />
+        	
+        	<%
+        	
+        }else{
+        	
 	%>
-		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="/logout">sign out</a>.)</p>
-	<%
-	    } else {
-	%>
-		<p>Hello! <a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a></p>
-	<%
-	    }
-    
-       
-    Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
-    
-    if(participant == null){
-    	
-    	%>
-    	
-    	<jsp:forward page="editProfile.jsp" />
-    	
-    	<%
-    	
-    	
-    }else{
-    	
-    	
-    	%>
-		<h2>Welcome <%=Participant.getFirstName(participant) %>.</h2>
-			<p><a href="profile.jsp">View your profile</a></p>
+		<div class="top" style="float:left">
+			<a href="/index.jsp">INDEX</a> | 
+			<a href="/auth/user/home.jsp">HOME</a>
 			
-			<br/>
+		</div>
+		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
+		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
+		<ul>
+			<li><a href="profile.jsp" >PROFILE</a></li>
+			<li><a href="/logout" onmouseover="popup();">LOGOUT</a></li>
+		</ul>
+		</div>
+
+    	<br />
+    	<br />
+    	
 			<%
 				Entity activity = Activity.getActivity(request.getParameter("activityID"));
 			
@@ -134,16 +153,18 @@
 				  <td> </td>
 				</tr>
 				<tr>
+				<td>
 					<%
 					List<Entity> allRecords = Record.getActivityRecords(Activity.getStringID(activity), 100);
 					if (allRecords.isEmpty()) {
 					%>
-						<td><h1>No records entered</h1></td>
+						<h1>No records entered</h1></td>
 						</tr>
 						</table>
 					<%
 					}else{	
 					%>
+					
 					<table>
 						<tr>
 							<th>participant</th><th>record</th><th>date</th>
@@ -167,6 +188,7 @@
 						}
 						%>
 					</table>
+					</td>
 				</tr>
 			</table>
 
@@ -181,6 +203,7 @@
 				<table>
 				<tr>
 				<td>Enter a new record for this activity.</td>
+				</tr>
 				<tr>
 	    			<td><input type="hidden" name="participantID" value="<%=Participant.getStringID(participant) %>" />
 					<input type="hidden" name="activityID" value="<%=Activity.getStringID(activity)%>" />
@@ -217,6 +240,7 @@
 					
 					</select>
 				</tr>
+				<tr>
 				<td><input type="submit" value="Add Record" /></td>
 				</tr>
 				</table>
@@ -225,9 +249,11 @@
 				
 				<% 
     }
+    }
     
     
 	%>
+  </div>
   </div>
   </body>
   

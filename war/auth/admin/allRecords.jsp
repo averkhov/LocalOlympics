@@ -11,6 +11,7 @@
 <%@ page import="com.google.appengine.api.datastore.Key" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <%@ page import="localolympics.db.Record" %>
+<%@ page import="localolympics.db.Participant" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
@@ -30,7 +31,7 @@
 <html>
 
   <head>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/admin.css" />
     
     <title>Local Olympics - All Records</title>
     
@@ -63,33 +64,74 @@
     	document.forms["finalSubmit"].submit();
     }
     
+    function popup(){
+    	var pos = $("#menudrop").position();
+    	var wid = $("#menudrop").width();
+    	$("#popup").css({
+            position: "absolute",
+            top: (pos.top + 15) + "px",
+            left: pos.left + "px",
+            width: wid + "px"
+        }).show();
+    	document.getElementById("popup").style.display = "";
+    }
+    function popoff(){
+    	document.getElementById("popup").style.display = "none";
+    }
+    
     </script>
     
   </head>
   
   	
 
-  <body background="/stylesheets/medals.png">
-  <div class="background" align="center">
+  <body>
+  <div class="topbar"></div>
+	  <div class="backgroundwrapper">
+	  <div class="background">
 
-  
-  	<a href="admin.jsp">return to admin main</a>
-  	<a href="/index.jsp">home</a>
   
   <%
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
-    if (user != null) {
+    
+    if (user == null) {
+    	
+    	%>
+			<jsp:forward page="/index.jsp" />
+		<%
+		
+    } else {
+    	
+    	Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
       	pageContext.setAttribute("user", user);
+      	        
+        if(participant == null){
+        	
+        	%>
+        	
+        	<jsp:forward page="editProfile.jsp" />
+        	
+        	<%
+        	
+        }else{
+        	
 	%>
-		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="/logout">sign out</a>.)</p>
-	<%
-	    } else {
-	%>
-		<p>Hello! <a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a></p>
-	<%
-	    }
-	%>
+		<div class="top" style="float:left">
+			<a href="/index.jsp">INDEX</a> | 
+			<a href="/auth/user/home.jsp">HOME</a> | 
+			<a href="/auth/admin/admin.jsp">ADMIN</a>
+		</div>
+		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
+		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
+		<ul>
+			<li><a href="profile.jsp" >PROFILE</a></li>
+			<li><a href="/logout" >LOGOUT</a></li>
+		</ul>
+		</div>
+
+    	<br />
+    	<br />
   
   
 	<%
@@ -180,6 +222,12 @@
     </div>
 
 </div>
+</div>
+<%
+        }
+    }
+
+%>
   </body>
 
 </html>

@@ -31,36 +31,70 @@
 <html>
   
   <head>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/user.css" />
     
     <title>Local Olympics</title>
     
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <script>
+    
+	    function popup(){
+	    	var pos = $("#menudrop").position();
+	    	var wid = $("#menudrop").width();
+	    	$("#popup").css({
+	            position: "absolute",
+	            top: (pos.top + 15) + "px",
+	            left: pos.left + "px",
+	            width: wid + "px"
+	        }).show();
+	    	document.getElementById("popup").style.display = "";
+	    }
+	    function popoff(){
+	    	document.getElementById("popup").style.display = "none";
+	    }
+    </script>
+    
   </head>
 
-  	<a href="home.jsp">home</a>
-
 <body background="/stylesheets/medals.png">
-<div class="background" align="center">
-	 
+	<div class="topbar"></div>
+	<div class="backgroundwrapper">
+	<div class="background">
   
   <%
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
-    if (user != null) {
-      	pageContext.setAttribute("user", user);
-	%>
-		<p>Hello, ${fn:escapeXml(user.nickname)}! (You can <a href="/logout">sign out</a>.)</p>
-	<%
-	    } else {
-	%>
-		<p>Hello! <a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a></p>
-	<%
-	    }
-       
-    Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
     
-    if(participant == null){
+    if (user == null) {
+    	
     	%>
+			<jsp:forward page="/index.jsp" />
+		<%
+		
+    } else {
+    	
+    	Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
+      	pageContext.setAttribute("user", user);
+      	        
+        if(participant == null){
+        	
+        	%>
+        	
+        	<div class="top" style="float:left">
+				<a href="/index.jsp">INDEX</a> | 
+				<a href="/auth/user/home.jsp">HOME</a>
+			</div>
+			<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=user.getNickname()%></a></div>
+			<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
+			<ul>
+				<li><a href="profile.jsp" >PROFILE</a></li>
+				<li><a href="/logout" onmouseover="popup();">LOGOUT</a></li>
+			</ul>
+		</div>
+
+    	<br />
+    	<br />
     	
     	<h2>Welcome <%=user.getNickname() %>! Please create your profile below.</h2>
 		<form action="addParticipant" method="post">
@@ -106,12 +140,27 @@
 			<input type="hidden" name="ParticipantLoginID" value="<%=user.getNickname()%>" />
 			<input type="submit" value="Update" />
 		</form>
+        	
+        	<%
+        	
+        }else{
+        	
+	%>
+		<div class="top" style="float:left">
+			<a href="/index.jsp">INDEX</a> | 
+			<a href="/auth/user/home.jsp">HOME</a>
+		</div>
+		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
+		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
+		<ul>
+			<li><a href="profile.jsp" >PROFILE</a></li>
+			<li><a href="/logout" onmouseover="popup();">LOGOUT</a></li>
+		</ul>
+		</div>
+
+    	<br />
+    	<br />
     	
-    	<%
-    }else{
-    	
-    	
-    	%>
 		<h2>Welcome <%=Participant.getFirstName(participant) %>! Edit your profile below!</h2>
 		<form action="updateParticipant" method="post">
 			<table>
@@ -242,11 +291,12 @@
     	
     	
     
-    
+        }
     }
     
 	%>
   
+	</div>
 	</div>
   </body>
  
