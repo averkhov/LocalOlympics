@@ -184,8 +184,8 @@
 	
 	List<Entity> allRecord = Record.getParticipantRecords(Participant.getStringID(participant), 100);
 	int num = Record.getParticipantRecordsNumber(Participant.getStringID(participant), 100);
-	
-	if(allRecord!=null && num != 0)
+	boolean won = false;
+	if(allRecord!=null && num !=0)
 	{
 		%>
 		<h3> Records for the activities that you have participated so far</h3>
@@ -195,7 +195,6 @@
 			<th>Activity Type </th>
 			<th>Record </th>
 			<th>Date</th>
-			<th>AwardLevel</th>
 			
 		</tr>
 		
@@ -208,8 +207,11 @@
 				String activityType = Activity.getType(activity);
 				String recordTime = Record.getValue(record);
 				String recordDate = Record.getDate(record);
-						String awardLevel = Record.getAward(record);
-				
+				String award = Record.getAward(record);
+				if(award!=null)
+				{
+					won = true;
+				}
 			%>
 			<tr> 
 			
@@ -217,7 +219,6 @@
 				<td><%=activityType %> </td>
 				<td><%=recordTime %> </td>
 				<td><%=recordDate %> </td>
-				<td><%=awardLevel %></td>
 			</tr>
 			<%
 				
@@ -232,6 +233,48 @@
 		
 		</table>	
 		<%
+		//this is where a table is displayed when a user win an award 
+		
+		if(won == true)
+		{
+		%>
+		<table>
+		<tr> 
+			<th>Activity Name </th>
+			<th>Activity Type </th>
+			<th>Record </th>
+			<th>Date</th>
+		</tr>
+		<% 
+			for(Entity record: allRecord) 
+			{
+				String award = Record.getAward(record);
+				if(award!=null)
+				{
+					String activityID = Record.getActivityID(record);
+					Entity activity = Activity.getActivity(activityID);
+					String activityName = Activity.getName(activity);
+					String activityType = Activity.getType(activity);
+					String recordTime = Record.getValue(record);
+					String recordDate = Record.getDate(record);
+					
+					%>
+					<tr> 
+			
+				<td><%=activityName %> </td>
+				<td><%=activityType %> </td>
+				<td><%=recordTime %> </td>
+				<td><%=recordDate %> </td>
+			</tr>
+					
+					<% 
+				}
+			}
+		
+		%>
+		</table>
+		<% 
+		}
 	}
 	else
 	{
@@ -239,8 +282,9 @@
 		<h3> You have not yet participated in any activities</h3>
 		<%
 	}
-    }
+	}
 	%>
+
 
 </div>
 </div>

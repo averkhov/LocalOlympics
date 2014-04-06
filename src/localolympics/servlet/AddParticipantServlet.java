@@ -11,13 +11,16 @@
 package localolympics.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.List;
 import java.util.Properties;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -25,6 +28,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -50,6 +54,20 @@ public class AddParticipantServlet extends HttpServlet {
     	
     	UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
+        
+        
+        String alias = req.getParameter("participantAlias");
+        List<String> aliasList = Participant.getAliasList();
+        for(int i=0; i<aliasList.size(); i++){
+        	if(aliasList!=null && aliasList.size()>0){
+        		System.out.println("AliasList value: " + aliasList.get(i));
+        		System.out.println("Alias: " + alias);
+        	if(alias.equals((String) aliasList.get(i))){
+
+                resp.sendRedirect("editProfile.jsp");
+        	}
+        	}
+        }
     	
     	if(sendValidationEmail(user.getEmail(), user.getUserId()) == true){
     		
@@ -61,7 +79,7 @@ public class AddParticipantServlet extends HttpServlet {
 	        String activity = req.getParameter("activity");
 	        String aboutme = req.getParameter("aboutme");
 	        String address = req.getParameter("address");
-	        Participant.createParticipant(participantID, participantFirstName, participantLastName, gender, birthday, activity, aboutme, address, "false");
+	        Participant.createParticipant(participantID, participantFirstName, participantLastName, alias, gender, birthday, activity, aboutme, address, "false");
 	        
 	        resp.sendRedirect("profile.jsp"); 
     	}else{

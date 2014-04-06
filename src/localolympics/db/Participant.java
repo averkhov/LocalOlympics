@@ -11,6 +11,7 @@
 package localolympics.db;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +22,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Transaction;
 import com.google.appengine.api.datastore.Query.Filter;
@@ -37,6 +39,7 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
  * FEATURES: <br>
  * - "firstName" a {@link String} with the firstname record for the participant<br>
  * - "lastName" a {@link String} with the lastname record for the participant<br>
+ * - "alias" a {@link String} with the alias record for the participant<br>
  * - "gender" a {@link String} with the gender record for the participant<br>
  * - "birthday" a {@link String} with the birthday record for the participant<br>
  * - "aboutMe" a {@link String} with the aboutme record for the participant<br>
@@ -119,6 +122,26 @@ public class Participant {
 	        Object lastName = participant.getProperty(LASTNAME_PROPERTY);
 	        if (lastName == null) lastName = "";
 	        return (String)lastName;
+    }
+    
+    //
+    // ALIAS
+    //
+    
+    /**
+     * The property name for the <b>name</b> of the user profile.
+     */
+    private static final String ALIAS_PROPERTY = "Alias";
+    
+    /**
+     * Return the alias of the user. 
+     * @param user The GAE Entity storing the user.
+     * @return the alias of the user. 
+     */
+    public static String getAlias(Entity participant) {
+	        Object alias = participant.getProperty(ALIAS_PROPERTY);
+	        if (alias == null) alias = "";
+	        return (String)alias;
     }
     
     
@@ -264,7 +287,7 @@ public class Participant {
     }
     
     
-    public static Entity createParticipant(String loginID, String firstName, String lastName, 
+    public static Entity createParticipant(String loginID, String firstName, String lastName, String alias,
     		String gender, String birthday, String activity, String aboutme, String address, String validated) {
         Entity participant = null;
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -280,6 +303,7 @@ public class Participant {
                 participant.setProperty(LOGIN_ID_PROPERTY, loginID);
                 participant.setProperty(FIRSTNAME_PROPERTY, firstName);
                 participant.setProperty(LASTNAME_PROPERTY, lastName);
+                participant.setProperty(ALIAS_PROPERTY, alias);
                 participant.setProperty(GENDER_PROPERTY, gender);
                 participant.setProperty(BIRTHDAY_PROPERTY, birthday);
                 participant.setProperty(ACTIVITY_PROPERTY, activity);
@@ -363,6 +387,27 @@ public class Participant {
             return participant;
     }
     
+    /**
+     * Get an list of alias based on a string containing its loginID.
+     * @return A GAE {@link Entity} for the user or <code>null</code> if none or error.
+     */
+    public static List getAliasList() {
+            DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+            List<String> aliasList = new ArrayList<>();
+            try {
+                    Query query = new Query(ENTITY_KIND);
+                    PreparedQuery result = datastore.prepare(query);
+                    for (Entity part : result.asIterable()) {
+                    	aliasList.add((String) part.getProperty(ALIAS_PROPERTY));
+                    }
+                    
+            } catch (Exception e) {
+                    // TODO log the error
+            }
+            return aliasList;
+    }
+    
+    
     //
     // UPDATE USER
     //
@@ -410,13 +455,14 @@ public class Participant {
     private static final String ACTIVITY_PROPERTY = "activity";
     private static final String ABOUTME_PROPERTY = "aboutme";*/
     
-    public static boolean updateParticipantCommand(String participantID, String firstName, String lastName, 
+    public static boolean updateParticipantCommand(String participantID, String firstName, String lastName, String alias,
     		String gender, String birthday, String activity, String aboutme, String address, String participantLoginID, String isAdmin) {
             Entity participant = null;
             try {
             		participant = getParticipant(participantID);
             		participant.setProperty(FIRSTNAME_PROPERTY, firstName);
             		participant.setProperty(LASTNAME_PROPERTY, lastName);
+            		participant.setProperty(ALIAS_PROPERTY, alias);
             		participant.setProperty(GENDER_PROPERTY, gender);
             		participant.setProperty(BIRTHDAY_PROPERTY, birthday);
             		participant.setProperty(ACTIVITY_PROPERTY, activity);

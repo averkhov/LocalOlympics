@@ -135,7 +135,7 @@
     	<br />
     	
 			<%
-				Entity activity = Activity.getActivity(request.getParameter("activityID"));
+			Entity activity = Activity.getActivity(request.getParameter("activityID"));
 			
 			%>
 			
@@ -153,23 +153,63 @@
 				  <td> </td>
 				</tr>
 				<tr>
-				<td>
 					<%
 					List<Entity> allRecords = Record.getActivityRecords(Activity.getStringID(activity), 100);
 					if (allRecords.isEmpty()) {
 					%>
-						<h1>No records entered</h1></td>
+						<td><h1>No records entered</h1></td>
 						</tr>
 						</table>
 					<%
 					}else{	
+						
+						//Displays the best record of the activity
+						
 					%>
-					
+					<h3> Best Record </h3>
+					<table>
+						<tr>
+							<th> participant </th> <th>record</th> <th> date </th> 
+							<th>Award </th>
+						</tr>
+					<%
+						int count = 0;
+						String activityID = Activity.getStringID(activity);
+						String name = " ";
+						for(Entity record: allRecords)
+						{
+							String value = Record.getValue(record);
+							String valueID = Record.getStringID(record);
+							String username = Participant.getLoginID(Participant.getParticipant(Record.getParticipantID(record)));
+							String date = Record.getDate(record);
+							String award = Record.getAward(record);
+							if(award!=null)
+							{
+								
+								%>
+								<tr>
+								<td><%= username %> </td>
+								<td><%= value %> </td>
+								<td><%= date %> </td>
+								<td><%= award %> </td>
+								</tr>
+								<% 
+							}
+							%>
+							
+							
+							<%
+							
+						}
+					%>
+					</table>
+					<h3> Best of the Rest</h3>
 					<table>
 						<tr>
 							<th>participant</th><th>record</th><th>date</th>
 						</tr>
 					<%
+						
 						for (Entity record : allRecords) {
 							String value = Record.getValue(record);
 							String username = Participant.getLoginID(Participant.getParticipant(Record.getParticipantID(record)));
@@ -188,7 +228,6 @@
 						}
 						%>
 					</table>
-					</td>
 				</tr>
 			</table>
 
@@ -203,14 +242,15 @@
 				<table>
 				<tr>
 				<td>Enter a new record for this activity.</td>
-				</tr>
 				<tr>
 	    			<td><input type="hidden" name="participantID" value="<%=Participant.getStringID(participant) %>" />
 					<input type="hidden" name="activityID" value="<%=Activity.getStringID(activity)%>" />
 					
 					Hour: <select name = "hour">
 					
-						<% for(int i = 0; i<25 ; i++)
+						<%
+						
+						for(int i = 0; i<25 ; i++)
 						{
 							%>
 							<option value = "<%=i %>"><%=i %></option>
@@ -240,7 +280,6 @@
 					
 					</select>
 				</tr>
-				<tr>
 				<td><input type="submit" value="Add Record" /></td>
 				</tr>
 				</table>
@@ -253,6 +292,7 @@
     
     
 	%>
+
   </div>
   </div>
   </body>
