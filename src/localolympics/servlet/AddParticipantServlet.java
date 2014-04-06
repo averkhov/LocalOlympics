@@ -54,32 +54,21 @@ public class AddParticipantServlet extends HttpServlet {
     	
     	UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
-        
-        
-        String alias = req.getParameter("participantAlias");
-        List<String> aliasList = Participant.getAliasList();
-        for(int i=0; i<aliasList.size(); i++){
-        	if(aliasList!=null && aliasList.size()>0){
-        		System.out.println("AliasList value: " + aliasList.get(i));
-        		System.out.println("Alias: " + alias);
-        	if(alias.equals((String) aliasList.get(i))){
 
-                resp.sendRedirect("editProfile.jsp");
-        	}
-        	}
-        }
-    	
-    	if(sendValidationEmail(user.getEmail(), user.getUserId()) == true){
+    	if(sendValidationEmail(req.getParameter("email"), user.getUserId()) == true){
     		
 	        String participantID = req.getParameter("ParticipantLoginID");
 	        String participantFirstName = req.getParameter("participantFirstName");
 	        String participantLastName = req.getParameter("participantLastName");
+	        String participantAlias = req.getParameter("participantAlias");
 	        String gender = req.getParameter("gender");
 	        String birthday = req.getParameter("birthday");
 	        String activity = req.getParameter("activity");
 	        String aboutme = req.getParameter("aboutme");
 	        String address = req.getParameter("address");
-	        Participant.createParticipant(participantID, participantFirstName, participantLastName, alias, gender, birthday, activity, aboutme, address, "false");
+	        String email = req.getParameter("email");
+	        Participant.createParticipant(participantID, participantFirstName, participantLastName, participantAlias, gender, 
+	        		birthday, activity, aboutme, address, "false", email);
 	        
 	        resp.sendRedirect("profile.jsp"); 
     	}else{
@@ -92,7 +81,6 @@ public class AddParticipantServlet extends HttpServlet {
     	Properties props = new Properties();
     	Session session = Session.getDefaultInstance(props, null);
     	
-    	System.out.println(email);
 
     	String msgBody = "<html><body><p>Please validate your email. Click <a href=\"localolympics.appspot.com/validateEmail?id=" + id + "\">here.</a></p></body></html>";
 
@@ -102,7 +90,7 @@ public class AddParticipantServlet extends HttpServlet {
     	    msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
     	    msg.setSubject("Validate your email account for LocalOlympics");
     	    msg.setText(msgBody);
-    	    Transport.send(msg);
+    	    //Transport.send(msg);
 
     	} catch (AddressException e) {
     	    return false;

@@ -54,6 +54,37 @@
 	    function popoff(){
 	    	document.getElementById("popup").style.display = "none";
 	    }
+	    
+	    function updateProfile() {
+	    	var alias = $("#updateAlias").val();
+    		$.post("/validateAlias", 
+    				{alias: alias}, 
+    				function (data,status) {
+    					//alert("Data "+data+" status "+status);
+    					if (status!="success") {
+    						alert("Alias already in use. Please choose a new alias.");
+    					} else {
+    						document.forms["updateForm"].submit();
+    					}
+    				}		
+    		);
+	    }
+	    
+	    function createProfile() {
+	    	var alias = $("#createAlias").val();
+    		$.post("/validateAlias", 
+    				{alias: alias}, 
+    				function (data,status) {
+    					//alert("Data "+data+" status "+status);
+    					if (status!="success") {
+    						alert("Alias already in use. Please choose a new alias.");
+    					} else {
+    						document.forms["createForm"].submit();
+    					}
+    				}		
+    		);
+	    }
+	    
     </script>
     
   </head>
@@ -75,10 +106,19 @@
 		
     } else {
     	
-    	Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
+    	//Temporary Fix User Id issue for all users that log in with incorrect user id feilds
+    	
+    	if(Participant.getParticipantWithLoginID(user.getNickname()) != null){
+    		Participant.setEmail(Participant.getParticipantWithLoginID(user.getNickname()), user.getNickname());
+    		Participant.setUserId(Participant.getParticipantWithLoginID(user.getNickname()), user.getUserId());
+    	}
+    	
+    	Entity participant = Participant.getParticipantWithLoginID(user.getUserId());
       	pageContext.setAttribute("user", user);
       	        
         if(participant == null){
+        	
+        	
         	
         	%>
         	
@@ -98,7 +138,7 @@
     	<br />
     	
     	<h2>Welcome <%=user.getNickname() %>! Please create your profile below.</h2>
-		<form action="addParticipant" method="post">
+		<form id="createForm" action="addParticipant" method="post">
 			<table>
 				<tr>
 					<td>First Name: </td><td><input type="text" name="participantFirstName" size="30" required /></td>
@@ -108,7 +148,7 @@
 				</tr>
 				
 				<tr>
-					<td>Alias: </td><td><input type="text" name="participantAlias" size="30" required /></td>
+					<td>Alias: </td><td><input id="createAlias" type="text" name="participantAlias" size="30" required /></td>
 				</tr>
 				
 
@@ -141,9 +181,13 @@
 					<td>Zip Code: </td>
 					<td><input type = "text" name = "address" required /> </td>
 				</tr>
+				<tr> 
+					<td>Email Address: </td>
+					<td><input type = "text" name = "email" required /> </td>
+				</tr>
 			</table>
-			<input type="hidden" name="ParticipantLoginID" value="<%=user.getNickname()%>" />
-			<input type="submit" value="Update" />
+			<input type="hidden" name="ParticipantLoginID" value="<%=user.getUserId()%>" />
+			<button type="button" onclick="createProfile()" >Create</button>
 		</form>
         	
         	<%
@@ -171,7 +215,8 @@
     	%>
     	
 		<h2>Welcome <%=Participant.getFirstName(participant) %>! Edit your profile below!</h2>
-		<form  action="updateParticipant" method="post">
+		<h3>Your Account is missing an alias please create an alias to proceed.</h3>
+		<form  id="updateForm" action="updateParticipant" method="post">
 			<table>
 				<tr>
 					<td>First Name: </td><td><input type="text" name="participantFirstName" size="30" value="<%=Participant.getFirstName(participant) %>" required /></td>
@@ -181,7 +226,7 @@
 				</tr>
 				
 				<tr>
-					<td>Alias: </td><td><input type="text" name="participantAlias" size="30"  required /></td>
+					<td>Alias: </td><td><input id="updateAlias" type="text" name="participantAlias" size="30"  required /></td>
 				</tr>
 				
 				<%
@@ -291,12 +336,16 @@
 				</tr>
 				<tr> 
 					<td>Zip Code: </td>
-					<td><input type = "text" name = "address" value="<%=Participant.getAddress(participant) %>"/> </td>
+					<td><input type = "text" name = "address" value="<%=Participant.getAddress(participant) %>" required /> </td>
+				</tr>
+				<tr> 
+					<td>Email: </td>
+					<td><input type = "text" name = "email" value="<%=Participant.getEmail(participant) %>" required /> </td>
 				</tr>
 			</table>
-			<input type="hidden" name="ParticipantLoginID" value="<%=user.getNickname()%>" />
+			<input type="hidden" name="ParticipantLoginID" value="<%=user.getUserId()%>" />
 			<input type="hidden" name="ParticipantID" value="<%=Participant.getStringID(participant)%>" />
-			<input type="submit" value="update" />
+			<button type="button" onclick="updateProfile()" >Update</button>
 		</form>
 
 
@@ -426,10 +475,14 @@
 				</tr>
 				<tr> 
 					<td>Zip Code: </td>
-					<td><input type = "text" name = "address" value="<%=Participant.getAddress(participant) %>"/> </td>
+					<td><input type = "text" name = "address" value="<%=Participant.getAddress(participant) %>" required /> </td>
+				</tr>
+				<tr> 
+					<td>Email: </td>
+					<td><input type = "text" name = "email" value="<%=Participant.getEmail(participant) %>" required /> </td>
 				</tr>
 			</table>
-			<input type="hidden" name="ParticipantLoginID" value="<%=user.getNickname()%>" />
+			<input type="hidden" name="ParticipantLoginID" value="<%=user.getUserId()%>" />
 			<input type="hidden" name="ParticipantID" value="<%=Participant.getStringID(participant)%>" />
 			<input type="submit" value="update" />
 		</form>

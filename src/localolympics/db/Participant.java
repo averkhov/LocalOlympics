@@ -201,7 +201,7 @@ public class Participant {
     public static String getLoginID(Entity participant) {
             Object val = participant.getProperty(LOGIN_ID_PROPERTY);
             if (val == null) 
-            	val = "test1";
+            	val = "";
             return (String) val;
     }
     
@@ -247,6 +247,7 @@ public class Participant {
     private static final String ABOUTME_PROPERTY = "aboutme";
     private static final String ISADMIN_PROPERTY = "isAdmin";
     private static final String VALIDATED_PROPERTY = "validated";
+    private static final String EMAIL_PROPERTY = "email";
     
     public static String getGender(Entity participant) {
         Object gender = participant.getProperty(GENDER_PROPERTY);
@@ -281,14 +282,78 @@ public class Participant {
         return (String)validatedEmail;
     }
     
+    public static String getEmail(Entity participant) {
+        Object email = participant.getProperty(EMAIL_PROPERTY);
+        if (email == null) email = "false";
+        return (String)email;
+    }
     
+    
+    
+    //
+    // SET VALIDATRED ID
+    //
+
     public static void setValidatedEmail(Entity participant, String value) {
-        participant.setProperty(VALIDATED_PROPERTY, value);
+    	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Transaction txn = datastore.beginTransaction();
+    	try{
+    		participant.setProperty(VALIDATED_PROPERTY, value);
+    		datastore.put(participant);
+
+            txn.commit();
+        } finally {
+            if (txn.isActive()) {
+                txn.rollback();
+            }
+        }
+    }
+    
+    
+    //
+    // SET USERID
+    //
+    
+    public static void setUserId(Entity participant, String value) {
+    	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Transaction txn = datastore.beginTransaction();
+    	try{
+    		participant.setProperty(LOGIN_ID_PROPERTY, value);
+    		datastore.put(participant);
+
+            txn.commit();
+        } finally {
+            if (txn.isActive()) {
+                txn.rollback();
+            }
+        }
+        
+    }
+    
+    
+    //
+    // SET EMAIL
+    //
+    
+    public static void setEmail(Entity participant, String value) {
+    	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Transaction txn = datastore.beginTransaction();
+    	try{
+    		participant.setProperty(EMAIL_PROPERTY, value);
+    		datastore.put(participant);
+
+            txn.commit();
+        } finally {
+            if (txn.isActive()) {
+                txn.rollback();
+            }
+        }
+        
     }
     
     
     public static Entity createParticipant(String loginID, String firstName, String lastName, String alias,
-    		String gender, String birthday, String activity, String aboutme, String address, String validated) {
+    		String gender, String birthday, String activity, String aboutme, String address, String validated, String email) {
         Entity participant = null;
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Transaction txn = datastore.beginTransaction();
@@ -310,6 +375,7 @@ public class Participant {
                 participant.setProperty(ABOUTME_PROPERTY, aboutme);
                 participant.setProperty(ADDRESS_PROPERTY, address);
                 participant.setProperty(VALIDATED_PROPERTY, validated);
+                participant.setProperty(EMAIL_PROPERTY, email);
                 datastore.put(participant);
 
             txn.commit();
@@ -391,20 +457,21 @@ public class Participant {
      * Get an list of alias based on a string containing its loginID.
      * @return A GAE {@link Entity} for the user or <code>null</code> if none or error.
      */
-    public static List getAliasList() {
+    public static Entity getParticipantWithAlias(String alias) {
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-            List<String> aliasList = new ArrayList<>();
+            Entity part = null;
             try {
-                    Query query = new Query(ENTITY_KIND);
-                    PreparedQuery result = datastore.prepare(query);
-                    for (Entity part : result.asIterable()) {
-                    	aliasList.add((String) part.getProperty(ALIAS_PROPERTY));
-                    }
-                    
-            } catch (Exception e) {
-                    // TODO log the error
-            }
-            return aliasList;
+            	Filter hasName = new FilterPredicate(ALIAS_PROPERTY, FilterOperator.EQUAL, alias);
+    			Query query = new Query(ENTITY_KIND);
+    			query.setFilter(hasName);
+    			List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(10));
+    			if (result != null && result.size() > 0) {
+    				part = result.get(0);
+    			}
+    		} catch (Exception e) {
+    			// TODO log the error
+    		}
+    		return part;
     }
     
     
@@ -456,7 +523,8 @@ public class Participant {
     private static final String ABOUTME_PROPERTY = "aboutme";*/
     
     public static boolean updateParticipantCommand(String participantID, String firstName, String lastName, String alias,
-    		String gender, String birthday, String activity, String aboutme, String address, String participantLoginID, String isAdmin) {
+    		String gender, String birthday, String activity, String aboutme, String address, String participantLoginID, String isAdmin, 
+    		String validated, String email) {
             Entity participant = null;
             try {
             		participant = getParticipant(participantID);
@@ -470,6 +538,32 @@ public class Participant {
             		participant.setProperty(LOGIN_ID_PROPERTY, participantLoginID);
             		participant.setProperty(ADDRESS_PROPERTY, address);
             		participant.setProperty(ISADMIN_PROPERTY, isAdmin);
+            		participant.setProperty(VALIDATED_PROPERTY, validated);
+            		participant.setProperty(EMAIL_PROPERTY, email);
+                    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+                    datastore.put(participant);
+            } catch (Exception e) {
+                    return false;
+            }
+            return true;
+    }
+    
+    
+    public static boolean updateParticipantCommand(String participantID, String firstName, String lastName, String alias,
+    		String gender, String birthday, String activity, String aboutme, String address, String participantLoginID,  String email) {
+            Entity participant = null;
+            try {
+            		participant = getParticipant(participantID);
+            		participant.setProperty(FIRSTNAME_PROPERTY, firstName);
+            		participant.setProperty(LASTNAME_PROPERTY, lastName);
+            		participant.setProperty(ALIAS_PROPERTY, alias);
+            		participant.setProperty(GENDER_PROPERTY, gender);
+            		participant.setProperty(BIRTHDAY_PROPERTY, birthday);
+            		participant.setProperty(ACTIVITY_PROPERTY, activity);
+            		participant.setProperty(ABOUTME_PROPERTY, aboutme);
+            		participant.setProperty(LOGIN_ID_PROPERTY, participantLoginID);
+            		participant.setProperty(ADDRESS_PROPERTY, address);
+            		participant.setProperty(EMAIL_PROPERTY, email);
                     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
                     datastore.put(participant);
             } catch (Exception e) {

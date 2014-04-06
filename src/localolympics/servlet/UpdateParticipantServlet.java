@@ -28,18 +28,9 @@ public class UpdateParticipantServlet extends HttpServlet {
 
 
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-			String alias = req.getParameter("participantAlias");
-            List<String> aliasList = Participant.getAliasList();
-            for(int i=0; i<aliasList.size(); i++){
-            	if(alias.equals(aliasList.get(i))){
-            		resp.setContentType("text/html");
-                    PrintWriter out = resp.getWriter();
-                    out.println("<html>alert('Alias already in use please choose a different alias');</html>");
-                    resp.sendRedirect("editProfile.jsp");
-            	}
-            }
+
 	        Participant.updateParticipantCommand(req.getParameter("ParticipantID"), req.getParameter("participantFirstName"),
-                    req.getParameter("participantLastName"), alias, req.getParameter("gender"),
+                    req.getParameter("participantLastName"), req.getParameter("participantAlias"), req.getParameter("gender"),
                     req.getParameter("birthday"), req.getParameter("activity"),
                     req.getParameter("aboutme"), req.getParameter("address"), req.getParameter("ParticipantLoginID"), req.getParameter("isAdmin"));
 
@@ -51,24 +42,37 @@ public class UpdateParticipantServlet extends HttpServlet {
         private static final String ACTIVITY_PROPERTY = "activity";
         private static final String ABOUTME_PROPERTY = "aboutme";*/
         protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        	String alias = req.getParameter("participantAlias");
-            List<String> aliasList = Participant.getAliasList();
-            for(int i=0; i<aliasList.size(); i++){
-            	if(aliasList!=null && aliasList.size()>0){
-            	if(alias.equals(aliasList.get(i))){
-            		resp.setContentType("text/html");
-                    PrintWriter out = resp.getWriter();
-                    out.println("<html>alert('Alias already in use please choose a different alias');</html>");
-                    resp.sendRedirect("editProfile.jsp");
-            	}
-            	}
-            }
-            Participant.updateParticipantCommand(req.getParameter("ParticipantID"), req.getParameter("participantFirstName"),
-                            req.getParameter("participantLastName"),alias, req.getParameter("gender"),
+        	if(req.getRequestURI().equals("/auth/admin/updateParticipant")){
+        		Participant.updateParticipantCommand(req.getParameter("ParticipantID"), req.getParameter("participantFirstName"),
+                        req.getParameter("participantLastName"), req.getParameter("participantAlias"), req.getParameter("gender"),
+                        req.getParameter("birthday"), req.getParameter("activity"),
+                        req.getParameter("aboutme"), req.getParameter("address"), req.getParameter("ParticipantLoginID"), req.getParameter("isAdmin"),
+                        req.getParameter("validated"), req.getParameter("email"));
+        
+        		resp.sendRedirect("allParticipants.jsp");
+        		
+        	}else if(req.getRequestURI().equals("/auth/user/updateParticipant")){
+        		if(Participant.getEmail(Participant.getParticipant(req.getParameter("ParticipantID"))).equals(req.getParameter("email"))){
+        			Participant.updateParticipantCommand(req.getParameter("ParticipantID"), req.getParameter("participantFirstName"),
+                            req.getParameter("participantLastName"), req.getParameter("participantAlias"), req.getParameter("gender"),
                             req.getParameter("birthday"), req.getParameter("activity"),
-                            req.getParameter("aboutme"), req.getParameter("address"), req.getParameter("ParticipantLoginID"), req.getParameter("isAdmin"));
-            Participant.setValidatedEmail(Participant.getParticipant(req.getParameter("ParticipantID")), req.getParameter("validated"));
+                            req.getParameter("aboutme"), req.getParameter("address"), req.getParameter("ParticipantLoginID"),
+                            req.getParameter("email"));
             
-            resp.sendRedirect("profile.jsp");
+            	resp.sendRedirect("profile.jsp");
+        		}else{
+        		
+        		Participant.updateParticipantCommand(req.getParameter("ParticipantID"), req.getParameter("participantFirstName"),
+                        req.getParameter("participantLastName"), req.getParameter("participantAlias"), req.getParameter("gender"),
+                        req.getParameter("birthday"), req.getParameter("activity"),
+                        req.getParameter("aboutme"), req.getParameter("address"), req.getParameter("ParticipantLoginID"), 
+                        Participant.getIsAdmin(Participant.getParticipant(req.getParameter("ParticipantID"))),
+                        "false", req.getParameter("email"));
+        
+        		resp.sendRedirect("profile.jsp");
+        		}
+        	}
+
+            
     }
 }

@@ -199,14 +199,14 @@ function popoff(){
 		
     } else {
     	
-    	Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
+    	Entity participant = Participant.getParticipantWithLoginID(user.getUserId());
       	pageContext.setAttribute("user", user);
       	        
         if(participant == null){
         	
         	%>
         	
-        	<jsp:forward page="editProfile.jsp" />
+        	<jsp:forward page="/auth/user/editProfile.jsp" />
         	
         	<%
         	
@@ -254,6 +254,7 @@ function popoff(){
 		<tr>
 			<th class="ParticipantOperationsList">Operations</th>
 			<th>Participant  Login ID</th>
+			<th>Participant email</th>
 
 		</tr>
 		<%
@@ -269,6 +270,7 @@ function popoff(){
 				String gender = Participant.getGender(Participant1);
 				String isAdmin = Participant.getIsAdmin(Participant1);
 				String validated = Participant.getValidatedEmail(Participant1);
+				String email = Participant.getEmail(Participant1);
 				
 					
 		%>
@@ -368,6 +370,14 @@ function popoff(){
 							      name="validated" /></div></td>
 							</tr>
 							
+							<tr>
+							      <td class="editTable" width=90>Validated Email</td>
+							      <td class="editTable">
+							      <div id="editParticipantEmailInput<%=ParticipantID%>"
+							      class="editParticipantEmailInput"><input type="text" value="<%=email%>"
+							      name="email" /></div></td>
+							</tr>
+							
 						</table>
 						<input id="saveEditParticipantButton<%=ParticipantID%>"
 							type="submit" value="Save" />
@@ -383,6 +393,9 @@ function popoff(){
 					<button type="button"
 						onclick="cancelDeleteParticipant(<%=ParticipantID%>)">Cancel</button>
 				</div></td>
+				<td>
+					<%=email %>
+				</td>
 
 		</tr>
 

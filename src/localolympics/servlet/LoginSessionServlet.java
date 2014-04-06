@@ -45,13 +45,17 @@ public class LoginSessionServlet extends HttpServlet {
 				resp.sendRedirect("/error.html");
 			}else{
 				session.setAttribute("user", user.getUserId());
-				if(Participant.getParticipantWithLoginID(user.getNickname())==null){
-					session.setAttribute("isAdmin", "false");
-				}else if(Participant.getIsAdmin(Participant.getParticipantWithLoginID(user.getNickname())).equals("true")){
-					session.setAttribute("isAdmin", "true");
-				}else{
-					session.setAttribute("isAdmin", "false");
+				session.setAttribute("isAdmin", "false");
+				if(Participant.getParticipantWithLoginID(user.getNickname())!=null ){
+					if(Participant.getIsAdmin(Participant.getParticipantWithLoginID(user.getNickname())).equals("true")){
+						session.setAttribute("isAdmin", "true");
+					}
+				}else if(Participant.getParticipantWithLoginID(user.getUserId())!=null){
+					if (Participant.getIsAdmin(Participant.getParticipantWithLoginID(user.getUserId())).equals("true")){
+						session.setAttribute("isAdmin", "true");
+					}
 				}
+
 				resp.sendRedirect("/index.jsp");
 			}
 

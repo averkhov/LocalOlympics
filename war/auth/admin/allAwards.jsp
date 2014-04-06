@@ -98,14 +98,14 @@
 		
     } else {
     	
-    	Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
+    	Entity participant = Participant.getParticipantWithLoginID(user.getUserId());
       	pageContext.setAttribute("user", user);
       	        
         if(participant == null){
         	
         	%>
         	
-        	<jsp:forward page="editProfile.jsp" />
+        	<jsp:forward page="/auth/user/editProfile.jsp" />
         	
         	<%
         	

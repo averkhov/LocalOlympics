@@ -87,6 +87,7 @@
 	    function popoff(){
 	    	document.getElementById("popup").style.display = "none";
 	    }
+	   
     
     </script>
   </head>
@@ -108,7 +109,7 @@
 		
     } else {
     	
-    	Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
+    	Entity participant = Participant.getParticipantWithLoginID(user.getUserId());
       	pageContext.setAttribute("user", user);
       	        
         if(participant == null){

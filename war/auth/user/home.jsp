@@ -107,7 +107,7 @@
 		
     } else {
     	
-    	Entity participant = Participant.getParticipantWithLoginID(user.getNickname());
+    	Entity participant = Participant.getParticipantWithLoginID(user.getUserId());
       	pageContext.setAttribute("user", user);
       	        
         if(participant == null){
@@ -117,6 +117,14 @@
         	<jsp:forward page="editProfile.jsp" />
         	
         	<%
+        	
+        	if(Participant.getAlias(participant)==""){
+        		%>
+            	
+            	<jsp:forward page="editProfile.jsp" />
+            	
+            	<%
+        	}
         	
         }else{
         	

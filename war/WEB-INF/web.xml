@@ -248,7 +248,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/auth/admin/*</url-pattern>
 	</filter-mapping>
 	
-	
+
 	
 	
 	
@@ -278,6 +278,20 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <servlet-mapping>
         <servlet-name>ValidateEmailServlet</servlet-name>
         <url-pattern>/validateEmail</url-pattern>
+    </servlet-mapping>
+    
+    
+    <!--  VALIDATE ALIAS -->
+	
+
+    
+    <servlet>
+        <servlet-name>ValidateAliasServlet</servlet-name>
+        <servlet-class>localolympics.servlet.ValidateAliasServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ValidateAliasServlet</servlet-name>
+        <url-pattern>/validateAlias</url-pattern>
     </servlet-mapping>
     
     
