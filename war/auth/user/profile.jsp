@@ -109,6 +109,8 @@
 		
     } else {
     	
+    	
+    	
     	Entity participant = Participant.getParticipantWithLoginID(user.getUserId());
       	pageContext.setAttribute("user", user);
       	        
@@ -121,6 +123,16 @@
         	<%
         	
         }else{
+        	
+			//Temporary redirect to have users make an alias
+        	
+        	if(Participant.getAlias(participant)=="" | Participant.getAlias(participant)==null){
+        		%>
+            	
+            	<jsp:forward page="editProfile.jsp" />
+            	
+            	<%
+        	}
         	
 	%>
 		<div class="top" style="float:left">

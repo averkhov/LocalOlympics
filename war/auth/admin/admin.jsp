@@ -82,6 +82,16 @@
         	
         }else{
         	
+			//Temporary redirect to have users make an alias
+        	
+        	if(Participant.getAlias(participant)=="" | Participant.getAlias(participant)==null){
+        		%>
+            	
+            	<jsp:forward page="editProfile.jsp" />
+            	
+            	<%
+        	}
+        	
 	%>
 		<div class="top" style="float:left">
 			<a href="/index.jsp">INDEX</a> | 
