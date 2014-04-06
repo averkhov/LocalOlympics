@@ -17,13 +17,16 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PropertyProjection;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.Transaction;
+import com.google.appengine.api.datastore.TransactionOptions;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Query.FilterOperator;
-
+import com.google.appengine.api.datastore.Query.CompositeFilter;
+import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 
 /**
  * GAE ENTITY UTIL CLASS: "Record" <br>
@@ -270,6 +273,46 @@ public class Record {
 				txn.rollback();
 			}
 		}
+		
+		try {
+		    Thread.sleep(2000);
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+		
+		
+		TransactionOptions options = TransactionOptions.Builder.withXG(true);
+		Transaction awardtxn = datastore.beginTransaction(options);
+		try {
+		
+		List<Entity> list = getParticipantActivityRecords(participantID, activityID, 10);
+		
+		for(int i=0; i<list.size(); i++){
+			if(i==0){
+				list.get(0).setProperty(RECORDAWARD_PROPERTY, "Gold");
+				datastore.put(list.get(0));
+			}
+			if(i==1){
+				list.get(1).setProperty(RECORDAWARD_PROPERTY, "Silver");
+				datastore.put(list.get(1));
+			}
+			if(i==2){
+				list.get(2).setProperty(RECORDAWARD_PROPERTY, "Bronze");
+				datastore.put(list.get(2));
+			}
+			if(i==3){
+				list.get(3).setProperty(RECORDAWARD_PROPERTY, "");
+				datastore.put(list.get(3));
+			}
+
+		}
+			
+
+		awardtxn.commit();
+		} catch (Exception e){
+			System.out.println(e);
+			return null;
+		}
 
 		return record;
 	}
@@ -394,6 +437,30 @@ public class Record {
 	 * @param limit The number of records to be returned.
 	 * @return A list of GAE {@link Entity entities}.
 	 */
+	public static List<Entity> getParticipantActivityRecords(String participantID, String activityID, int limit) {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Filter activityFilter = new FilterPredicate(ACTIVITYID_PROPERTY, FilterOperator.EQUAL, activityID);
+		Filter participantFilter = new FilterPredicate(PARTICIPANTID_PROPERTY, FilterOperator.EQUAL, participantID);
+		Filter combinedFilter = CompositeFilterOperator.and(activityFilter, participantFilter);
+		Query query = new Query(ENTITY_KIND).addSort(LONGTIME_PROPERTY, SortDirection.ASCENDING);
+		query.setFilter(combinedFilter);
+		List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(limit));
+		return result;
+	}
+	
+	
+	public static List<Entity> getTopRecordForParticipants(String activityID, int limit) {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Filter activityFilter = new FilterPredicate(ACTIVITYID_PROPERTY, FilterOperator.EQUAL, activityID);
+		Query query = new Query(ENTITY_KIND).addSort(LONGTIME_PROPERTY, SortDirection.ASCENDING);
+		query.setFilter(activityFilter);
+		query.addProjection(new PropertyProjection(PARTICIPANTID_PROPERTY, String.class));
+		query.setDistinct(true);
+		List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(limit));
+		return result;
+	}
+	
+	
 	public static List<Entity> getActivityRecords(String activityID, int limit) {
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Filter activityFilter = new FilterPredicate("ActivityID", FilterOperator.EQUAL, activityID);
@@ -407,15 +474,6 @@ public class Record {
 		Filter participantFilter = new FilterPredicate("ParticipantID", FilterOperator.EQUAL, participantID);
 		Query query = new Query(ENTITY_KIND).setFilter(participantFilter).addSort(LONGTIME_PROPERTY, SortDirection.ASCENDING);
 		List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(limit));
-		 Iterable<Entity> GOLDRESULT = datastore.prepare(query).asIterable(FetchOptions.Builder.withLimit(1));
-         try{
-               for (Entity gold: GOLDRESULT){
-                  
-                   gold.setProperty(RECORDAWARD_PROPERTY, "GOLD");
-                   datastore.put(gold);
-               }} catch (Exception e){}
-		
-		
 		return result;
 	}
 	

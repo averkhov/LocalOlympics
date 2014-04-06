@@ -83,6 +83,11 @@
 	    function popoff(){
 	    	document.getElementById("popup").style.display = "none";
 	    }
+	    
+	    function submitform(){
+	    	document.getElementById("submitbutton").disabled = true;
+	    	document.forms["addrecord"].submit();
+	    }
     
     </script>
   </head>
@@ -154,7 +159,7 @@
 				</tr>
 				<tr>
 					<%
-					List<Entity> allRecords = Record.getActivityRecords(Activity.getStringID(activity), 100);
+					List<Entity> allRecords = Record.getParticipantActivityRecords(Participant.getStringID(participant), Activity.getStringID(activity), 100);
 					if (allRecords.isEmpty()) {
 					%>
 						<td><h1>No records entered</h1></td>
@@ -180,10 +185,14 @@
 						{
 							String value = Record.getValue(record);
 							String valueID = Record.getStringID(record);
-							String username = Participant.getLoginID(Participant.getParticipant(Record.getParticipantID(record)));
+							String username = Participant.getAlias(Participant.getParticipant(Record.getParticipantID(record)));
+							if (username==null | username.equals("")){
+								username = Participant.getFirstName(Participant.getParticipant(Record.getParticipantID(record))) + 
+										(Record.getParticipantID(record).substring(10));
+							}
 							String date = Record.getDate(record);
 							String award = Record.getAward(record);
-							if(award!=null)
+							if(!award.equals(""))
 							{
 								
 								%>
@@ -209,10 +218,15 @@
 							<th>participant</th><th>record</th><th>date</th>
 						</tr>
 					<%
+					List<Entity> allOtherRecords = Record.getActivityRecords(Activity.getStringID(activity), 100);
 						
-						for (Entity record : allRecords) {
+						for (Entity record : allOtherRecords) {
 							String value = Record.getValue(record);
-							String username = Participant.getLoginID(Participant.getParticipant(Record.getParticipantID(record)));
+							String username = Participant.getAlias(Participant.getParticipant(Record.getParticipantID(record)));
+							if (username==null | username.equals("")){
+								username = Participant.getFirstName(Participant.getParticipant(Record.getParticipantID(record))) + 
+										(Record.getParticipantID(record).substring(10));
+							}
 							String date = Record.getDate(record);
 						%>
 						
@@ -238,7 +252,7 @@
 					
 				%>
 				<hr />
-				<form action="addRecord" method="post">
+				<form id="addrecord" action="addRecord" method="post">
 				<table>
 				<tr>
 				<td>Enter a new record for this activity.</td>
@@ -280,7 +294,7 @@
 					
 					</select>
 				</tr>
-				<td><input type="submit" value="Add Record" /></td>
+				<td><button id="submitbutton" type="button" onclick="submitform()">Add</button></td>
 				</tr>
 				</table>
 				</form>

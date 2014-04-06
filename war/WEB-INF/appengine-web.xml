@@ -5,7 +5,7 @@
   <!-- 
   	Appengine Version
    -->
-  <version>8</version>
+  <version>9</version>
 
   <!--
     Allows App Engine to send multiple requests to one instance in parallel:
