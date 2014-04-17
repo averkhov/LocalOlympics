@@ -294,14 +294,18 @@ public final class Activity {
       // UPDATE ACTIVITY
       //
 
-	public static boolean UpdateActivity(String ActivityID, String name, String description, String type, String address) {
+	public static boolean UpdateActivity(String ActivityID, String name, String description, String type, String address, String limithour, String limitminute, String limitsecond) {
 		Entity activityInput = null;
 		try {
+			long seconds = secondCalc(limithour, limitminute, limitsecond);
+			String totalSecond = Long.toString(seconds);
+			
 			activityInput = getActivity(ActivityID);
 			activityInput.setProperty(NAME_PROPERTY, name);
 			activityInput.setProperty(DESCRIPTION_PROPERTY, description);
 			activityInput.setProperty(TYPE_PROPERTY, type);
 			activityInput.setProperty(LOCATION_PROPERTY, address);
+			activityInput.setProperty(TIME_LIMIT, totalSecond);
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 			datastore.put(activityInput);
 		} catch (Exception e) {

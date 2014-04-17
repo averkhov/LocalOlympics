@@ -22,14 +22,18 @@ private static final long serialVersionUID = 1L;
 
 @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		String id = req.getParameter("activityID");
-		String activityName = req.getParameter("ActivityName");
-		String description = req.getParameter("desctiption");
+		String id = req.getParameter("id");
+		String activityName = req.getParameter("activityName");
+		String description = req.getParameter("description");
 		String type = req.getParameter("type");
 		String address = req.getParameter("address");
-        Activity.UpdateActivity(id, activityName, description, type, address);
+		String limitHour = req.getParameter("limithour");
+		String limitMinute = req.getParameter("limitminute");
+		String limitSecond = req.getParameter("limitsecond");
+        Activity.UpdateActivity(id, activityName, description, type, address, limitHour, limitMinute, limitSecond);
         resp.sendRedirect("allActivity.jsp");
     }
 
 
 }
+

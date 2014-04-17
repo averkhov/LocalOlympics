@@ -320,7 +320,7 @@ else
 					</td>
 				</tr>
 			</table>
-			<input id ="addressUpdate" type="text" disabled="disabled" name="address" />
+			<input id ="addressUpdate" type="text" name="address" />
 			<button type="button" onclick="cancelButton()">cancel</button>
 			<button type="button" onclick="saveButton()">Save</button>
     	</form>
