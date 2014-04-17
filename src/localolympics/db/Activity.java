@@ -106,7 +106,7 @@ public final class Activity {
 	private static final String LOCATION_PROPERTY = "location";
 
 	
-	
+	private static final String TIME_LIMIT = "limit";
 	
 	
 	
@@ -123,6 +123,12 @@ public final class Activity {
 	 * @param Activity The GAE Entity storing the Activity.
 	 * @return the name of the Activity.
 	 */
+	public static String getLimit(Entity Activity)
+	{
+		Object timeLimit = Activity.getProperty(TIME_LIMIT);
+
+		return (String) timeLimit;
+	}
 	public static String getName(Entity Activity) {
 		Object nameofActivity = Activity.getProperty(NAME_PROPERTY);
 
@@ -185,7 +191,8 @@ public final class Activity {
 	 * @param Type The type for the Activity.
 	 * @return the Entity created with this name or null if error
 	 */
-	public static Entity createActivity(String ActivityName, String description, String type, String address) {
+	public static Entity createActivity(String ActivityName, String description, String type, 
+			String limithour, String limitminute, String limitsecond, String address) {
 
 		Entity Activity = null;
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -200,11 +207,13 @@ public final class Activity {
 			if (Activity != null) {
 				return null;
 			}
-
+			long seconds = secondCalc(limithour, limitminute, limitsecond);
+			String totalSecond = Long.toString(seconds);
 			Activity = new Entity(ENTITY_KIND);
 			Activity.setProperty(NAME_PROPERTY, ActivityName);
 			Activity.setProperty(DESCRIPTION_PROPERTY, description);
 			Activity.setProperty(TYPE_PROPERTY, type);
+			Activity.setProperty(TIME_LIMIT, totalSecond);
 			Activity.setProperty(LOCATION_PROPERTY, address);
 			datastore.put(Activity);
 
@@ -217,7 +226,19 @@ public final class Activity {
 		}
 		return Activity;
 	}
-
+	private static int secondCalc(String hour, String minute, String second)
+	{
+		int totalSecond;
+		int limithour;
+		int limitminute;
+		int limitsecond;
+		
+		limithour = Integer.parseInt(hour);
+		limitminute = Integer.parseInt(minute);
+		limitsecond = Integer.parseInt(second);
+		totalSecond = (limithour * 3600) + (limitminute * 60) + limitsecond;
+		return totalSecond;
+	}
 	//
 	// GET Activity
 	//

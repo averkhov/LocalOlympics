@@ -32,7 +32,8 @@ public class UpdateParticipantServlet extends HttpServlet {
 	        Participant.updateParticipantCommand(req.getParameter("ParticipantID"), req.getParameter("participantFirstName"),
                     req.getParameter("participantLastName"), req.getParameter("participantAlias"), req.getParameter("gender"),
                     req.getParameter("birthday"), req.getParameter("activity"),
-                    req.getParameter("aboutme"), req.getParameter("address"), req.getParameter("ParticipantLoginID"), req.getParameter("isAdmin"));
+                    req.getParameter("aboutme"), req.getParameter("address"), req.getParameter("ParticipantLoginID"), req.getParameter("isAdmin"),
+                    req.getParameter("validated"), req.getParameter("email"));
 
 
                 resp.sendRedirect("allparticipant.jsp");

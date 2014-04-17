@@ -23,8 +23,12 @@ public class AddActivityServlet extends HttpServlet {
 		String ActivityName = req.getParameter("ActivityName");
 		String description = req.getParameter("description");
 		String type = req.getParameter("type");
+		String limitHour = req.getParameter("limithour");
+		String limitMinute = req.getParameter("limitminute");
+		String limitSecond = req.getParameter("limitsecond");
 		String address = req.getParameter("address");
-		Activity.createActivity(ActivityName, description, type, address);
+		Activity.createActivity(ActivityName, description, type, limitHour, 
+				limitMinute, limitSecond, address);
 		resp.sendRedirect("allActivity.jsp");
 	}
 	
@@ -34,8 +38,12 @@ public class AddActivityServlet extends HttpServlet {
 		String ActivityName = req.getParameter("ActivityName");
 		String description = req.getParameter("description");
 		String type = req.getParameter("type");
+		String limitHour = req.getParameter("limithour");
+		String limitMinute = req.getParameter("limitminute");
+		String limitSecond = req.getParameter("limitsecond");
 		String address = req.getParameter("address");
-		Activity.createActivity(ActivityName, description, type, address);
+		Activity.createActivity(ActivityName, description, type, limitHour, 
+				limitMinute, limitSecond, address);
 		resp.sendRedirect("allActivity.jsp");
 		
     }

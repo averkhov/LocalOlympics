@@ -56,7 +56,7 @@ public class LoginSessionServlet extends HttpServlet {
 					}
 				}
 
-				resp.sendRedirect("/index.jsp");
+				resp.sendRedirect("/auth/user/home.jsp");
 			}
 
 		}

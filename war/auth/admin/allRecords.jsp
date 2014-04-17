@@ -11,6 +11,7 @@
 <%@ page import="com.google.appengine.api.datastore.Key" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <%@ page import="localolympics.db.Record" %>
+<%@ page import="localolympics.db.Activity" %>
 <%@ page import="localolympics.db.Participant" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -125,7 +126,7 @@
 		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
 		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
 		<ul>
-			<li><a href="profile.jsp" >PROFILE</a></li>
+			<li><a href="/auth/user/profile.jsp" >PROFILE</a></li>
 			<li><a href="/logout" >LOGOUT</a></li>
 		</ul>
 		</div>
@@ -147,9 +148,11 @@
 	<table class="myTable" border="1">
 		<tr>
 			<td>ParticipantID</td>
+			<td>Participant alias</td>
 			<td>ActivityID</td>
 			<td>Value</td>
 			<td>AwardLevel</td>
+			<td>ActivityName</td>
 			<td>Edit</td>
 			<td>Delete</td>
 		</tr>
@@ -160,23 +163,43 @@
 					String activityID = Record.getActivityID(record);
 					String recordID = Record.getStringID(record);
 					String awardLevel = Record.getAward(record);
+					String activityName = "";
+					String participantAlias = "";
+					if(Activity.getActivity(activityID)==null){
+						activityName="";
+					}else{
+						activityName = Activity.getName(Activity.getActivity(activityID));
+					}
+					if(Participant.getParticipant(participantID)==null){
+						participantAlias="";
+					}else{
+						participantAlias = Participant.getAlias((Participant.getParticipant(participantID)));
+					}
+					
+					
 					
 		%>
 
 		<tr id="view<%=recordID%>">
 				<td><%=participantID%></td>
+				<td><%=participantAlias %></td>
 				<td><%=activityID %></td>
 				<td><%=recordTime %></td>
 				<td><%=awardLevel %></td>
+				<td><%=activityName %></td>
+			
 				<td><button type="button" onclick="editButton(<%=recordID%>)">Edit</button></td>
 				<td><button type="button" onclick="deleteButton(<%=recordID%>)">Delete</button></td>
 		</tr>
 		
 		<tr id="edit<%=recordID%>" style="display: none">
 				<td><input id="participantID<%=recordID%>" type="text" name="participantID" value="<%=participantID%>" size="20" /></td>
+				<td><input type="text" name="participantAlias" value="<%=participantAlias%>" size="20" /></td>
 				<td><input id="activityID<%=recordID%>" type="text" name="activityID" value="<%=activityID%>" size="20" /></td>
 				<td><input id="recordTime<%=recordID%>" type="text" name="recordTime" value="<%=recordTime%>" size="20" /></td>
 				<td><input id="awardLevel<%=recordID%>" type="text" name="awardLevel" value="<%=awardLevel%>" size="20" /></td>
+				<td><input type="text" name="activityName" value="<%=activityName%>" size="20" /></td>
+				
 				
 				<td><button type="button" onclick="cancelButton(<%=recordID%>)">cancel</button><button type="button" onclick="saveButton(<%=recordID%>)">save</button></td>
 				<td><button type="button" onclick="deleteButton(<%=recordID%>)">Delete</button></td>

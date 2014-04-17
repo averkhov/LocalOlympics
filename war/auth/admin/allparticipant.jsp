@@ -157,7 +157,7 @@ function editButton(ParticipantID) {
 
 function cancelEditParticipant(ParticipantID) {
 	$("#editParticipantNameInput"+selectedParticipantForEdit).val(selectedParticipantOldName);
-	$("#edit"+ParticipantID).show();
+	$("#edit"+ParticipantID).hide();
 	$("#view"+ParticipantID).show();
 	disableAllButtons(false);
 }
@@ -221,7 +221,7 @@ function popoff(){
 		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
 		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
 		<ul>
-			<li><a href="profile.jsp" >PROFILE</a></li>
+			<li><a href="/auth/user/profile.jsp" >PROFILE</a></li>
 			<li><a href="/logout" >LOGOUT</a></li>
 		</ul>
 		</div>
@@ -371,12 +371,14 @@ function popoff(){
 							</tr>
 							
 							<tr>
-							      <td class="editTable" width=90>Validated Email</td>
+							      <td class="editTable" width=90>Email</td>
 							      <td class="editTable">
 							      <div id="editParticipantEmailInput<%=ParticipantID%>"
 							      class="editParticipantEmailInput"><input type="text" value="<%=email%>"
 							      name="email" /></div></td>
 							</tr>
+							
+
 							
 						</table>
 						<input id="saveEditParticipantButton<%=ParticipantID%>"

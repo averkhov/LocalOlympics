@@ -66,6 +66,14 @@ body {
 	
 }
 
+.edit{
+	border: 1px black solid;
+	background-color: white;
+	padding-left: 40px;
+	z-index: 3;
+	
+}
+
 h1 {
 	padding: 5px;
 	margin: 0px;

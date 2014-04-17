@@ -216,6 +216,9 @@
 			{
 				String activityID = Record.getActivityID(record);
 				Entity activity = Activity.getActivity(activityID);
+				if(activity!=null){
+					
+				
 				String activityName = Activity.getName(activity);
 				String activityType = Activity.getType(activity);
 				String recordTime = Record.getValue(record);
@@ -225,6 +228,7 @@
 				{
 					won = true;
 				}
+				
 			%>
 			<tr> 
 			
@@ -238,6 +242,8 @@
 				//String activityName = Activity.getA
 			
 			}
+			}
+			
 		%>
 		<tr>
 		

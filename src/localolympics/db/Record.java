@@ -28,6 +28,7 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.CompositeFilter;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 
+import localolympics.db.Activity;
 /**
  * GAE ENTITY UTIL CLASS: "Record" <br>
  * PARENT: NONE <br>
@@ -119,7 +120,7 @@ public class Record {
 	
 	private static final String LONGTIME_PROPERTY = "longTime";
 	
-	
+	private static final String FLAG_PROPERTY = "flag";
 	
 	//
 	// GETTERS
@@ -177,7 +178,15 @@ public class Record {
 		return (String) date;
 	}
 	
-	
+	public static String getFlag(Entity record)
+	{
+		Object flag = record.getProperty(FLAG_PROPERTY);
+		if(flag == null)
+		{
+			flag = "";
+		}
+		return (String) flag;
+	}
 	public static String getAward(Entity record){
 		
 		
@@ -218,6 +227,9 @@ public class Record {
 		String storingSecond = " ";
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Transaction txn = datastore.beginTransaction();
+		
+		
+		
 		try {
 			hour1 = Integer.parseInt(hour);
 			minute1 = Integer.parseInt(minute);
@@ -249,6 +261,9 @@ public class Record {
 				storingSecond = storingSecond + second1;
 			}
 			value = value + storingHour + ":" + storingMinute + ":" + storingSecond;
+			//Entity activity = Activity.getActivity(activityID);
+			//String limit = Activity.getLimit(activity);
+			//int timeLimit = Integer.parseInt(limit);
 			record = new Entity(ENTITY_KIND);
 			record.setProperty(VALUE_PROPERTY, value);
 			record.setProperty(SECOND_VALUE, secondAsign);
@@ -256,12 +271,32 @@ public class Record {
 			record.setProperty(ACTIVITYID_PROPERTY, activityID);
 			
 			
+			Entity activity = Activity.getActivity(activityID);
+			int timeLimit;
+			if(Activity.getLimit(activity)!=null || !Activity.getLimit(activity).equals("")){
+				String limit = Activity.getLimit(activity);
+				timeLimit = Integer.parseInt(limit);	
+			}else{
+				timeLimit = 10000000;
+			}
+			
+			if(totalSecond<timeLimit)
+			{
+				record.setProperty(FLAG_PROPERTY, "yes");
+				
+			}
+			else
+			{
+				record.setProperty(FLAG_PROPERTY, "no");
+			}
+			
 			
 			Date date = new Date();
 			record.setProperty(DATE_PROPERTY, date.toString());
 			
 			Time time = new Time(hour1, minute1, second1);
 			record.setProperty(LONGTIME_PROPERTY, time.getTime());
+			
 			
 			datastore.put(record);
 
@@ -288,6 +323,7 @@ public class Record {
 		List<Entity> list = getParticipantActivityRecords(participantID, activityID, 10);
 		
 		for(int i=0; i<list.size(); i++){
+			
 			if(i==0){
 				list.get(0).setProperty(RECORDAWARD_PROPERTY, "Gold");
 				datastore.put(list.get(0));
@@ -441,6 +477,7 @@ public class Record {
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Filter activityFilter = new FilterPredicate(ACTIVITYID_PROPERTY, FilterOperator.EQUAL, activityID);
 		Filter participantFilter = new FilterPredicate(PARTICIPANTID_PROPERTY, FilterOperator.EQUAL, participantID);
+		//Filter flagFilter = new FilterPredicate(FLAG_PROPERTY, FilterOperator.EQUAL, "no");
 		Filter combinedFilter = CompositeFilterOperator.and(activityFilter, participantFilter);
 		Query query = new Query(ENTITY_KIND).addSort(LONGTIME_PROPERTY, SortDirection.ASCENDING);
 		query.setFilter(combinedFilter);
@@ -467,7 +504,9 @@ public class Record {
 		Query query = new Query(ENTITY_KIND).addSort(LONGTIME_PROPERTY, SortDirection.ASCENDING);
 		query.setFilter(activityFilter);
 		List<Entity> result = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(limit));
+	
 		return result;
+		
 	}
 	public static List<Entity> getParticipantRecords(String participantID, int limit) {
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

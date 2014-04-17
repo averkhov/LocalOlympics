@@ -100,7 +100,7 @@
 		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
 		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
 		<ul>
-			<li><a href="profile.jsp" >PROFILE</a></li>
+			<li><a href="/auth/user/profile.jsp" >PROFILE</a></li>
 			<li><a href="/logout">LOGOUT</a></li>
 		</ul>
 		</div>
