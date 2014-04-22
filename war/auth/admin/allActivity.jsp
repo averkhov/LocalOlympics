@@ -61,8 +61,13 @@
     }
     
     function deleteButton(ID) {
-    	window.location = 'deleteActivity?id=' + ID;
+    	if(confirm('Are you sure you want to delete this Activity?')){
+    		window.location = 'deleteActivity?id=' + ID;
+    	}else{
+    	
+    	}
     }
+    
     
     function saveButton() {
     	document.forms["finalSubmit"].submit();
@@ -261,19 +266,33 @@ else
 	
 	%>
 	
-	<div id="edit" style="display:none">
+	<div id="edit" class="edit" style="display:none">
     	<form id="finalSubmit" action="UpdateActivity" method="post">
+    		
 	    	<input id="activityIDUpdate" type="text" hidden="true" name="id" />
-	    	<input id="activityNameUpdate" type="text"  name="activityName" />
-			<input id="descriptionUpdate" type="text" name="description"  />
-			<select id="typeUpdate" name = "type">
+	    	<table>
+    		<tr>
+	    	<td>Activity Name: </td>
+	    	<td><input id="activityNameUpdate" type="text"  name="activityName" /></td>
+	    	</tr>
+	    	<tr>
+	    	<td>Description: </td>
+	    	<td><input id="descriptionUpdate" type="text" name="description"  /></td>
+	    	</tr>
+			<tr>
+			<td>Type: </td>
+			<td><select id="typeUpdate" name = "type">
 				<option value = ""> </option>
 				<option value = "Running">Running </option>
 				<option value = "Walking" >Walking</option>
 				<option value = "Swimming">Swimming</option>
 				<option value = "Hiking">Hiking</option>
 			</select>
-			<table>
+			</td>
+			</tr>
+			<tr>
+			<td colspan="2">
+			<table border="">
 				<tr>
 					<td>Time limit: </td>
 				</tr>
@@ -320,9 +339,19 @@ else
 					</td>
 				</tr>
 			</table>
-			<input id ="addressUpdate" type="text" name="address" />
+			</td>
+			</tr>
+			<tr>
+			<td>Address: </td>
+			<td><input id ="addressUpdate" type="text" name="address" /></td>
+			</tr>
+			<tr>
+			<td colspan="2">
 			<button type="button" onclick="cancelButton()">cancel</button>
 			<button type="button" onclick="saveButton()">Save</button>
+			</td>
+			</tr>
+			</table>
     	</form>
     </div>
     

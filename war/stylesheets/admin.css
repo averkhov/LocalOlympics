@@ -70,6 +70,7 @@ body {
 	border: 1px black solid;
 	background-color: white;
 	padding-left: 40px;
+	horizontal-align: center;
 	z-index: 3;
 	
 }
