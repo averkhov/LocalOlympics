@@ -29,6 +29,7 @@ import com.google.appengine.api.datastore.Query.CompositeFilter;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 
 import localolympics.db.Activity;
+
 /**
  * GAE ENTITY UTIL CLASS: "Record" <br>
  * PARENT: NONE <br>
@@ -120,7 +121,7 @@ public class Record {
 	
 	private static final String LONGTIME_PROPERTY = "longTime";
 	
-	private static final String FLAG_PROPERTY = "flag";
+	private static final String ISVALID_PROPERTY = "isValid";
 	
 	//
 	// GETTERS
@@ -178,9 +179,9 @@ public class Record {
 		return (String) date;
 	}
 	
-	public static String getFlag(Entity record)
+	public static String getIsValid(Entity record)
 	{
-		Object flag = record.getProperty(FLAG_PROPERTY);
+		Object flag = record.getProperty(ISVALID_PROPERTY);
 		if(flag == null)
 		{
 			flag = "";
@@ -220,13 +221,14 @@ public class Record {
 		int hour1;
 		int minute1;
 		int second1;
-		String secondAsign = "";
+		//String secondAsign = "";
 		int totalSecond;
 		String storingHour = " ";
 		String storingMinute = " ";
 		String storingSecond = " ";
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Transaction txn = datastore.beginTransaction();
+		TransactionOptions options1 = TransactionOptions.Builder.withXG(true);
+		Transaction txn = datastore.beginTransaction(options1);
 		
 		
 		
@@ -235,7 +237,7 @@ public class Record {
 			minute1 = Integer.parseInt(minute);
 			second1 = Integer.parseInt(second);
 			totalSecond = secondCal(hour1, minute1, second1);
-			secondAsign = String.valueOf(totalSecond);
+			//secondAsign = String.valueOf(totalSecond);
 			if(hour1>=0 && hour1 <=9)
 			{
 				storingHour = "0"+hour1;
@@ -261,35 +263,33 @@ public class Record {
 				storingSecond = storingSecond + second1;
 			}
 			value = value + storingHour + ":" + storingMinute + ":" + storingSecond;
-			//Entity activity = Activity.getActivity(activityID);
-			//String limit = Activity.getLimit(activity);
-			//int timeLimit = Integer.parseInt(limit);
+
 			record = new Entity(ENTITY_KIND);
 			record.setProperty(VALUE_PROPERTY, value);
-			record.setProperty(SECOND_VALUE, secondAsign);
+			record.setProperty(SECOND_VALUE, totalSecond + "");
 			record.setProperty(PARTICIPANTID_PROPERTY, participantID);
 			record.setProperty(ACTIVITYID_PROPERTY, activityID);
-			
-			
+
 			Entity activity = Activity.getActivity(activityID);
-			int timeLimit;
-			if(Activity.getLimit(activity)!=null || !Activity.getLimit(activity).equals("")){
-				String limit = Activity.getLimit(activity);
-				timeLimit = Integer.parseInt(limit);	
-			}else{
-				timeLimit = 10000000;
+			int timeLimit = 10000000;
+			if(Activity.getLimit(activity)!=null){
+				if(!Activity.getLimit(activity).equals("")){
+					timeLimit = Integer.parseInt(Activity.getLimit(activity));
+				}
 			}
-			
+
 			if(totalSecond<timeLimit)
 			{
-				record.setProperty(FLAG_PROPERTY, "yes");
+				record.setProperty(ISVALID_PROPERTY, "true");
+				//TODO update participant trust level
 				
 			}
 			else
 			{
-				record.setProperty(FLAG_PROPERTY, "no");
+				record.setProperty(ISVALID_PROPERTY, "false");
+				//TODO update participant trust level
 			}
-			
+
 			
 			Date date = new Date();
 			record.setProperty(DATE_PROPERTY, date.toString());
@@ -297,11 +297,14 @@ public class Record {
 			Time time = new Time(hour1, minute1, second1);
 			record.setProperty(LONGTIME_PROPERTY, time.getTime());
 			
+
 			
 			datastore.put(record);
 
+
 			txn.commit();
 		} catch (Exception e) {
+			System.out.println(e);
 			return null;
 		} finally {
 			if (txn.isActive()) {
@@ -314,6 +317,8 @@ public class Record {
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
+		
+
 		
 		
 		TransactionOptions options = TransactionOptions.Builder.withXG(true);

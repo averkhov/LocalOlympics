@@ -105,7 +105,9 @@ public final class Activity {
 	 */
 	private static final String LOCATION_PROPERTY = "location";
 
-	
+	/**
+	 * The property limit for the location of the activity
+	 */
 	private static final String TIME_LIMIT = "limit";
 	
 	
@@ -118,17 +120,23 @@ public final class Activity {
 	
 	
 	/**
+	 * Return the timelimit of the Activity.
+	 * 
+	 * @param Activity The GAE Entity storing the Activity.
+	 * @return the timelimit of the Activity.
+	 */
+	public static String getLimit(Entity Activity)
+	{
+		Object timeLimit = Activity.getProperty(TIME_LIMIT);
+		return (String) timeLimit;
+	}
+	
+	/**
 	 * Return the name of the Activity.
 	 * 
 	 * @param Activity The GAE Entity storing the Activity.
 	 * @return the name of the Activity.
 	 */
-	public static String getLimit(Entity Activity)
-	{
-		Object timeLimit = Activity.getProperty(TIME_LIMIT);
-
-		return (String) timeLimit;
-	}
 	public static String getName(Entity Activity) {
 		Object nameofActivity = Activity.getProperty(NAME_PROPERTY);
 

@@ -69,6 +69,11 @@ public class AddParticipantServlet extends HttpServlet {
 	        String email = req.getParameter("email");
 	        Participant.createParticipant(participantID, participantFirstName, participantLastName, participantAlias, gender, 
 	        		birthday, activity, aboutme, address, "false", email);
+	        try {
+			    Thread.sleep(1000);
+			} catch(InterruptedException ex) {
+			    Thread.currentThread().interrupt();
+			}
 	        
 	        resp.sendRedirect("profile.jsp"); 
     	}else{

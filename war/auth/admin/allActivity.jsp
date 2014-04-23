@@ -258,8 +258,7 @@ else
 	</table>
 	<input type="submit" value="Add Activity" />
 	</form>
-	</div>
-	</div>
+	
 	<%
         }
     }
@@ -354,6 +353,7 @@ else
 			</table>
     	</form>
     </div>
-    
+    </div>
+	</div>
 </body>
 </html>

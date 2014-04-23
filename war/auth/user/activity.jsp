@@ -294,6 +294,7 @@
 					
 					</select>
 				</tr>
+				<tr>
 				<td><button id="submitbutton" type="button" onclick="submitform()">Add</button></td>
 				</tr>
 				</table>
