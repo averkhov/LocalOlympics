@@ -114,7 +114,7 @@
         	
         	%>
         	
-        	<jsp:forward page="editProfile.jsp" />
+        	<jsp:forward page="/auth/user/editProfile.jsp" />
         	
         	<%
         	
@@ -126,7 +126,7 @@
         	if(Participant.getAlias(participant)=="" | Participant.getAlias(participant)==null){
         		%>
             	
-            	<jsp:forward page="editProfile.jsp" />
+            	<jsp:forward page="/auth/user/editProfile.jsp" />
             	
             	<%
         	}
@@ -139,7 +139,7 @@
 		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
 		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
 		<ul>
-			<li><a href="profile.jsp" >PROFILE</a></li>
+			<li><a href="/auth/user/profile.jsp" >PROFILE</a></li>
 			<li><a href="/logout">LOGOUT</a></li>
 		</ul>
 		</div>
@@ -187,7 +187,7 @@
 						<td>
 							<table>
 							<tr>
-								<td class="activityname"><a href="activity.jsp?activityID=<%=activityID%>"><%=activityName%></a></td>
+								<td class="activityname"><a href="/auth/user/activity.jsp?activityID=<%=activityID%>"><%=activityName%></a></td>
 							</tr>
 							<tr>
 								<td><hr/><%=description%></td>
