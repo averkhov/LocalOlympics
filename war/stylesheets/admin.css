@@ -65,14 +65,15 @@ body {
 	
 }
 
-.edit{
+.editcss{
 	border: 1px black solid;
 	background-color: white;
-	padding-left: 40px;
-	horizontal-align: center;
-	z-index: 3;
+	z-index: 2;
 	
 }
+
+
+
 
 h1 {
 	padding: 5px;
@@ -88,12 +89,26 @@ form {
 	display: inline;
 }
 
-table,th,td,tfoot {
+table,th,td,tfoot,tr {
 	border: 1px solid black;
 	border-collapse: collapse;
 	text-align: left;
 	padding: 2px;
 }
+
+#edittablecss{
+	width: 100%;
+	border: 0px solid white;
+}
+
+#edittablecss th{
+	border: 0px solid white;
+}
+
+#edittablecss td{
+	border: 0px solid white;
+}
+
 
 th {
 	color: black;

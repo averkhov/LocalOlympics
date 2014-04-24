@@ -53,7 +53,10 @@
     }
     
     function deleteButton(ID) {
-    	window.location = 'deleteRecord?id=' + ID;
+    	if(confirm('Are you sure you want to delete this Record?')){
+    		window.location = 'deleteRecord?id=' + ID;
+    	}else{
+    	}
     }
     
     function saveButton(recordID) {
@@ -153,6 +156,7 @@
 			<td>Value</td>
 			<td>AwardLevel</td>
 			<td>ActivityName</td>
+			<td>isValid</td>
 			<td>Edit</td>
 			<td>Delete</td>
 		</tr>
@@ -175,6 +179,10 @@
 					}else{
 						participantAlias = Participant.getAlias((Participant.getParticipant(participantID)));
 					}
+					String isValid = "";
+					if(Record.getIsValid(record)!=null){
+						isValid = Record.getIsValid(record);
+					}
 					
 					
 					
@@ -187,6 +195,7 @@
 				<td><%=recordTime %></td>
 				<td><%=awardLevel %></td>
 				<td><%=activityName %></td>
+				<td><%=isValid %></td>
 			
 				<td><button type="button" onclick="editButton(<%=recordID%>)">Edit</button></td>
 				<td><button type="button" onclick="deleteButton(<%=recordID%>)">Delete</button></td>
@@ -198,7 +207,9 @@
 				<td><input id="activityID<%=recordID%>" type="text" name="activityID" value="<%=activityID%>" size="20" /></td>
 				<td><input id="recordTime<%=recordID%>" type="text" name="recordTime" value="<%=recordTime%>" size="20" /></td>
 				<td><input id="awardLevel<%=recordID%>" type="text" name="awardLevel" value="<%=awardLevel%>" size="20" /></td>
+				
 				<td><input type="text" name="activityName" value="<%=activityName%>" size="20" /></td>
+				<td> </td>
 				
 				
 				<td><button type="button" onclick="cancelButton(<%=recordID%>)">cancel</button><button type="button" onclick="saveButton(<%=recordID%>)">save</button></td>

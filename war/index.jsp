@@ -55,6 +55,7 @@
 				    if (user != null) {
 				      	pageContext.setAttribute("user", user);
 					%>
+						<jsp:forward page="/auth/user/home.jsp" />
 						<p>Welcome, ${fn:escapeXml(user.nickname)}! (You can <a href="/logout">sign out</a>.)</p>
 					
 				</td>

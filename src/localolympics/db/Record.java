@@ -280,13 +280,13 @@ public class Record {
 
 			if(totalSecond<timeLimit)
 			{
-				record.setProperty(ISVALID_PROPERTY, "true");
+				record.setProperty(ISVALID_PROPERTY, "false");
 				//TODO update participant trust level
 				
 			}
 			else
 			{
-				record.setProperty(ISVALID_PROPERTY, "false");
+				record.setProperty(ISVALID_PROPERTY, "true");
 				//TODO update participant trust level
 			}
 

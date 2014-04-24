@@ -43,13 +43,12 @@
     	$("#descriptionUpdate").val($("#description"+activityID).val());
     	$("#typeUpdate").val($("#type"+activityID).val());
     	$("#addressUpdate").val($("#address"+activityID).val());
-    	var pos = $("#back").position();
-	    	var wid = $("#back").width();
+    	var pos = $("#view" + activityID).position();
 	    	$("#edit").css({
 	            position: "absolute",
-	            top: (pos.top + 30) + "px",
-	            left: (pos.left + 30) + "px",
-	            width: (wid/2) + "px"
+	            top: (pos.top + 20) + "px",
+	            left: (pos.left + 200) + "px",
+	            width: 400 + "px"
 	        }).show();
 	    	document.getElementById("edit").style.display = "";
     	
@@ -160,7 +159,7 @@ if(allActivity != null)
 		String timeLimit = Activity.getLimit(activity);
 		
 	%>
-	<tr>
+	<tr id="view<%=activityID%>">
 
 			<td><%=activityName%><input id="activityName<%=activityID%>" type="hidden" value="<%=activityName%>" /></td>
 			<td><%=activityType%><input id="type<%=activityID%>" type="hidden" value="<%=activityType%>" /></td>
@@ -189,14 +188,14 @@ else
 	<form action = "addActivity" method = "post">
 	<table border="1">
 	 <tr>
-	 	<td>Activity Name: </td><td><input type = "text" name = "ActivityName" /></td>
+	 	<td>Activity Name: </td><td colspan="5"><input type = "text" name = "ActivityName" /></td>
 	</tr>
 	<tr>
-		<td>Description: </td><td><input type = "text" name = "description" /></td>
+		<td>Description: </td><td colspan="5"><input type = "text" name = "description" /></td>
 	</tr>
 	<tr>
 		<td>Type: </td>
-		<td>
+		<td colspan="5">
 		<select name = "type">
 		<option value = ""> </option>
 		<option value = "Running">Running </option>
@@ -208,7 +207,7 @@ else
 		</td>
 	</tr>
 	<tr>
-		<td>Time limit: </td>
+		<td colspan="6">Time limit: </td>
 	</tr>
 	<tr>
 		<td>Hour: </td>
@@ -253,7 +252,7 @@ else
 		</td>
 	</tr>
 	<tr>
-		<td>Zipcode: </td><td><input type = "text" name = "address"/></td>
+		<td>Zipcode: </td><td colspan="5"><input type = "text" name = "address"/></td>
 	</tr>
 	</table>
 	<input type="submit" value="Add Activity" />
@@ -265,11 +264,11 @@ else
 	
 	%>
 	
-	<div id="edit" class="edit" style="display:none">
+	<div id="edit" class="editcss" style="display:none">
     	<form id="finalSubmit" action="UpdateActivity" method="post">
     		
 	    	<input id="activityIDUpdate" type="text" hidden="true" name="id" />
-	    	<table>
+	    	<table id="edittablecss">
     		<tr>
 	    	<td>Activity Name: </td>
 	    	<td><input id="activityNameUpdate" type="text"  name="activityName" /></td>
@@ -291,9 +290,9 @@ else
 			</tr>
 			<tr>
 			<td colspan="2">
-			<table border="">
+			<table id="edittablecss">
 				<tr>
-					<td>Time limit: </td>
+					<td colspan="6">Time limit: </td>
 				</tr>
 				<tr>
 					<td>Hour: </td>
