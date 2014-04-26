@@ -13,6 +13,9 @@
 <%@ page import="localolympics.db.Record" %>
 <%@ page import="localolympics.db.Participant" %>
 <%@ page import="localolympics.db.Activity" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.TimeZone" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
@@ -136,24 +139,25 @@
         	
 	%>
 		<div class="top" style="float:left">
-			<a href="/index.jsp">INDEX</a> | 
-			<a href="/auth/user/home.jsp">HOME</a>
+			<a class="topbarmenumain" href="/index.jsp">LOCAL OLYMPICS</a>
 		</div>
-		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
+		<div class="top" id="menudrop" style="float:right"><a href="#" class="topbarmenu" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
 		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
 		<ul>
-			<li><a href="profile.jsp" >PROFILE</a></li>
-			<li><a href="/logout" onmouseover="popup();">LOGOUT</a></li>
+			<li><a class="topbarmenu" href="profile.jsp" >PROFILE</a><hr/></li>
+			<li><a class="topbarmenu" href="/logout" onmouseover="popup();">LOGOUT</a></li>
 		</ul>
 		</div>
 
     	<br />
     	<br />
     	
-		<h2>Welcome <%=Participant.getFirstName(participant) %>.</h2>
-			<table>
+		<h2>Welcome <%=Participant.getFirstName(participant) %></h2>
+		<div style="margin-left:auto;margin-right:auto;width:75%;">
+		<div style="background-color:white; border-radius:20px;padding: 15px;">
+			<table id="profftable">
 				<tr>
-					<td>First Name: </td>
+					<td style="width:125px">First Name: </td>
 					<td><%=Participant.getFirstName(participant) %></td>
 				</tr>
 				<tr>
@@ -182,10 +186,12 @@
 				</tr>
 
 			</table>
+			</div>
+			</div>
 			
 			<p><a href="editProfile.jsp">Edit your profile</a></p>
 			<input type="hidden" id="address" value="<%=Participant.getAddress(participant) %>" />
-			<div id="map-canvas" class="map-canvas"></div>
+			<div style="margin-left:auto;margin-right:auto;width:75%;"><div id="map-canvas" class="map-canvas"></div></div>
 
 	<%
   
@@ -203,38 +209,59 @@
 		%>
 		<h2>Awards WON!</h2>
 		<table>
-		<tr> 
-			<th>Activity Name </th>
-			<th>Activity Type </th>
-			<th>Record </th>
-			<th>Date</th>
-			<th>Award Won!</th>
-		</tr>
+		<tr>
 		<% 
+			int count = 0;
 			for(Entity record: allRecord) 
 			{
 				String award = Record.getAward(record);
-				if(award!=null || !award.equals(""))
-				{
+				if(award!=null){
+					if(!award.equals("")){
 					String activityID = Record.getActivityID(record);
 					Entity activity = Activity.getActivity(activityID);
 					String activityName = Activity.getName(activity);
 					String activityType = Activity.getType(activity);
 					String recordTime = Record.getValue(record);
-					String recordDate = Record.getDate(record);
+					String date = Record.getDate(record);
+					Date date1 = new SimpleDateFormat("EEE MMMM dd kk:mm:ss zzz yyyy").parse(date);
+					SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/yy hh:mm aa");
+					df2.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+			        String dateText = df2.format(date1);
 					String awardwon = Record.getAward(record);
+					if(count==5){
+						count = 0;
+						%></tr><tr><%
+					}
 					
-					%>
-					<tr> 
-			
-				<td><%=activityName %> </td>
-				<td><%=activityType %> </td>
-				<td><%=recordTime %> </td>
-				<td><%=recordDate %> </td>
-				<td><%=awardwon %></td>
-			</tr>
-					
-					<% 
+					if(awardwon.equals("Gold")){
+						count++;
+						%>
+						<td class="timetext" ><img src="/stylesheets/gold.jpg" alt="gold" height="50" width="50" class="icon" /><br/>
+						<a href="/auth/user/activity.jsp?activityID=<%=activityID%>"><%=activityName %></a><br/><%=recordTime %><br /><%=dateText %>
+						
+						</td>
+						<%
+					}
+
+					if(awardwon.equals("Silver")){
+						count++;
+						%>
+						<td class="timetext" ><img src="/stylesheets/silver.jpg" alt="silver" height="50" width="50" class="icon" /><br/>
+						<a href="/auth/user/activity.jsp?activityID=<%=activityID%>"><%=activityName%></a><br/><%=recordTime %><br /><%=dateText %>
+						</td>
+						<%
+					}
+
+					if(awardwon.equals("Bronze")){
+						count++;
+						%>
+						<td class="timetext"><img src="/stylesheets/bronze.jpg" alt="bronze" height="50" width="50" class="icon" /><br/>
+						<a href="/auth/user/activity.jsp?activityID=<%=activityID%>"><%=activityName%></a><br/><%=recordTime %><br /><%=dateText %>
+						</td>
+						<%
+					}
+
+				}
 				}
 			}
 		
@@ -265,7 +292,11 @@
 				String activityName = Activity.getName(activity);
 				String activityType = Activity.getType(activity);
 				String recordTime = Record.getValue(record);
-				String recordDate = Record.getDate(record);
+				String date = Record.getDate(record);
+				Date date1 = new SimpleDateFormat("EEE MMMM dd kk:mm:ss zzz yyyy").parse(date);
+				SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/yy hh:mm aa");
+				df2.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+		        String dateText = df2.format(date1);
 				String award = Record.getAward(record);
 
 				
@@ -275,7 +306,7 @@
 				<td><%=activityName %> </td>
 				<td><%=activityType %> </td>
 				<td><%=recordTime %> </td>
-				<td><%=recordDate %> </td>
+				<td><%=dateText %> </td>
 			</tr>
 			<%
 				

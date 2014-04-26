@@ -133,14 +133,13 @@
         	
 	%>
 		<div class="top" style="float:left">
-			<a href="/index.jsp">INDEX</a> | 
-			<a href="/auth/user/home.jsp">HOME</a>
+			<a class="topbarmenumain" href="/index.jsp">LOCAL OLYMPICS</a>
 		</div>
-		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
+		<div class="top" id="menudrop" style="float:right"><a href="#" class="topbarmenu" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
 		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
 		<ul>
-			<li><a href="/auth/user/profile.jsp" >PROFILE</a></li>
-			<li><a href="/logout">LOGOUT</a></li>
+			<li><a class="topbarmenu" href="/auth/user/profile.jsp" >PROFILE</a><hr/></li>
+			<li><a class="topbarmenu" href="/logout">LOGOUT</a></li>
 		</ul>
 		</div>
 
@@ -148,7 +147,6 @@
     	<br />
     	
     	<div class="main">
-		<h2>Welcome <%=Participant.getFirstName(participant) %>.</h2>
 			
 			
 			<br/>
@@ -157,7 +155,7 @@
 			List<Entity> allActivity = Activity.getFirstActivity(100);
 			if (allActivity.isEmpty()) {
 			%>
-				<h1>No Activities available at this time</h1>
+				<h3>No Activities available at this time</h3>
 			<%
 			}else{	
 			%>
@@ -167,8 +165,7 @@
 			
 			<table>
 				<tr>
-					<td><h3>Click on an activity to join in the fun!</h3></td>
-					<td></td>
+					<td><h3>New and Popular Activities</h3></td>
 				</tr>
 				<tr>
 				<td>
@@ -183,7 +180,7 @@
 						%>
 						
 						<tr class= "activitylistrow">
-						<td class="iconcell"><img src="/stylesheets/runner.jpg" alt="running" height="123" width="124" /></td>
+						<td class="iconcell"><img src="/stylesheets/runner.jpg" alt="running" height="123" width="124" class="icon"/></td>
 						<td>
 							<table>
 							<tr>

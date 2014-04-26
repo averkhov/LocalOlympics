@@ -94,8 +94,8 @@
         	
 	%>
 		<div class="top" style="float:left">
-			<a href="/index.jsp">INDEX</a> | 
-			<a href="/auth/user/home.jsp">HOME</a>
+			<a class="topbarmenu" href="/index.jsp">LOCAL OLYMPICS</a> | 
+			<a class="topbarmenu" href="/auth/user/home.jsp">HOME</a>
 		</div>
 		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
 		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">

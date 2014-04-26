@@ -15,6 +15,9 @@
 <%@ page import="localolympics.db.Activity" %>
 <%@ page import="localolympics.db.Record" %>
 <%@ page import="localolympics.db.Participant" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.TimeZone" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
@@ -68,6 +71,12 @@
 
 
 	      }
+	    
+
+	    window.onload = function () {
+	        var address = document.getElementById("address").value;
+	        initializeMap(address);
+	    }
 
 	    function popup(){
 	    	var pos = $("#menudrop").position();
@@ -124,15 +133,14 @@
         	
 	%>
 		<div class="top" style="float:left">
-			<a href="/index.jsp">INDEX</a> | 
-			<a href="/auth/user/home.jsp">HOME</a>
+			<a class="topbarmenumain" href="/index.jsp">LOCAL OLYMPICS</a> 
 			
 		</div>
-		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
+		<div class="top" id="menudrop" style="float:right"><a class="topbarmenu" href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
 		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
 		<ul>
-			<li><a href="profile.jsp" >PROFILE</a></li>
-			<li><a href="/logout" onmouseover="popup();">LOGOUT</a></li>
+			<li><a class="topbarmenu" href="profile.jsp" >PROFILE</a><hr/></li>
+			<li><a class="topbarmenu" href="/logout" onmouseover="popup();">LOGOUT</a></li>
 		</ul>
 		</div>
 
@@ -146,37 +154,44 @@
 			
 			<table>
 				<tr>
-					<td>Activity Name: <%=Activity.getName(activity)%></td>
+					<td class="activitytitle"><%=Activity.getName(activity)%><hr /></td>
 				</tr>
 				<tr>
 					<td><%=Activity.getDescription(activity) %></td>
 				</tr>
 				<tr>
-					<td>Location: <%=Activity.getLocation(activity) %></td>
+					<td>Location: <%=Activity.getLocation(activity) %><input type="hidden" id="address" value="<%=Activity.getLocation(activity)%>" /></td>
 				</tr>
 				<tr>
-				  <td> </td>
+				  <td><div style="margin-left:auto;margin-right:auto;width:75%;"><div id="map-canvas" class="map-canvas"></div></div></td>
 				</tr>
 				<tr>
 					<%
 					List<Entity> allRecords = Record.getParticipantActivityRecords(Participant.getStringID(participant), Activity.getStringID(activity), 100);
 					if (allRecords.isEmpty()) {
 					%>
-						<td><h1>No records entered</h1></td>
+						<td><h1 class="activitytitle">No records entered</h1></td>
 						</tr>
 						</table>
 					<%
 					}else{	
 						
-						//Displays the best record of the activity
+						//Displays the your record of the activity
 						
 					%>
-					<h3> Best Record </h3>
 					<table>
+						<tr><td colspan="3" class="activitytitle"><br/>Your Records</td></tr>
 						<tr>
-							<th> participant </th> <th>record</th> <th> date </th> 
-							<th>Award </th>
+							<td><img src="/stylesheets/gold.jpg" alt="gold" height="124" width="124" class="icon" /></td>
+							<td><img src="/stylesheets/silver.jpg" alt="silver" height="124" width="124" class="icon" /></td>
+							<td><img src="/stylesheets/bronze.jpg" alt="bronze" height="124" width="124" class="icon" /></td>
 						</tr>
+						<tr>
+							<td class="medaltext">GOLD!</td>
+							<td class="medaltext">Silver</td>
+							<td class="medaltext">Bronze</td>
+						</tr>
+						<tr>
 					<%
 						int count = 0;
 						String activityID = Activity.getStringID(activity);
@@ -191,31 +206,64 @@
 										(Record.getParticipantID(record).substring(10));
 							}
 							String date = Record.getDate(record);
+							Date date1 = new SimpleDateFormat("EEE MMMM dd kk:mm:ss zzz yyyy").parse(date);
+							SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/yy hh:mm aa");
+							df2.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+					        String dateText = df2.format(date1);
 							String award = Record.getAward(record);
-							if(!award.equals(""))
-							{
 								
 								%>
-								<tr>
-								<td><%= username %> </td>
-								<td><%= value %> </td>
-								<td><%= date %> </td>
-								<td><%= award %> </td>
-								</tr>
-								<% 
+								
+								
+									
+									<%
+									if(!award.equals(""))
+									{
+										if(award.equals("Gold")){
+											%>
+											<td class="timetext" >
+											<%=value %><br /><%=dateText %>
+											</td>
+											<%
+										}
+
+										if(award.equals("Silver")){
+											%>
+											<td class="timetext" >
+											<%=value %><br /><%=dateText %>
+											</td>
+											<%
+										}
+
+										if(award.equals("Bronze")){
+											%>
+											<td class="timetext">
+											<%=value %><br /><%=dateText %>
+											</td>
+											<%
+										}
+
 							}
 							%>
+							
 							
 							
 							<%
 							
 						}
 					%>
+					</tr>
 					</table>
-					<h3> Best of the Rest</h3>
-					<table>
+					<hr/>
+					<br/>
+					<br/>
+					<div class="bestofrestdiv">
+					
+
+					<table id="bestofrest">
+					<tr><td colspan="3" class="activitytitle">Best of the Rest</td></tr>
 						<tr>
-							<th>participant</th><th>record</th><th>date</th>
+							<th>Participant</th><th>Record</th><th>Date/Time</th>
 						</tr>
 					<%
 					List<Entity> allOtherRecords = Record.getActivityRecords(Activity.getStringID(activity), 100);
@@ -228,12 +276,16 @@
 										(Record.getParticipantID(record).substring(10));
 							}
 							String date = Record.getDate(record);
+							Date date1 = new SimpleDateFormat("EEE MMMM dd kk:mm:ss zzz yyyy").parse(date);
+							SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/yy hh:mm aa");
+							df2.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+					        String dateText = df2.format(date1);
 						%>
 						
 						<tr>
 							<td><%=username%></td>
 							<td><%=value%></td>
-							<td><%=date %></td>
+							<td><%=dateText %></td>
 						</tr>
 						
 						<%
@@ -242,8 +294,8 @@
 						}
 						%>
 					</table>
-				</tr>
-			</table>
+					</div>
+
 
 	<%
     

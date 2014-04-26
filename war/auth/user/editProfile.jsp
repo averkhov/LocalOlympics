@@ -123,14 +123,13 @@
         	%>
         	
         	<div class="top" style="float:left">
-				<a href="/index.jsp">INDEX</a> | 
-				<a href="/auth/user/home.jsp">HOME</a>
+				<a class="topbarmenumain" href="/index.jsp">LOCAL OLYMPICS</a>
 			</div>
-			<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=user.getNickname()%></a></div>
+			<div class="top" id="menudrop" style="float:right"><a href="#" class="topbarmenu" onmouseover="popup();" onmouseout="popoff();"><%=user.getNickname()%></a></div>
 			<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
 			<ul>
-				<li><a href="profile.jsp" >PROFILE</a></li>
-				<li><a href="/logout" onmouseover="popup();">LOGOUT</a></li>
+				<li><a class="topbarmenu" href="profile.jsp" >PROFILE</a><hr/></li>
+				<li><a class="topbarmenu" href="/logout" onmouseover="popup();">LOGOUT</a></li>
 			</ul>
 		</div>
 
@@ -138,8 +137,11 @@
     	<br />
     	
     	<h2>Welcome <%=user.getNickname() %>! Please create your profile below.</h2>
+    	<div style="margin-left:auto;margin-right:auto;width:75%;">
+		<div style="background-color:white; border-radius:20px;padding: 15px;">
 		<form id="createForm" action="addParticipant" method="post">
-			<table>
+		
+			<table id="profftable">
 				<tr>
 					<td>First Name: </td><td><input type="text" name="participantFirstName" size="30" required /></td>
 				</tr>
@@ -189,21 +191,21 @@
 			<input type="hidden" name="ParticipantLoginID" value="<%=user.getUserId()%>" />
 			<button type="button" onclick="createProfile()" >Create</button>
 		</form>
-        	
+        	</div>
+        	</div>
         	<%
         	
         }else{
         	
 	%>
 		<div class="top" style="float:left">
-			<a href="/index.jsp">INDEX</a> | 
-			<a href="/auth/user/home.jsp">HOME</a>
+			<a class="topbarmenumain"href="/index.jsp">LOCAL OLYMPICS</a>
 		</div>
-		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
+		<div class="top" id="menudrop" style="float:right"><a href="#" class="topbarmenu" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
 		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
 		<ul>
-			<li><a href="profile.jsp" >PROFILE</a></li>
-			<li><a href="/logout" onmouseover="popup();">LOGOUT</a></li>
+			<li><a class="topbarmenu" href="profile.jsp" >PROFILE</a><hr/></li>
+			<li><a class="topbarmenu" href="/logout" onmouseover="popup();">LOGOUT</a></li>
 		</ul>
 		</div>
 
@@ -216,8 +218,10 @@
     	
 		<h2>Welcome <%=Participant.getFirstName(participant) %>! Edit your profile below!</h2>
 		<h3>Your Account is missing an alias please create an alias to proceed.</h3>
+		<div style="margin-left:auto;margin-right:auto;width:75%;">
+		<div style="background-color:white; border-radius:20px;padding: 15px;">
 		<form  id="updateForm" action="updateParticipant" method="post">
-			<table>
+			<table id="profftable">
 				<tr>
 					<td>First Name: </td><td><input type="text" name="participantFirstName" size="30" value="<%=Participant.getFirstName(participant) %>" required /></td>
 				</tr>
@@ -347,6 +351,8 @@
 			<input type="hidden" name="ParticipantID" value="<%=Participant.getStringID(participant)%>" />
 			<button type="button" onclick="updateProfile()" >Update</button>
 		</form>
+		</div>
+		</div>
 
 
 <%
@@ -355,8 +361,10 @@
     	%>
     	
 		<h2>Welcome <%=Participant.getFirstName(participant) %>! Edit your profile below!</h2>
+		<div style="margin-left:auto;margin-right:auto;width:75%;">
+		<div style="background-color:white; border-radius:20px;padding: 15px;">
 		<form action="updateParticipant" method="post">
-			<table>
+			<table id="profftable">
 				<tr>
 					<td>First Name: </td><td><input type="text" name="participantFirstName" size="30" value="<%=Participant.getFirstName(participant) %>" required /></td>
 				</tr>
@@ -486,6 +494,8 @@
 			<input type="hidden" name="ParticipantID" value="<%=Participant.getStringID(participant)%>" />
 			<input type="submit" value="update" />
 		</form>
+		</div>
+		</div>
 	<%
     	
     	

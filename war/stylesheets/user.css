@@ -14,8 +14,7 @@
 
 .background{
 	background-color:EEEECC;
-	vertical-align:center;
-	width: 700px;
+
 	padding: 3px;
 	margin: 0px auto;
 	color: black;
@@ -29,7 +28,7 @@
 	vertical-align:center;
 	width: 700px;
 	height: 99%;
-	padding: 3px;
+
 	margin: 0px auto;
 	
 }
@@ -53,6 +52,55 @@
 	z-index: 1; 
 }
 
+.topbarmenu{
+	font-family: "Lucida Console", Monaco, monospace;
+}
+
+.topbarmenumain{
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 24px;
+}
+
+a.topbarmenu:link{
+	text-decoration:none;
+	color:999966;
+}
+
+a.topbarmenumain:link{
+	text-decoration:none;
+	color:999966;
+}
+
+a.topbarmenu:hover{
+	text-decoration:none;
+	color: 999966;
+}
+
+a.topbarmenumain:hover{
+	text-decoration:none;
+	color: 999966;
+}
+
+a.topbarmenu:active{
+	text-decoration:none;
+	color: 999966;
+}
+
+a.topbarmenumain:active{
+	text-decoration:none;
+	color: 999966;
+}
+
+a.topbarmenu:visited{
+	text-decoration:none;
+	color: 66AA66;
+}
+
+a.topbarmenumain:visited{
+	text-decoration:none;
+	color: 66AA66;
+}
+
 .popup{
 	border: 1px black solid;
 	background-color: white;
@@ -74,7 +122,7 @@
 
 
 body {
-	background-image: url("/stylesheets/medals.png");
+	background-image: url("/stylesheets/background1.png");
 }
 
 h1 {
@@ -99,7 +147,6 @@ table {
 }
 
 th {
-	border: 1px solid black;
 	text-align: center;
 	padding: 2px;
 	background-color: white;
@@ -116,11 +163,36 @@ th {
 	color: black;
 }
 
+.bestofrestdiv{
+	margin-left:auto;
+	margin-right:auto;
+	width:60%;
+	background-color: white;
+	border-radius:20px;
+	padding: 15px;
+}
+
+#bestofrest{
+	width:100%;
+}
+
+
+#profftable td{
+	text-align: left;
+}
+
+
 ul{
 	list-style-type: none;
 	padding: 0px;
 	margin: 0px:
 }
+
+.medaltext{
+	font-size: 20px;
+	font-family: "Lucida Console", Monaco, monospace;
+}
+
 
 .iconcell{
 	width: 125px;
@@ -130,8 +202,16 @@ ul{
 	font-size: 25px;
 }
 
+.activitytitle{
+	font-size: 20px;
+	font-family: "Lucida Console", Monaco, monospace;
+}
 .activitylistrow{
 	border: 1px solid black;
+}
+
+.icon{
+	border-radius: 10px;
 }
 
 
@@ -139,6 +219,7 @@ ul{
 	width: 530px;
 	height: 400px;
 	background-color: white;
+	border-radius: 10px;
 }
 a:link{color:green;}
 a:hover {color: 999966;}  
