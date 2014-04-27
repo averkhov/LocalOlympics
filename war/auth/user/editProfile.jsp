@@ -139,7 +139,7 @@
     	<h2>Welcome <%=user.getNickname() %>! Please create your profile below.</h2>
     	<div style="margin-left:auto;margin-right:auto;width:75%;">
 		<div style="background-color:white; border-radius:20px;padding: 15px;">
-		<form id="createForm" action="addParticipant" method="post">
+		<form id="createForm" action="/auth/user/addParticipant" method="post">
 		
 			<table id="profftable">
 				<tr>
@@ -220,7 +220,7 @@
 		<h3>Your Account is missing an alias please create an alias to proceed.</h3>
 		<div style="margin-left:auto;margin-right:auto;width:75%;">
 		<div style="background-color:white; border-radius:20px;padding: 15px;">
-		<form  id="updateForm" action="updateParticipant" method="post">
+		<form  id="updateForm" action="/auth/user/updateParticipant" method="post">
 			<table id="profftable">
 				<tr>
 					<td>First Name: </td><td><input type="text" name="participantFirstName" size="30" value="<%=Participant.getFirstName(participant) %>" required /></td>
@@ -363,7 +363,7 @@
 		<h2>Welcome <%=Participant.getFirstName(participant) %>! Edit your profile below!</h2>
 		<div style="margin-left:auto;margin-right:auto;width:75%;">
 		<div style="background-color:white; border-radius:20px;padding: 15px;">
-		<form action="updateParticipant" method="post">
+		<form action="/auth/user/updateParticipant" method="post">
 			<table id="profftable">
 				<tr>
 					<td>First Name: </td><td><input type="text" name="participantFirstName" size="30" value="<%=Participant.getFirstName(participant) %>" required /></td>
@@ -373,7 +373,7 @@
 				</tr>
 				
 				<tr>
-					<td>Alias: </td><td><input type="text" name="participantAlias" size="30" value="<%=Participant.getAlias(participant) %>" disabled="disabled"  /></td>
+					<td>Alias: </td><td><%=Participant.getAlias(participant) %><input type="text" name="participantAlias" size="30" value="<%=Participant.getAlias(participant) %>" hidden="true"  /></td>
 				</tr>
 				
 				<%
