@@ -1,6 +1,7 @@
 <%@page import="com.google.appengine.repackaged.com.google.api.client.http.HttpRequest"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
+<%@ page import =" java.util.ArrayList" %>
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
@@ -170,7 +171,7 @@
 					List<Entity> allRecords = Record.getParticipantActivityRecords(Participant.getStringID(participant), Activity.getStringID(activity), 100);
 					if (allRecords.isEmpty()) {
 					%>
-						<td><h1 class="activitytitle">No records entered</h1></td>
+						<td><h1 class="activitytitle">You have not entered any Records for this Activity</h1></td>
 						</tr>
 						</table>
 					<%
@@ -251,6 +252,7 @@
 							<%
 							
 						}
+					}
 					%>
 					</tr>
 					</table>
@@ -266,9 +268,13 @@
 							<th>Participant</th><th>Record</th><th>Date/Time</th>
 						</tr>
 					<%
+					List<String> usersEntered = new ArrayList<String>(); 
 					List<Entity> allOtherRecords = Record.getActivityRecords(Activity.getStringID(activity), 100);
+					int counter = 0;
+					boolean show = true;
 						
 						for (Entity record : allOtherRecords) {
+							String userID = Record.getParticipantID(record);
 							String value = Record.getValue(record);
 							String username = Participant.getAlias(Participant.getParticipant(Record.getParticipantID(record)));
 							if (username==null | username.equals("")){
@@ -280,6 +286,20 @@
 							SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/yy hh:mm aa");
 							df2.setTimeZone(TimeZone.getTimeZone("America/New_York"));
 					        String dateText = df2.format(date1);
+					        
+					        String valid = Record.getIsValid(record);
+					        boolean isValid = false;
+					        if(valid==null | valid.equals("") | valid.equals("false")){
+					        	isValid = false;
+					        }else{
+					        	isValid = true;
+					        }
+					        
+					        if(isValid | (Record.getParticipantID(record).equals(Participant.getStringID(participant)))){
+					        
+					        if(counter == 0){
+					        	
+					        
 						%>
 						
 						<tr>
@@ -289,8 +309,34 @@
 						</tr>
 						
 						<%
+								usersEntered.add(userID);
+								counter++;
+								show = false;
+							}else{
+								for(int i=0; i<usersEntered.size(); i++)
+								{
+									if(userID.equals(usersEntered.get(i)))
+									{
+										show = false;
+									}
+								}
+							}
+					        
+					        if(show)
+							{
+								usersEntered.add(userID);
+								%>
+							<tr>
+								<td><%=username%></td>
+								<td><%=value%></td>
+								<td><%=dateText %></td>
+							</tr>
+									<% 
+							}
+							show = true;
     	
     	
+						}
 						}
 						%>
 					</table>
@@ -300,7 +346,7 @@
 	<%
     
     
-    }
+    
 					
 				%>
 				<hr />

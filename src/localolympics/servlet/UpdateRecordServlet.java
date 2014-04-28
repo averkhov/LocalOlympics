@@ -27,7 +27,8 @@ public class UpdateRecordServlet extends HttpServlet {
         String activityID = req.getParameter("activityID");
         //String awardLevel = req.getParameter("awardLevel");
         String participantID = req.getParameter("participantID");
-        Record.updateRecord(id, participantID, activityID, value);
+        String isValid = req.getParameter("isValid");
+        Record.updateRecord(id, participantID, activityID, value, isValid);
         resp.sendRedirect("allRecords.jsp");
     }
 	

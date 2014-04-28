@@ -65,6 +65,7 @@
     	$("#activityIDUpdate").val($("#activityID"+recordID).val());
     	$("#recordTimeUpdate").val($("#recordTime"+recordID).val());
     	$("#awardLevelUpdate").val($("#awardLevel"+recordID).val());
+    	$("#isValidUpdate").val($("#isValid"+recordID).val());
     	document.forms["finalSubmit"].submit();
     }
     
@@ -208,8 +209,8 @@
 				<td><input id="recordTime<%=recordID%>" type="text" name="recordTime" value="<%=recordTime%>" size="20" /></td>
 				<td><input id="awardLevel<%=recordID%>" type="text" name="awardLevel" value="<%=awardLevel%>" size="20" /></td>
 				
-				<td><input type="text" name="activityName" value="<%=activityName%>" size="20" /></td>
-				<td> </td>
+				<td><input type="text" name="activityName" value="<%=activityName%>" size="20" disabled="disabled" /></td>
+				<td><input id="isValid<%=recordID%>" type="text" name="isValid" value="<%=isValid%>" size="20" /></td>
 				
 				
 				<td><button type="button" onclick="cancelButton(<%=recordID%>)">cancel</button><button type="button" onclick="saveButton(<%=recordID%>)">save</button></td>
@@ -252,6 +253,7 @@
 			<input id="activityIDUpdate" type="hidden" name="activityID"  />
 			<input id="recordTimeUpdate" type="hidden" name="recordTime"  />
 			<input id ="awardLevelUpdate" type="hidden" name="awardLevel" />
+			<input id ="isValidUpdate" type="hidden" name="isValid" />
     	</form>
     </div>
 

@@ -180,7 +180,52 @@
 						%>
 						
 						<tr class= "activitylistrow">
+						
+						<%
+							if(activityType.equals("Running")){
+						%>
+						
+						
 						<td class="iconcell"><img src="/stylesheets/runner.jpg" alt="running" height="123" width="124" class="icon"/></td>
+						
+						<%
+							}else{ 
+								if(activityType.equals("Swimming")){
+						
+						%>
+						
+						
+						
+						<td class="iconcell"><img src="/stylesheets/swimmer.jpg" alt="running" height="123" width="124" class="icon"/></td>
+						
+						<%
+								}else{ 
+									if(activityType.equals("Hiking")){
+						
+						%>
+						
+						
+						
+						<td class="iconcell"><img src="/stylesheets/hiker.jpg" alt="running" height="123" width="124" class="icon"/></td>
+						
+						<%
+									}else{
+						
+						%>
+						
+						
+						<td class="iconcell"><img src="/stylesheets/walker.jpg" alt="running" height="123" width="124" class="icon"/></td>
+						
+						<%
+						}
+						}
+						}
+						
+						
+						
+						
+						%>
+						
 						<td>
 							<table>
 							<tr>
@@ -209,11 +254,14 @@
 			
 			
 	<%
+			}
+        }
+    }
     
     
-    }
-    }
-    }
+    
+    
+    
     
     
 	%>
