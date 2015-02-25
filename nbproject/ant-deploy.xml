@@ -1,111 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="-deploy-ant" basedir=".">
-    <target name="-init-cl-deployment-env" if="deploy.ant.enabled">
-        <property file="${deploy.ant.properties.file}" />
-        <available file="${deploy.ant.docbase.dir}/WEB-INF/sun-web.xml" property="sun.web.present"/>
-        <available file="${deploy.ant.docbase.dir}/WEB-INF/glassfish-web.xml" property="glassfish.web.present"/>
-        <available file="${deploy.ant.resource.dir}" property="has.setup"/>
-        <tempfile prefix="gfv3" property="gfv3.password.file" destdir="${java.io.tmpdir}"/>  <!-- do not forget to delete this! -->
-        <echo message="AS_ADMIN_PASSWORD=${gfv3.password}" file="${gfv3.password.file}"/>
+
+    <!-- Google App Engine Properties -->
+    <property name="appengine.location" value="C:\Users\averkhovtsev\Documents\NetBeansProjects\AppenginServer\appengine-java-sdk-1.9.18\appengine-java-sdk-1.9.18"/>
+    <property name="appengine.http.port" value="8080"/>
+    <property name="appengine.debug.port" value="8765"/>
+    <property name="appengine.manager.uri" value="deployer:appengine:localhost:8080/-1198750328"/>
+    
+    <property name="deploy.ant.enabled" value="false"/>
+    <property name="jvmargs" value=""/>
+    
+    <property name="appengine.jpa2" value="true"/>
+    
+
+    <!-- Import Google App Engine Macros -->
+    <import file="${appengine.location}/config/user/ant-macros.xml" />
+
+    <!-- Copy Google App Engine Runtime JARs -->
+    <target unless="${appengine.jpa2}" name="copyjars" description="Copies the App Engine JARs to the WAR." depends="init, dist">
+        <copy todir="${build.web.dir}/WEB-INF/lib" flatten="true">
+            <fileset dir="${appengine.location}/lib/user">
+                <include name="**/*.jar" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target if="${appengine.jpa2}" name="copyjars-v2" description="Copies the App Engine JARs to the WAR." depends="init, dist">
+        <copy todir="${build.web.dir}/WEB-INF/lib" flatten="true">
+            <fileset dir="${appengine.location}/lib/user">
+                <include name="**/appengine-api-1.0-sdk*.jar" />
+            </fileset>
+            <fileset dir="${appengine.location}/lib/opt/user">
+                <include name="appengine-api-labs/v1/*.jar" />
+                <include name="jsr107/v1/*.jar" />
+                <include name="datanucleus/v2/*.jar" />
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- Data Nucleus JPA Enhancer -->
+    <target unless="${appengine.jpa2}" name="datanucleusenhance" description="Performs JDO enhancement on compiled data classes." depends="copyjars">
+        <enhance_war war="${build.web.dir}" />
     </target>
     
-    <target name="-parse-sun-web" depends="-init-cl-deployment-env" if="sun.web.present">
-        <tempfile prefix="gfv3" property="temp.sun.web" destdir="${java.io.tmpdir}"/>
-        <copy file="${deploy.ant.docbase.dir}/WEB-INF/sun-web.xml" tofile="${temp.sun.web}"/>
-        <!-- The doctype triggers resolution which can fail -->
-        <replace file="${temp.sun.web}">
-            <replacetoken><![CDATA[<!DOCTYPE]]></replacetoken>
-            <replacevalue><![CDATA[<!-- <!DOCTYPE]]></replacevalue>
-        </replace>
-        <replace file="${temp.sun.web}">
-            <replacetoken><![CDATA[<sun-web-app]]></replacetoken>
-            <replacevalue><![CDATA[--> <sun-web-app]]></replacevalue>
-        </replace>
-        <xmlproperty file="${temp.sun.web}" validate="false">
-        </xmlproperty>    
-        <delete file="${temp.sun.web}"/>
-        <condition property="deploy.ant.client.url" value="${gfv3.url}${sun-web-app.context-root}" else="${gfv3.url}/${ant.project.name}">
-            <isset property="sun-web-app.context-root"/>
-        </condition>
-        <condition property="deploy.context.root.argument" value="&amp;contextroot=${sun-web-app.context-root}" else="/${ant.project.name}">
-            <isset property="sun-web-app.context-root"/>
-        </condition>
-    </target>
-    <target name="-parse-glassfish-web" depends="-init-cl-deployment-env" if="glassfish.web.present">
-        <tempfile prefix="gfv3" property="temp.gf.web" destdir="${java.io.tmpdir}"/>
-        <copy file="${deploy.ant.docbase.dir}/WEB-INF/glassfish-web.xml" tofile="${temp.gf.web}"/>
-        <!-- The doctype triggers resolution which can fail -->
-        <replace file="${temp.gf.web}">
-            <replacetoken><![CDATA[<!DOCTYPE]]></replacetoken>
-            <replacevalue><![CDATA[<!-- <!DOCTYPE]]></replacevalue>
-        </replace>
-        <replace file="${temp.gf.web}">
-            <replacetoken><![CDATA[<glassfish-web-app]]></replacetoken>
-            <replacevalue><![CDATA[--> <glassfish-web-app]]></replacevalue>
-        </replace>
-        <xmlproperty file="${temp.gf.web}" validate="false">
-        </xmlproperty>
-        <delete file="${temp.gf.web}"/>
-        <condition property="deploy.ant.client.url" value="${gfv3.url}${glassfish-web-app.context-root}" else="${gfv3.url}/${ant.project.name}">
-            <isset property="glassfish-web-app.context-root"/>
-        </condition>
-        <condition property="deploy.context.root.argument" value="&amp;contextroot=${glassfish-web-app.context-root}" else="/${ant.project.name}">
-            <isset property="glassfish-web-app.context-root"/>
-        </condition>
-    </target>
-    <target name="-no-parse-sun-web" depends="-init-cl-deployment-env" unless="sun.web.present">
-        <property name="deploy.context.root.argument" value=""/>
-    </target>
-    <target name="-add-resources" depends="-init-cl-deployment-env" if="has.setup">
-        <tempfile prefix="gfv3" property="gfv3.resources.dir" destdir="${java.io.tmpdir}"/>
-        <mkdir dir="${gfv3.resources.dir}"/>
-        <mkdir dir="${gfv3.resources.dir}/META-INF"/>
-        <copy todir="${gfv3.resources.dir}/META-INF">
-            <fileset dir="${deploy.ant.resource.dir}"/>
-        </copy>
-        <jar destfile="${deploy.ant.archive}" update="true">
-            <fileset dir="${gfv3.resources.dir}"/>
-        </jar>
-        <delete dir="${gfv3.resources.dir}"/>
-    </target>
-    <target name="-deploy-ant" depends="-parse-glassfish-web, -parse-sun-web, -no-parse-sun-web,-add-resources" if="deploy.ant.enabled">
-        <antcall target="-deploy-without-pw"/>
-        <antcall target="-deploy-with-pw"/>
+    <target if="${appengine.jpa2}" name="datanucleusenhance-v2" depends="copyjars-v2"
+            description="Performs enhancement on compiled data classes.">
+        <enhance_war war="${build.web.dir}">
+            <args>
+                <arg value="-enhancerVersion"/>
+                <arg value="v2"/>
+            </args>
+        </enhance_war>
     </target>
 
-    <target name="-deploy-without-pw" unless="gfv3.password">
-        <echo message="Deploying ${deploy.ant.archive}"/>
-        <tempfile prefix="gfv3" property="gfv3.results.file" destdir="${java.io.tmpdir}"/>  <!-- do not forget to delete this! -->
-        <property name="full.deploy.ant.archive" location="${deploy.ant.archive}"/>
-        <get src="${gfv3.admin.url}/__asadmin/deploy?path=${full.deploy.ant.archive}${deploy.context.root.argument}&amp;force=true&amp;name=${ant.project.name}"
-            dest="${gfv3.results.file}"/>
-        <delete file="${gfv3.results.file}"/>    
-    </target>
-    <target name="-deploy-with-pw" if="gfv3.password">
-        <echo message="Deploying ${deploy.ant.archive}"/>
-        <tempfile prefix="gfv3" property="gfv3.results.file" destdir="${java.io.tmpdir}"/>  <!-- do not forget to delete this! -->
-        <property name="full.deploy.ant.archive" location="${deploy.ant.archive}"/>
-        <get username="${gfv3.username}" password="${gfv3.password}" src="${gfv3.admin.url}/__asadmin/deploy?path=${full.deploy.ant.archive}${deploy.context.root.argument}&amp;force=true&amp;name=${ant.project.name}"
-            dest="${gfv3.results.file}"/>
-        <delete file="${gfv3.results.file}"/>
-    </target>
-    <target name="-undeploy-ant" depends="-init-cl-deployment-env" if="deploy.ant.enabled">
-        <antcall target="-undeploy-without-pw"/>
-        <antcall target="-undeploy-with-pw"/>
+    <!-- Start Google App Engine Development Server -->
+    <target name="runserver" depends="datanucleusenhance,datanucleusenhance-v2"
+            description="Starts the development server.">
+        <dev_appserver war="${build.web.dir}" port="${appengine.http.port}" >
+            <options>
+                <arg line="${jvmargs}"/>
+            </options>
+        </dev_appserver>
     </target>
 
-    <target name="-undeploy-without-pw" unless="gfv3.password">
-        <echo message="Undeploying ${deploy.ant.archive}"/>
-        <tempfile prefix="gfv3" property="gfv3.results.file" destdir="${java.io.tmpdir}"/>  <!-- do not forget to delete this! -->
-        <get src="${gfv3.admin.url}/__asadmin/undeploy?name=${ant.project.name}"
-            dest="${gfv3.results.file}"/>
-        <delete file="${gfv3.results.file}"/>    
+    <!-- Start Google App Engine Development Server In Debug Mode -->
+    <target name="runserver-debug" depends="datanucleusenhance,datanucleusenhance-v2"
+            description="Starts the development server.">
+        <dev_appserver war="${build.web.dir}" port="${appengine.http.port}" >
+            <options>
+                <arg value="--jvm_flag=-Xdebug"/>
+                <arg value="--jvm_flag=-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=${appengine.debug.port}"/>
+                <arg line="${jvmargs}"/>
+            </options>
+        </dev_appserver>
     </target>
-    <target name="-undeploy-with-pw" if="gfv3.password">
-        <echo message="Undeploying ${deploy.ant.archive}"/>
-        <tempfile prefix="gfv3" property="gfv3.results.file" destdir="${java.io.tmpdir}"/>  <!-- do not forget to delete this! -->
-        <get username="${gfv3.username}" password="${gfv3.password}" src="${gfv3.admin.url}/__asadmin/undeploy?name=${ant.project.name}"
-            dest="${gfv3.results.file}"/>
-        <delete file="${gfv3.results.file}"/>
+
+    <!-- Start Google App Engine Development Server In Profile Mode -->
+    <target name="runserver-profile" depends="datanucleusenhance,datanucleusenhance-v2"
+            description="Starts the development server.">
+        <dev_appserver war="${build.web.dir}" port="${appengine.http.port}" >            
+            <options>
+                <arg line="${jvmargs}"/>
+            </options>
+        </dev_appserver>
+    </target>
+
+    <target name="-deploy-ant" if="${deploy.ant.enabled}">
+        <fail message="Undeploy is not supported for the current target server"/>
+    </target>
+
+    <target name="-undeploy-ant" if="${deploy.ant.enabled}">
+        <fail message="Undeploy is not supported for the current target server"/>
     </target>
 </project>
