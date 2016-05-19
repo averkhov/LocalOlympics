@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+
+    
+<!--  
+   Copyright 2014 - 
+   Licensed under the Academic Free License version 3.0
+   http://opensource.org/licenses/AFL-3.0
+
+   Authors: Alex Verkhovtsev, Karen Bacon
+   
+   Version 0.1 - Spring 2014
+-->
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    
+
+    <!-- ADMIN: RECORD -->
+
+
+	<servlet>
+		<servlet-name>AddRecordServlet</servlet-name>
+		<servlet-class>averkhov.localolympics.servlet.AddRecordServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddRecordServlet</servlet-name>
+		<url-pattern>/auth/admin/addRecord</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>DeleteRecordServlet</servlet-name>
+		<servlet-class>averkhov.localolympics.servlet.DeleteRecordServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteRecordServlet</servlet-name>
+		<url-pattern>/auth/admin/deleteRecord</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>UpdateRecordServlet</servlet-name>
+		<servlet-class>averkhov.localolympics.servlet.UpdateRecordServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateRecordServlet</servlet-name>
+		<url-pattern>/auth/admin/updateRecord</url-pattern>
+	</servlet-mapping>
+
+
+
+
+
+
+
+    <!-- ADMIN: PARTICIPANT -->
+
+	<servlet>
+	    <servlet-name>UpdateParticipantServlet</servlet-name>
+	    <servlet-class>averkhov.localolympics.servlet.UpdateParticipantServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>UpdateParticipantServlet</servlet-name>
+	    <url-pattern>/auth/admin/updateparticipant</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+	    <servlet-name>DeleteParticipantServlet</servlet-name>
+	    <servlet-class>averkhov.localolympics.servlet.DeleteParticipantServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>DeleteParticipantServlet</servlet-name>
+	    <url-pattern>/auth/admin/deleteparticipant</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+	    <servlet-name>AddParticipantServlet</servlet-name>
+	    <servlet-class>averkhov.localolympics.servlet.AddParticipantServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>AddParticipantServlet</servlet-name>
+	    <url-pattern>/auth/admin/addparticipant</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	<!-- ADMIN: ACTIVITY -->
+	<servlet>
+		<servlet-name>AddActivityServlet</servlet-name>
+		<servlet-class>averkhov.localolympics.servlet.AddActivityServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddActivityServlet</servlet-name>
+		<url-pattern>/auth/admin/addActivity</url-pattern>
+	</servlet-mapping>
+	<servlet>
+	    <servlet-name>UpdateActivityServlet</servlet-name>
+	    <servlet-class>averkhov.localolympics.servlet.UpdateActivityServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>UpdateActivityServlet</servlet-name>
+		<url-pattern>/auth/admin/UpdateActivity</url-pattern>
+		</servlet-mapping>
+	<servlet>
+	    <servlet-name>DeleteActivityServlet</servlet-name>
+	    <servlet-class>averkhov.localolympics.servlet.DeleteActivityServlet</servlet-class>
+	    
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>DeleteActivityServlet</servlet-name>
+	    <url-pattern>/auth/admin/deleteActivity</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!-- ADMIN: AWARD -->
+
+
+	<servlet>
+		<servlet-name>AddAwardServlet</servlet-name>
+		<servlet-class>averkhov.localolympics.servlet.AddAwardServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddAwardServlet</servlet-name>
+		<url-pattern>/auth/admin/addAward</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>DeleteAwardServlet</servlet-name>
+		<servlet-class>averkhov.localolympics.servlet.DeleteAwardServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteAwardServlet</servlet-name>
+		<url-pattern>/auth/admin/deleteAward</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>UpdateAwardServlet</servlet-name>
+		<servlet-class>averkhov.localolympics.servlet.UpdateAwardServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateAwardServlet</servlet-name>
+		<url-pattern>/auth/admin/updateAward</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	
+	
+	
+	    <!-- USER: PARTICIPANT -->
+
+	<servlet>
+	    <servlet-name>UpdateParticipantServlet</servlet-name>
+	    <servlet-class>averkhov.localolympics.servlet.UpdateParticipantServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>UpdateParticipantServlet</servlet-name>
+	    <url-pattern>/auth/user/updateParticipant</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+	    <servlet-name>DeleteParticipantServlet</servlet-name>
+	    <servlet-class>averkhov.localolympics.servlet.DeleteParticipantServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>DeleteParticipantServlet</servlet-name>
+	    <url-pattern>/auth/user/deleteParticipant</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+	    <servlet-name>AddParticipantServlet</servlet-name>
+	    <servlet-class>averkhov.localolympics.servlet.AddParticipantServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>AddParticipantServlet</servlet-name>
+	    <url-pattern>/auth/user/addParticipant</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	<!-- USER: RECORD -->
+
+
+	<servlet>
+		<servlet-name>AddRecordServlet</servlet-name>
+		<servlet-class>averkhov.localolympics.servlet.AddRecordServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddRecordServlet</servlet-name>
+		<url-pattern>/auth/user/addRecord</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!--  OPEN ID LOGIN -->
+	
+
+    
+    <servlet>
+        <servlet-name>LoginSessionServlet</servlet-name>
+        <servlet-class>averkhov.localolympics.servlet.LoginSessionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginSessionServlet</servlet-name>
+        <url-pattern>/_login_session</url-pattern>
+    </servlet-mapping>
+	
+	
+    <servlet>
+        <servlet-name>LoginRequiredServlet</servlet-name>
+        <servlet-class>averkhov.localolympics.servlet.LoginRequiredServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginRequiredServlet</servlet-name>
+        <url-pattern>/_ah/login_required</url-pattern>
+    </servlet-mapping>
+    
+    
+    
+    <!-- GENERAL LOGIN FILTER - login required filter for all users -->
+	
+	<filter>
+		<filter-name>LoginRequiredFilter</filter-name>
+		<filter-class>averkhov.localolympics.servlet.LoginRequiredFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>LoginRequiredFilter</filter-name>
+		<url-pattern>/auth/*</url-pattern>
+	</filter-mapping>
+	
+	
+	
+	<!-- ADMIN FILTER -->
+    
+        <filter>
+		<filter-name>AdminLoginFilter</filter-name>
+		<filter-class>averkhov.localolympics.servlet.AdminLoginFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>AdminLoginFilter</filter-name>
+		<url-pattern>/auth/admin/*</url-pattern>
+	</filter-mapping>
+	
+	
+
+	
+	
+	
+	
+		<!--  LOGOUT  -->
+	
+	<servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>averkhov.localolympics.servlet.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    
+    
+    
+    
+    <!--  VALIDATE EMAIL -->
+	
+
+    
+    <servlet>
+        <servlet-name>ValidateEmailServlet</servlet-name>
+        <servlet-class>averkhov.localolympics.servlet.ValidateEmailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ValidateEmailServlet</servlet-name>
+        <url-pattern>/validateEmail</url-pattern>
+    </servlet-mapping>
+    
+    
+    <!--  VALIDATE ALIAS -->
+	
+
+    
+    <servlet>
+        <servlet-name>ValidateAliasServlet</servlet-name>
+        <servlet-class>averkhov.localolympics.servlet.ValidateAliasServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ValidateAliasServlet</servlet-name>
+        <url-pattern>/validateAlias</url-pattern>
+    </servlet-mapping>
+    
+    
+	
+
+	<!-- WELCOME FILE -->
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
