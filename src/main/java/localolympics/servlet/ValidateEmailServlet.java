@@ -6,7 +6,7 @@
  * Authors: Alex Verkhovtsev
  */
 
-package averkhov.localolympics.servlet;
+package localolympics.servlet;
 
 import javax.servlet.http.*;
 import javax.servlet.ServletException;
@@ -16,7 +16,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-import averkhov.localolympics.db.Participant;
+import localolympics.db.Participant;
 
 
 

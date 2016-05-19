@@ -6,7 +6,7 @@
  * Authors: Alex Verkhovtsev
  */
 
-package averkhov.localolympics.servlet;
+package localolympics.servlet;
 
 import java.io.IOException;
 import java.util.HashMap;

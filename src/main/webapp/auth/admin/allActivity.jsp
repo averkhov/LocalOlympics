@@ -10,8 +10,8 @@
 <%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
 <%@ page import="com.google.appengine.api.datastore.Key" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
-<%@page import="averkhov.localolympics.db.Participant"%>
-<%@page import="averkhov.localolympics.db.Activity"%>
+<%@ page import="localolympics.db.Participant" %>
+<%@ page import="localolympics.db.Activity" %>
 
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 

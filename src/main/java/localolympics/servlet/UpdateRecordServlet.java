@@ -6,13 +6,13 @@
  * Authors: Alex Verkhovtsev
  */
 
-package averkhov.localolympics.servlet;
+package localolympics.servlet;
 
 import javax.servlet.http.*;
 
 import java.io.IOException;
 
-import averkhov.localolympics.db.Record;
+import localolympics.db.Record;
 
 
 

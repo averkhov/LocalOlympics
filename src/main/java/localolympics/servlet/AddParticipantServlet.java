@@ -8,7 +8,7 @@
 
 
 
-package averkhov.localolympics.servlet;
+package localolympics.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,7 +33,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-import averkhov.localolympics.db.Participant;
+import localolympics.db.Participant;
 
 
 /**

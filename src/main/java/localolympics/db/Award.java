@@ -6,7 +6,7 @@
  * Authors: Karen Bacon
  */
 
-package averkhov.localolympics.db;
+package localolympics.db;
 
 import java.util.Date;
 import java.util.List;

@@ -3,35 +3,35 @@
  * Licensed under the Academic Free License version 3.0
  * http://opensource.org/licenses/AFL-3.0
  * 
- * Authors: Karen Bacon
+ * Authors: Alex Verkhovtsev
  */
 
-package averkhov.localolympics.servlet;
+package localolympics.servlet;
 
 import javax.servlet.http.*;
 import java.io.IOException;
 
-import averkhov.localolympics.db.Activity;
+import localolympics.db.Record;
 
 
 
-public class DeleteActivityServlet extends HttpServlet {
+public class DeleteRecordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	
 	@Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String id = req.getParameter("id");
-        Activity.deleteActivity(id);
-        resp.sendRedirect("allActivity.jsp");
+        Record.deleteRecord(id);
+        resp.sendRedirect("allRecords.jsp");
 		
     }
 	
 	@Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String id = req.getParameter("id");
-        Activity.deleteActivity(id);
-        resp.sendRedirect("allActivity.jsp");
+        Record.deleteRecord(id);
+        resp.sendRedirect("allRecords.jsp");
 		
     }
 	
