@@ -7,7 +7,7 @@
  * Authors: Karen Bacon, Alex Verkhovtsev
  */
 
-package averkhov.localolympics.db;
+package localolympics.db;
 
 import java.util.List;
 

@@ -7,7 +7,7 @@
  */
 
 
-package averkhov.localolympics.servlet;
+package localolympics.servlet;
 
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import averkhov.localolympics.db.Participant;
+import localolympics.db.Participant;
 
 @SuppressWarnings("serial")
 public class DeleteParticipantServlet extends HttpServlet{

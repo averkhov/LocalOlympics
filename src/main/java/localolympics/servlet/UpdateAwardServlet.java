@@ -6,33 +6,28 @@
  * Authors: Karen Bacon
  */
 
-package averkhov.localolympics.servlet;
+package localolympics.servlet;
 
 import javax.servlet.http.*;
+
 import java.io.IOException;
 
-import averkhov.localolympics.db.Award;
+import localolympics.db.Award;
 
 
 
-public class DeleteAwardServlet extends HttpServlet {
+public class UpdateAwardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	
 	@Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String id = req.getParameter("id");
-        Award.deleteAward(id);
+		String value = req.getParameter("awardName");
+        String recordID = req.getParameter("recordID");
+        String participantID = req.getParameter("participantID");
+        Award.updateAward(id, participantID, recordID, value);
         resp.sendRedirect("allAwards.jsp");
-		
-    }
-	
-	@Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		String id = req.getParameter("id");
-        Award.deleteAward(id);
-        resp.sendRedirect("allAwards.jsp");
-		
     }
 	
 
