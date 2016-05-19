@@ -6,7 +6,7 @@
  * Authors: Alex Verkhovtsev
  */
 
-package localolympics.db;
+package averkhov.localolympics.db;
 
 import java.sql.Time;
 import java.util.*;
@@ -28,7 +28,7 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.CompositeFilter;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 
-import localolympics.db.Activity;
+import averkhov.localolympics.db.Activity;
 
 /**
  * GAE ENTITY UTIL CLASS: "Record" <br>

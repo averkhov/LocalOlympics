@@ -6,13 +6,13 @@
 * Authors: Karen Bacon
 */
 
-package localolympics.servlet;
+package averkhov.localolympics.servlet;
 
 import javax.servlet.http.*;
 
 import java.io.IOException;
 
-import localolympics.db.Activity;
+import averkhov.localolympics.db.Activity;
 
 
 

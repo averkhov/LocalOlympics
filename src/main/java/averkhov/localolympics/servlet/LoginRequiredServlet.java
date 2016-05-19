@@ -8,7 +8,7 @@
 
 
 
-package localolympics.servlet;
+package averkhov.localolympics.servlet;
 
 
 import java.io.IOException;

@@ -6,14 +6,14 @@
  * Authors: Karen Bacon
  */
 
-package localolympics.servlet;
+package averkhov.localolympics.servlet;
 
 import javax.servlet.http.*;
 import javax.servlet.ServletException;
 
 import java.io.IOException;
 
-import localolympics.db.Activity;
+import averkhov.localolympics.db.Activity;
 
 public class AddActivityServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

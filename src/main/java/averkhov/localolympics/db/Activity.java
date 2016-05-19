@@ -1,4 +1,4 @@
-package localolympics.db;
+
 /**
  * Copyright 2014 -
  * Licensed under the Academic Free License version 3.0
@@ -7,7 +7,7 @@ package localolympics.db;
  * Authors: Karen Bacon, Alex Verkhovtsev
  */
 
-
+package averkhov.localolympics.db;
 
 import java.util.List;
 

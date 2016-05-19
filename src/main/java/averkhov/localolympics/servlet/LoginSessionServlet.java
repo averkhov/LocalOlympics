@@ -8,7 +8,7 @@
 
 
 
-package localolympics.servlet;
+package averkhov.localolympics.servlet;
 
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-import localolympics.db.Participant;
+import averkhov.localolympics.db.Participant;
 
 @SuppressWarnings("serial")
 public class LoginSessionServlet extends HttpServlet {

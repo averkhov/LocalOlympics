@@ -7,7 +7,7 @@
  */
 
 
-package localolympics.servlet;
+package averkhov.localolympics.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import localolympics.db.Participant;
+import averkhov.localolympics.db.Participant;
 
 /**
  * Update the admin profile.

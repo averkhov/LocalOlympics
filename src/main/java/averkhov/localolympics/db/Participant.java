@@ -8,7 +8,7 @@
 
 
 
-package localolympics.db;
+package averkhov.localolympics.db;
 
 
 import java.util.ArrayList;
