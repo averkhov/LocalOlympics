@@ -111,10 +111,14 @@
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
     
+    String username = "";
+    
     if (user == null) {
+        
+        username = "Guest";
     	
     	%>
-			<jsp:forward page="/index.jsp" />
+			
 		<%
 		
     } else {
@@ -131,13 +135,15 @@
         	<%
         	
         }else{
+            
+            username = Participant.getFirstName(participant) + " " + Participant.getLastName(participant);
         	
 	%>
 		<div class="top" style="float:left">
 			<a class="topbarmenumain" href="/index.jsp">LOCAL OLYMPICS</a> 
 			
 		</div>
-		<div class="top" id="menudrop" style="float:right"><a class="topbarmenu" href="#" onmouseover="popup();" onmouseout="popoff();"><%=Participant.getFirstName(participant)%> <%=Participant.getLastName(participant)%></a></div>
+		<div class="top" id="menudrop" style="float:right"><a class="topbarmenu" href="#" onmouseover="popup();" onmouseout="popoff();"><%=username%></a></div>
 		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
 		<ul>
 			<li><a class="topbarmenu" href="profile.jsp" >PROFILE</a><hr/></li>
@@ -201,9 +207,9 @@
 						{
 							String value = Record.getValue(record);
 							String valueID = Record.getStringID(record);
-							String username = Participant.getAlias(Participant.getParticipant(Record.getParticipantID(record)));
-							if (username==null | username.equals("")){
-								username = Participant.getFirstName(Participant.getParticipant(Record.getParticipantID(record))) + 
+							String uname = Participant.getAlias(Participant.getParticipant(Record.getParticipantID(record)));
+							if (uname==null | uname.equals("")){
+								uname = Participant.getFirstName(Participant.getParticipant(Record.getParticipantID(record))) + 
 										(Record.getParticipantID(record).substring(10));
 							}
 							String date = Record.getDate(record);
@@ -276,9 +282,9 @@
 						for (Entity record : allOtherRecords) {
 							String userID = Record.getParticipantID(record);
 							String value = Record.getValue(record);
-							String username = Participant.getAlias(Participant.getParticipant(Record.getParticipantID(record)));
-							if (username==null | username.equals("")){
-								username = Participant.getFirstName(Participant.getParticipant(Record.getParticipantID(record))) + 
+							String uname = Participant.getAlias(Participant.getParticipant(Record.getParticipantID(record)));
+							if (uname==null | uname.equals("")){
+								uname = Participant.getFirstName(Participant.getParticipant(Record.getParticipantID(record))) + 
 										(Record.getParticipantID(record).substring(10));
 							}
 							String date = Record.getDate(record);
