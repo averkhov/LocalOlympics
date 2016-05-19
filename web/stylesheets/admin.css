@@ -1,0 +1,130 @@
+@CHARSET "ISO-8859-1";
+
+/*  
+   Copyright 2014 - 
+   Licensed under the Academic Free License version 3.0
+   http://opensource.org/licenses/AFL-3.0
+
+   Authors: Alex Verkhovtsev
+   
+   Version 0.1 - Spring 2014
+*/
+body {
+	width: 99%;
+	margin: 0px auto;
+	background-color: white;
+	float: left;
+}
+
+.background{
+	background-color:EEEECC;
+	vertical-align:center;
+	width: 100%;
+	padding: 3px;
+	margin: 0px auto;
+	color: black;
+	text-align: left;
+	float: left;
+	
+}
+
+.backgroundwrapper{
+	background-color:EEEECC;
+	vertical-align:center;
+	width: 99%;
+	height: 99%;
+	padding: 3px;
+	margin: 0px auto;
+	
+}
+
+.topbar{
+	background-color:white;
+	height: 40px;
+	width: 99%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 2px;
+}
+
+.top{
+	background-color:white;
+	padding: 2px;
+	padding-right: 10px;
+	padding-left: 10px;
+	position: relative;
+	z-index: 1; 
+}
+
+.popup{
+	border: 1px black solid;
+	background-color: white;
+	padding-left: 40px;
+	z-index: 2;
+	
+}
+
+.editcss{
+	border: 1px black solid;
+	background-color: white;
+	z-index: 2;
+	
+}
+
+
+
+
+h1 {
+	padding: 5px;
+	margin: 0px;
+	color: Gray;
+	background-color: white;
+	text-align: left;
+	margin-bottom: 3px;
+}
+
+
+form {
+	display: inline;
+}
+
+table,th,td,tfoot,tr {
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: left;
+	padding: 2px;
+}
+
+#edittablecss{
+	width: 100%;
+	border: 0px solid white;
+}
+
+#edittablecss th{
+	border: 0px solid white;
+}
+
+#edittablecss td{
+	border: 0px solid white;
+}
+
+
+th {
+	color: black;
+	background-color: white;
+}
+
+
+td {
+	color: black;
+	background-color: white;
+}
+
+ul{
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+
