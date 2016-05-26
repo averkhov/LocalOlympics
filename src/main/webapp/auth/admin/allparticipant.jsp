@@ -271,6 +271,7 @@ function popoff(){
 				String isAdmin = Participant.getIsAdmin(Participant1);
 				String validated = Participant.getValidatedEmail(Participant1);
 				String email = Participant.getEmail(Participant1);
+                                String alias = Participant.getAlias(Participant1);
 				
 					
 		%>
@@ -300,7 +301,7 @@ function popoff(){
 								<td class="editTable" width=90>First Name:</td>
 								<td class="editTable"><input type="text"
 									id="editParticipantFirstNameInput<%=ParticipantID%>"
-									class="editParticipantNameInput" value="<%=ParticipantFirstName%>"
+									class="editParticipantFirstNameInput" value="<%=ParticipantFirstName%>"
 									name="participantFirstName" />
 								</td>
 										
@@ -309,8 +310,17 @@ function popoff(){
 								<td class="editTable" width=90>Last Name:</td>
 								<td class="editTable"><input type="text"
 									id="editParticipantLastNameInput<%=ParticipantID%>"
-									class="editParticipantNameInput" value="<%=ParticipantLastName%>"
+									class="editParticipantLastNameInput" value="<%=ParticipantLastName%>"
 									name="participantLastName" />
+									</td>
+										
+							</tr>
+                                                        <tr>
+								<td class="editTable" width=90>Alias:</td>
+								<td class="editTable"><input type="text"
+									id="editParticipantAliasInput<%=ParticipantID%>"
+									class="editParticipantAliasInput" value="<%=alias%>"
+									name="participantAlias" />
 									</td>
 										
 							</tr>

@@ -309,7 +309,7 @@
 						%>
 						
 						<tr>
-							<td><%=username%></td>
+							<td><%=uname%></td>
 							<td><%=value%></td>
 							<td><%=dateText %></td>
 						</tr>
@@ -333,7 +333,7 @@
 								usersEntered.add(userID);
 								%>
 							<tr>
-								<td><%=username%></td>
+								<td><%=uname%></td>
 								<td><%=value%></td>
 								<td><%=dateText %></td>
 							</tr>
