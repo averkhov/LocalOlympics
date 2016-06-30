@@ -168,7 +168,7 @@
     <!-- GENERAL LOGIN FILTER - login required filter for all users -->
     <filter>
         <filter-name>LoginRequiredFilter</filter-name>
-        <filter-class>localolympics.servlet.LoginRequiredFilter</filter-class>
+        <filter-class>localolympics.filters.LoginRequiredFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>LoginRequiredFilter</filter-name>
@@ -177,7 +177,7 @@
     <!-- ADMIN FILTER -->
     <filter>
         <filter-name>AdminLoginFilter</filter-name>
-        <filter-class>localolympics.servlet.AdminLoginFilter</filter-class>
+        <filter-class>localolympics.filters.AdminLoginFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AdminLoginFilter</filter-name>
