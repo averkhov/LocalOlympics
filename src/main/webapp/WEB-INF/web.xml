@@ -7,8 +7,15 @@
 
    Authors: Alex Verkhovtsev, Karen Bacon
    
-   Version 0.1 - Spring 2014
--->
+   Version 0.1 - Spring 2014 -->
+   
+   
+
+
+
+    
+   
+
     <session-config>
         <session-timeout>
             30
@@ -210,6 +217,25 @@
         <servlet-name>ValidateAliasServlet</servlet-name>
         <url-pattern>/validateAlias</url-pattern>
     </servlet-mapping>
+    
+    
+   <servlet>
+        <servlet-name>RestletServlet</servlet-name>
+        <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
+        <init-param>
+            <param-name>org.restlet.application</param-name>
+            <param-value>localolympics.rest.ApplicationConfig</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RestletServlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+    
+
+
+
+    
     <!-- WELCOME FILE -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--  
+   Copyright 2014 - 
+   Licensed under the Academic Free License version 3.0
+   http://opensource.org/licenses/AFL-3.0
+
+   Authors: Anugh
+   
+   Version 0.1 - Spring 2014
+-->
+
+<!-- test -->
+<html>
+
+<head> 
+<title>Add Activity</title>
+
+   <link type="text/css" rel="stylesheet" href="/stylesheets/admin.css" />
+   
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <script>
+    
+    function editButton(activityID) {
+    	$("#activityIDUpdate").val(activityID);
+    	$("#activityNameUpdate").val($("#activityName"+activityID).val());
+    	$("#descriptionUpdate").val($("#description"+activityID).val());
+    	$("#typeUpdate").val($("#type"+activityID).val());
+    	$("#addressUpdate").val($("#address"+activityID).val());
+    	var pos = $("#view" + activityID).position();
+	    	$("#edit").css({
+	            position: "absolute",
+	            top: (pos.top + 20) + "px",
+	            left: (pos.left + 200) + "px",
+	            width: 400 + "px"
+	        }).show();
+	    	document.getElementById("edit").style.display = "";
+    	
+    	
+    }
+    
+    function cancelButton() {
+    	document.getElementById("edit").style.display = "none";
+    }
+    
+    function deleteButton(ID) {
+    	if(confirm('Are you sure you want to delete this Activity?')){
+    		window.location = 'deleteActivity?id=' + ID;
+    	}else{
+    	
+    	}
+    }
+    
+    
+    function saveButton() {
+    	document.forms["finalSubmit"].submit();
+    }
+    
+    
+    function popup(){
+        var pos = $("#menudrop").position();
+        var wid = $("#menudrop").width();
+        $("#popup").css({
+            position: "absolute",
+            top: (pos.top + 15) + "px",
+            left: pos.left + "px",
+            width: wid + "px"
+        }).show();
+        document.getElementById("popup").style.display = "";
+
+    }
+    function popoff(){
+        document.getElementById("popup").style.display = "none";
+    }
+    
+    function httpGet(theUrl, callback)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() { 
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        }
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+        xmlHttp.send(null);
+    }
+    
+    data = {};
+    
+    data.d = httpGet('/rest/json/activity/get')
+    
+    
+    
+    $('#activityTable tr').not(':first').not(':last').remove();
+    var html = '';
+    for(var i = 0; i < data.d.length; i++)
+                html += '<tr id="view' + data.d[i].id + '><td>' + data.d[i].properties.name + '</td><td>' + data.d[i].properties.name + '</td></tr>';
+    $('#activityTable tr').first().after(html);
+    
+    
+    </script>
+   
+   </head>
+<body>
+	  <div class="topbar"></div>
+	  <div class="backgroundwrapper" id="back">
+	  <div class="background">
+
+ 
+		<div class="top" style="float:left">
+			<a class="topbarmenu" href="/index.jsp">LOCAL OLYMPICS</a> | 
+			<a class="topbarmenu" href="/auth/user/home.jsp">HOME</a> | 
+			<a class="topbarmenu" href="/auth/admin/admin.jsp">ADMIN</a>
+		</div>
+		<div class="top" id="menudrop" style="float:right"><a href="#" onmouseover="popup();" onmouseout="popoff();">NAME</a></div>
+		<div id="popup" class="popup" onmouseover="popup();" onmouseout="popoff();" style="display:none">
+		<ul>
+			<li><a href="/auth/user/profile.jsp" >PROFILE</a></li>
+			<li><a href="/logout" >LOGOUT</a></li>
+		</ul>
+		</div>
+
+    	<br />
+    	<br />
+    	
+
+	<table id="activityTable">
+		<tr>
+			<th>Activity Name</th><th>Activity Type</th><th>Activity Description</th><th>Activity Location</th><th>Limit</th><th>edit</th><th>delete</th>
+		</tr>
+
+
+	<tr id="view"></tr>
+
+	</table>
+
+	<h3>No Activities Listed</h3>
+
+	<hr />
+	<h1>Create Activity</h1>
+	<form action = "addActivity" method = "post">
+	<table border="1">
+	 <tr>
+	 	<td>Activity Name: </td><td colspan="5"><input type = "text" name = "ActivityName" /></td>
+	</tr>
+	<tr>
+		<td>Description: </td><td colspan="5"><input type = "text" name = "description" /></td>
+	</tr>
+	<tr>
+		<td>Type: </td>
+		<td colspan="5">
+		<select name = "type">
+		<option value = ""> </option>
+		<option value = "Running">Running </option>
+		<option value = "Walking" >Walking</option>
+		<option value = "Swimming">Swimming</option>
+		<option value = "Hiking">Hiking</option>
+
+		</select>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="6">Time limit: </td>
+	</tr>
+	<tr>
+            <td>Hour: </td>
+            <td>
+                <select name = "limithour" id="hourUpdate">
+                    <option value = "1">1</option>
+                </select>
+            </td>
+            <td>Minute: </td>
+            <td>
+                <select name = "limitminute" id="minuteUpdate">
+                    <option value = "1">1</option>
+                </select>
+            </td>
+            <td>Second:</td>
+            <td>
+                <select name = "limitsecond" id="secondUpdate">
+                    <option value = "1">1</option>
+                </select>
+            </td>
+	</tr>
+	<tr>
+		<td>Zipcode: </td><td colspan="5"><input type = "text" name = "address"/></td>
+	</tr>
+	</table>
+	<input type="submit" value="Add Activity" />
+	</form>
+	
+
+	
+	<div id="edit" class="editcss" style="display:none">
+    	<form id="finalSubmit" action="UpdateActivity" method="post">
+    		
+	    	<input id="activityIDUpdate" type="text" name="id" />
+	    	<table id="edittablecss">
+    		<tr>
+	    	<td>Activity Name: </td>
+	    	<td><input id="activityNameUpdate" type="text"  name="activityName" /></td>
+	    	</tr>
+	    	<tr>
+	    	<td>Description: </td>
+	    	<td><input id="descriptionUpdate" type="text" name="description"  /></td>
+	    	</tr>
+			<tr>
+			<td>Type: </td>
+			<td><select id="typeUpdate" name = "type">
+				<option value = ""> </option>
+				<option value = "Running">Running </option>
+				<option value = "Walking" >Walking</option>
+				<option value = "Swimming">Swimming</option>
+				<option value = "Hiking">Hiking</option>
+			</select>
+			</td>
+			</tr>
+			<tr>
+			<td colspan="2">
+			<table id="edittablecss">
+				<tr>
+					<td colspan="6">Time limit: </td>
+				</tr>
+				<tr>
+					<td>Hour: </td>
+					<td>
+                                            <select name = "limithour" id="hourUpdate">
+                                                <option value = "1">1</option>
+                                            </select>
+					</td>
+					<td>Minute: </td>
+					<td>
+                                            <select name = "limitminute" id="minuteUpdate">
+                                                <option value = "1">1</option>
+                                            </select>
+					</td>
+					<td>Second:</td>
+					<td>
+                                            <select name = "limitsecond" id="secondUpdate">
+                                                <option value = "1">1</option>
+                                            </select>
+					</td>
+				</tr>
+			</table>
+			</td>
+			</tr>
+			<tr>
+			<td>Address: </td>
+			<td><input id ="addressUpdate" type="text" name="address" /></td>
+			</tr>
+			<tr>
+			<td colspan="2">
+			<button type="button" onclick="cancelButton()">cancel</button>
+			<button type="button" onclick="saveButton()">Save</button>
+			</td>
+			</tr>
+			</table>
+    	</form>
+    </div>
+    </div>
+	</div>
+</body>
+</html>

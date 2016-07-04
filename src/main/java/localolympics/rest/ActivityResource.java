@@ -9,31 +9,39 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import localolympics.db.Activity;
+import com.google.appengine.api.datastore.Entity;
+import java.util.List;
 
 /**
  *
  * @author averkhovtsev
  */
 @Path("/json/activity")
-public class Activity {
+public class ActivityResource{
     
 
 
 	@GET
 	@Path("/get")
-	@Produces("application/json")
-	public Activity getProductInJSON() {
+        @Produces("application/json")
+	public Response getActivityInJSON() {
+            
+            List<Entity> allActivity = Activity.getFirstActivity(100);
+            
 
-            return null;
+            //String result = "Restful example : ";
+            return Response.status(200).entity(allActivity).build();
 
 	}
 
 	@POST
 	@Path("/post")
 	@Consumes("application/json")
-	public Response createProductInJSON() {
+	public Response createActivityInJSON() {
             return null;
 		
 	}

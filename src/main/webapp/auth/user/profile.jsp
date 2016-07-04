@@ -41,7 +41,7 @@
     <title>Local Olympics</title>
     
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     
     <script>
 
