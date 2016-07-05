@@ -27,14 +27,15 @@
     	$("#descriptionUpdate").val($("#description"+activityID).val());
     	$("#typeUpdate").val($("#type"+activityID).val());
     	$("#addressUpdate").val($("#address"+activityID).val());
-    	var pos = $("#view" + activityID).position();
-	    	$("#edit").css({
-	            position: "absolute",
-	            top: (pos.top + 20) + "px",
-	            left: (pos.left + 200) + "px",
-	            width: 400 + "px"
-	        }).show();
-	    	document.getElementById("edit").style.display = "";
+    	//var pos = $("#view" + activityID).position();
+        //console.log(pos);
+        $("#edit").css({
+            position: "absolute",
+            top: (20) + "px",
+            left: (200) + "px",
+            width: 400 + "px"
+        }).show();
+        document.getElementById("edit").style.display = "";
     	
     	
     }
@@ -86,15 +87,25 @@
     
     data = {};
     
-    data.d = httpGet('/rest/json/activity/get')
+    httpGet('/rest/json/activity/get', function(response){
+        console.log(response);
+        data.d = JSON.parse(response);
+        console.log(data.d);
+        $('#activityTable tr').not(':first').not(':last').remove();
+        var html = '';
+        for(var i = 0; i < data.d.length; i++)
+                    html += '<tr id="view"' + data.d[i].key.id + '><td>' +  
+                        data.d[i].properties.name.toString() + '<input id="activityName' + data.d[i].key.id + '" type="hidden" value="' + data.d[i].properties.name.toString() + '" /></td><td>' + 
+                        data.d[i].properties.type + '<input id="type' + data.d[i].key.id + '" type="hidden" value="' + data.d[i].properties.type + '" /></td><td>' + 
+                        data.d[i].properties.description + '<input id="description' + data.d[i].key.id + '" type="hidden" value="' + data.d[i].properties.description + '" /></td><td>' + 
+                        data.d[i].properties.location + '<input id="address' + data.d[i].key.id + '" type="hidden" value="' + data.d[i].properties.location + '" /></td><td>' + 
+                        data.d[i].properties.limit + '<input id="limit' + data.d[i].key.id + '" type="hidden" value="' + data.d[i].properties.limit + '" /></td><td>' + 
+                        '<button type="button" onclick="editButton(' + data.d[i].key.id + ')">Edit</button></td><td><button type="button" onclick="deleteButton(' + data.d[i].key.id + ')">Delete</button></td></tr>';
+        $('#activityTable tr').first().after(html);
+    });
     
     
     
-    $('#activityTable tr').not(':first').not(':last').remove();
-    var html = '';
-    for(var i = 0; i < data.d.length; i++)
-                html += '<tr id="view' + data.d[i].id + '><td>' + data.d[i].properties.name + '</td><td>' + data.d[i].properties.name + '</td></tr>';
-    $('#activityTable tr').first().after(html);
     
     
     </script>
@@ -125,15 +136,17 @@
 
 	<table id="activityTable">
 		<tr>
-			<th>Activity Name</th><th>Activity Type</th><th>Activity Description</th><th>Activity Location</th><th>Limit</th><th>edit</th><th>delete</th>
+                    <th>Activity Name</th>
+                    <th>Activity Type</th>
+                    <th>Activity Description</th>
+                    <th>Activity Location</th>
+                    <th>Limit</th>
+                    <th>edit</th>
+                    <th>delete</th>
 		</tr>
-
-
-	<tr id="view"></tr>
 
 	</table>
 
-	<h3>No Activities Listed</h3>
 
 	<hr />
 	<h1>Create Activity</h1>
