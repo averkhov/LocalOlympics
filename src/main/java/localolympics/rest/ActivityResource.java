@@ -8,6 +8,8 @@ package localolympics.rest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,30 +22,82 @@ import java.util.List;
  *
  * @author averkhovtsev
  */
-@Path("/json/activity")
+@Path("/activity")
 public class ActivityResource{
     
-
-
+        /**
+        *
+        * get all activity
+        */
 	@GET
-	@Path("/get")
+	@Path("/all")
         @Produces("application/json")
-	public Response getActivityInJSON() {
-            
+	public Response getAllActivity() {
             List<Entity> allActivity = Activity.getFirstActivity(100);
-            
-
-            //String result = "Restful example : ";
             return Response.status(200).entity(allActivity).build();
-
 	}
-
+        
+        /**
+        *
+        * get activity by ID
+        */
+	@GET
+	@Path("/{id}")
+        @Produces("application/json")
+	public Response getActivity(@PathParam("id") String id ) {
+            Entity activity = Activity.getActivity(id);
+            return Response.status(200).entity(activity).build();
+	}
+        
+        
+        /**
+        *
+        * create Activity
+        */
 	@POST
-	@Path("/post")
+	@Path("/create")
 	@Consumes("application/json")
-	public Response createActivityInJSON() {
-            return null;
+	public Response createActivity(Activity act) {
+            Activity.createActivity(act.getName(),
+                                    act.getDescription(),
+                                    act.getType(),
+                                    act.getLimithour(),
+                                    act.getLimitmin(),
+                                    act.getLimitsec(),
+                                    act.getLocation());
+            return Response.status(200).entity(act.getName()).build();
+	}
+        
+        /**
+        *
+        * update Activity
+        */
+        @PUT
+	@Path("/update")
+	@Consumes("application/json")
+	public Response udpateActivity(Activity act) {
+            Activity.UpdateActivity(act.getId(),
+                                    act.getName(),
+                                    act.getDescription(),
+                                    act.getType(),
+                                    act.getLocation(),
+                                    act.getLimithour(),
+                                    act.getLimitmin(),
+                                    act.getLimitsec());
+            return Response.status(200).entity(act.getName()).build();
 		
+	}
+        
+        
+        /**
+        *
+        * delete Activity
+        */
+        @DELETE
+	@Path("/delete/{id}")
+	public Response deleteActivity(@PathParam("id") String id ) {
+            Activity.deleteActivity(id);
+            return Response.status(200).build();
 	}
 	
 }

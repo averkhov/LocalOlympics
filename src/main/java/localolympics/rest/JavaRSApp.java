@@ -20,6 +20,9 @@ public class JavaRSApp extends Application{
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> classes = new HashSet<Class<?>>();
         	classes.add(localolympics.rest.ActivityResource.class);
+                classes.add(localolympics.rest.AwardResource.class);
+                classes.add(localolympics.rest.ParticipantResource.class);
+                classes.add(localolympics.rest.RecordResource.class);
         	return classes;
 	}
     

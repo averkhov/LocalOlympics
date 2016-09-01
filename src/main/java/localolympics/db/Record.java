@@ -31,6 +31,8 @@ import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import localolympics.db.Activity;
 import localolympics.db.Activity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * GAE ENTITY UTIL CLASS: "Record" <br>
  * PARENT: NONE <br>
@@ -116,13 +118,98 @@ public class Record {
 	 */
 	private static final String DATE_PROPERTY = "Date";
 	
-	private static final String SECOND_VALUE = "Second";
-	
 	private static final String RECORDAWARD_PROPERTY = "recordAward";
 	
 	private static final String LONGTIME_PROPERTY = "longTime";
 	
 	private static final String ISVALID_PROPERTY = "isValid";
+        
+        @JsonProperty
+        public String getId() {
+            return id;
+        }
+        @JsonProperty
+        public void setId(String id) {
+            this.id = id;
+        }
+        @JsonProperty
+        public String getParticipantId() {
+            return participantId;
+        }
+        @JsonProperty
+        public void setParticipantId(String participantId) {
+            this.participantId = participantId;
+        }
+        @JsonProperty
+        public String getActivityId() {
+            return activityId;
+        }
+        @JsonProperty
+        public void setActivityId(String activityId) {
+            this.activityId = activityId;
+        }
+        @JsonProperty
+        public String getValue() {
+            return value;
+        }
+        @JsonProperty
+        public void setValue(String value) {
+            this.value = value;
+        }
+        @JsonProperty
+        public String getIsValid() {
+            return isValid;
+        }
+        @JsonProperty
+        public void setIsValid(String isValid) {
+            this.isValid = isValid;
+        }
+        @JsonProperty
+        public String getDate() {
+            return date;
+        }
+        @JsonProperty
+        public void setDate(String date) {
+            this.date = date;
+        }
+        @JsonProperty
+        public String getHour() {
+            return hour;
+        }
+        @JsonProperty
+        public void setHour(String hour) {
+            this.hour = hour;
+        }
+        @JsonProperty
+        public String getMinute() {
+            return minute;
+        }
+        @JsonProperty
+        public void setMinute(String minute) {
+            this.minute = minute;
+        }
+        @JsonProperty
+        public String getSecond() {
+            return second;
+        }
+        @JsonProperty
+        public void setSecond(String second) {
+            this.second = second;
+        }
+        
+        
+        
+        private String id;
+        private String participantId;
+        private String activityId;
+        private String value;
+        private String isValid;
+        private String date;
+        private String hour;
+        private String minute;
+        private String second;
+
+        
 	
 	//
 	// GETTERS
@@ -267,7 +354,6 @@ public class Record {
 
 			record = new Entity(ENTITY_KIND);
 			record.setProperty(VALUE_PROPERTY, value);
-			record.setProperty(SECOND_VALUE, totalSecond + "");
 			record.setProperty(PARTICIPANTID_PROPERTY, participantID);
 			record.setProperty(ACTIVITYID_PROPERTY, activityID);
 

@@ -27,6 +27,8 @@ import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 /**
  * GAE ENTITY UTIL CLASS: "Award" <br>
@@ -96,33 +98,65 @@ public class Award {
 	/**
 	 * The property value for the <b>value</b> value of the award.
 	 */
-	private static final String VALUE_PROPERTY = "Value";
+	private static final String VALUE_PROPERTY = "value";
 
 	/**
 	 * The property participantID for the <b>participantid</b> value of the award.
 	 */
-	private static final String PARTICIPANTID_PROPERTY = "ParticipantID";
+	private static final String PARTICIPANTID_PROPERTY = "participantId";
 	
 	/**
 	 * The property recordID for the <b>recordID</b> value of the award.
 	 */
-	private static final String RECORDID_PROPERTY = "RecordID";
+	private static final String RECORDID_PROPERTY = "recordId";
 	
 	/**
-	 * The property Name for name value of the award.
+	 * The property Name for date value of the award.
 	 */
-	private static final String NAME_PROPERTY = "Name";
-	
-	/**
-	 * The property awardID for the awardID value of award.
-	 */
-	private static final String AWARDID_PROPERTY = "AwardID";
+	private static final String DATE_PROPERTY = "date";
 			
-	/**
-	 * The property Description for Description value of award.
-	 */
-	
-	private static final String DESCRIPTION_PROPERTY = "Description";
+        
+        
+        private String id;
+        private String recordId;
+        private String participantId;
+        private String value;
+
+        
+        @JsonProperty
+        public String getId(){
+            return id;
+        }
+        @JsonProperty
+        public void setId(String id){
+            this.id = id;
+        }
+        @JsonProperty
+        public String getRecordId(){
+            return recordId;
+        }
+        @JsonProperty
+        public void setRecordId(String recordId){
+            this.recordId = recordId;
+        }
+        @JsonProperty
+        public String getParticipantId(){
+            return participantId;
+        }
+        @JsonProperty
+        public void setParticipantId(String participantId){
+            this.participantId = participantId;
+        }
+        @JsonProperty
+        public String getValue(){
+            return value;
+        }
+        @JsonProperty
+        public void setValue(String value){
+            this.value = value;
+        }
+        
+        
 	
 	
 	//
@@ -154,32 +188,22 @@ public class Award {
 			participantID = "";
 		return (String) participantID;
 	}
-	
-	/**
+        
+        /**
 	 * Return the recordID for the award.
 	 * 
 	 * @param award The GAE Entity storing the attribute
 	 * @return the recordID in the award.
 	 */
 	public static String getRecordID(Entity award) {
-		Object recordID = award.getProperty(AWARDID_PROPERTY);
+		Object recordID = award.getProperty(RECORDID_PROPERTY);
 		if (recordID == null)
 			recordID = "";
 		return (String) recordID;
 	}
 	
-	/**
-	 * Return the date for the award.
-	 * 
-	 * @param award The GAE Entity storing the attribute
-	 * @return the date in the award.
-	 */
-	public static String getName(Entity award) {
-		Object name = award.getProperty(NAME_PROPERTY);
-		if (name == null)
-			name = "";
-		return (String) name;
-	}
+
+
 	
 
 	
@@ -205,8 +229,9 @@ public class Award {
 			award = new Entity(ENTITY_KIND);
 			award.setProperty(VALUE_PROPERTY, value);
 			award.setProperty(PARTICIPANTID_PROPERTY, participantID);
-			award.setProperty(AWARDID_PROPERTY, recordID);
-			award.setProperty(NAME_PROPERTY, getName(award));
+			award.setProperty(RECORDID_PROPERTY, recordID);
+                        Date date = new Date();
+			award.setProperty(DATE_PROPERTY, date.toString());
 			
 			
 			datastore.put(award);
@@ -226,7 +251,7 @@ public class Award {
 	
 	
 	//
-	// GET RECORD
+	// GET AWARD
 	//
 
 	/**
@@ -269,11 +294,11 @@ public class Award {
 		try {
 			award = getAward(awardID);
 			award.setProperty(VALUE_PROPERTY, value);
-			award.setProperty(AWARDID_PROPERTY, recordID);
+			award.setProperty(RECORDID_PROPERTY, recordID);
 			award.setProperty(PARTICIPANTID_PROPERTY, participantID);
 			
 			Date date = new Date();
-			award.setProperty(NAME_PROPERTY, date.toString());
+			award.setProperty(DATE_PROPERTY, date.toString());
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 			datastore.put(award);
 		} catch (Exception e) {

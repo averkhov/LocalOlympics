@@ -29,7 +29,7 @@ import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -288,8 +288,134 @@ public class Participant {
         return (String)email;
     }
     
+
+    @JsonProperty
+    public String getId() {
+        return id;
+    }
+    @JsonProperty
+    public void setId(String id) {
+        this.id = id;
+    }
+    @JsonProperty
+    public String getFirstName() {
+        return firstName;
+    }
+    @JsonProperty
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    @JsonProperty
+    public String getLastName() {
+        return lastName;
+    }
+    @JsonProperty
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    @JsonProperty
+    public String getAlias() {
+        return alias;
+    }
+    @JsonProperty
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+    @JsonProperty
+    public String getGender() {
+        return gender;
+    }
+    @JsonProperty
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+    @JsonProperty
+    public String getBirthday() {
+        return birthday;
+    }
+    @JsonProperty
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+    @JsonProperty
+    public String getActivity() {
+        return activity;
+    }
+    @JsonProperty
+    public void setActivity(String activity) {
+        this.activity = activity;
+    }
+    @JsonProperty
+    public String getAboutMe() {
+        return aboutMe;
+    }
+    @JsonProperty
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
+    }
+    @JsonProperty
+    public String getAddress() {
+        return address;
+    }
+    @JsonProperty
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    @JsonProperty
+    public String getLoginId() {
+        return loginId;
+    }
+    @JsonProperty
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+    @JsonProperty
+    public String getIsAdmin() {
+        return isAdmin;
+    }
+    @JsonProperty
+    public void setIsAdmin(String isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+    @JsonProperty
+    public String getIsValidated() {
+        return isValidated;
+    }
+    @JsonProperty
+    public void setIsValidated(String isValidated) {
+        this.isValidated = isValidated;
+    }
+    @JsonProperty
+    public String getEmail() {
+        return email;
+    }
+    @JsonProperty
+    public void setEmail(String email) {
+        this.email = email;
+    }
     
     
+    
+    
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String alias;
+    private String gender;        
+    private String birthday;
+    private String activity;
+    private String aboutMe;
+    private String address;
+    private String loginId;
+    private String isAdmin;
+    private String isValidated;
+    private String email;
+    
+
+            
+            
+            
+            
     //
     // SET VALIDATRED ID
     //

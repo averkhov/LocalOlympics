@@ -112,6 +112,80 @@ public final class Activity {
 	 */
 	private static final String TIME_LIMIT = "limit";
 	
+        private String id;
+        private String name;
+        private String description;
+        private String type;
+        private String location;
+        private String limithour;
+        private String limitmin;
+        private String limitsec;
+        
+        @JsonProperty
+        public String getId(){
+            return id;
+        }
+        @JsonProperty
+        public void setId(String id){
+            this.id = id;
+        }
+        @JsonProperty
+        public String getName(){
+            return name;
+        }
+        @JsonProperty
+        public void setName(String name){
+            this.name = name;
+        }
+        @JsonProperty
+        public String getDescription(){
+            return description;
+        }
+        @JsonProperty
+        public void setDescription(String description){
+            this.description = description;
+        }
+        @JsonProperty
+        public String getType(){
+            return type;
+        }
+        @JsonProperty
+        public void setType(String type){
+            this.type = type;
+        }
+        @JsonProperty
+        public String getLocation(){
+            return location;
+        }
+        @JsonProperty
+        public void setLocation(String location){
+            this.location = location;
+        }
+        @JsonProperty
+        public String getLimithour(){
+            return limithour;
+        }
+        @JsonProperty
+        public void setLimithour(String limit){
+            this.limithour = limit;
+        }
+        @JsonProperty
+        public String getLimitmin(){
+            return limitmin;
+        }
+        @JsonProperty
+        public void setLimitmin(String limit){
+            this.limitmin = limit;
+        }
+        @JsonProperty
+        public String getLimitsec(){
+            return limitsec;
+        }
+        @JsonProperty
+        public void setLimitsec(String limit){
+            this.limitsec = limit;
+        }
+        
 	
 	
 	
@@ -127,7 +201,6 @@ public final class Activity {
 	 * @param Activity The GAE Entity storing the Activity.
 	 * @return the timelimit of the Activity.
 	 */
-        @JsonProperty
 	public static String getLimit(Entity Activity)
 	{
 		Object timeLimit = Activity.getProperty(TIME_LIMIT);
@@ -140,7 +213,6 @@ public final class Activity {
 	 * @param Activity The GAE Entity storing the Activity.
 	 * @return the name of the Activity.
 	 */
-        @JsonProperty
 	public static String getName(Entity Activity) {
 		Object nameofActivity = Activity.getProperty(NAME_PROPERTY);
 
@@ -153,7 +225,6 @@ public final class Activity {
 	 * @param Activity The GAE Entity storing the Activity.
 	 * @return the description of the Activity.
 	 */
-        @JsonProperty
 	public static String getDescription(Entity Activity) {
 		Object description = Activity.getProperty(DESCRIPTION_PROPERTY);
 
@@ -166,7 +237,6 @@ public final class Activity {
 	 * @param Activity The GAE Entity storing the Activity.
 	 * @return the type of the Activity.
 	 */
-        @JsonProperty
 	public static String getType(Entity Activity) {
 		Object type = Activity.getProperty(TYPE_PROPERTY);
 
@@ -179,13 +249,16 @@ public final class Activity {
 	 * @param Activity The Entity storing the activity
 	 * @return a String with the address.
 	 */
-        @JsonProperty
 	public static String getLocation(Entity Activity) {
 		Object val = Activity.getProperty(LOCATION_PROPERTY);
 		if (val == null)
 			return "";
 		return (String) val;
 	}
+        
+        
+        
+        
 	
 	
 	
