@@ -349,6 +349,24 @@ public final class Activity {
 		}
 		return Activity;
 	}
+        
+        /**
+	 * Get a Activity based on a string containing its long ID.
+	 * 
+	 * @param id A {@link String} containing the ID key (a <code>long</code> number)
+	 * @return A GAE {@link Entity} for the Activity or <code>null</code> if none or error.
+	 */
+	public static Entity getActivity(Long ActivityId) {
+		Entity Activity = null;
+		try {
+			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+			Key ActivityKey = KeyFactory.createKey(ENTITY_KIND, ActivityId);
+			Activity = datastore.get(ActivityKey);
+		} catch (Exception e) {
+			// TODO log the error
+		}
+		return Activity;
+	}
 	
 
 

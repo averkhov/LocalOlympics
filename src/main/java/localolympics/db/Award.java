@@ -272,6 +272,24 @@ public class Award {
 		}
 		return award;
 	}
+        
+        /**
+	 * Get the award based on a string containing its long ID.
+	 * 
+	 * @param awardID a {@link Long} containing the ID key (a <code>long</code> number)
+	 * @return A GAE {@link Entity} for the Award or <code>null</code> if none or error.
+	 */
+	public static Entity getAward(Long awardID) {
+		Entity award = null;
+		try {
+			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+			Key awardKey = KeyFactory.createKey(ENTITY_KIND, awardID);
+			award = datastore.get(awardKey);
+		} catch (Exception e) {
+			// TODO log the error
+		}
+		return award;
+	}
 
 	
 	

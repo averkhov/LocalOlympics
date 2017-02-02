@@ -544,6 +544,24 @@ public class Participant {
     }
     
     /**
+     * Get the user based on a string containing its long ID.
+     * 
+     * @param id A {@link String} containing the ID key (a <code>long</code> number)
+     * @return A GAE {@link Entity} for the User or <code>null</code> if none or error.
+     */
+    public static Entity getParticipant(Long participantId) {
+            Entity participant = null;
+            try {
+                    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+                    Key participantKey = KeyFactory.createKey(ENTITY_KIND, participantId);
+                    participant = datastore.get(participantKey);
+            } catch (Exception e) {
+                    // TODO log the error
+            }
+            return participant;
+    }
+    
+    /**
      * Get an user based on a string containing its loginID.
      * @param loginID The login of the user as a String.
      * @return A GAE {@link Entity} for the user or <code>null</code> if none or error.

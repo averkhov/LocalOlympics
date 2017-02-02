@@ -42,9 +42,9 @@ public class AwardResource{
         * get award by ID
         */
 	@GET
-	@Path("/{id}")
+	@Path("/{id:[0-9]+}")
         @Produces("application/json")
-	public Response getAward(@PathParam("id") String id ) {
+	public Response getAward(@PathParam("id") Long id ) {
             Entity award = Award.getAward(id);
             return Response.status(200).entity(award).build();
 	}

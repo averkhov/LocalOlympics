@@ -33,7 +33,7 @@ public class ParticipantResource{
 	@Path("/all")
         @Produces("application/json")
 	public Response getAllParticipant() {
-            List<Entity> allParticipant = Participant.getFirstParticipants(100);
+            List<Entity> allParticipant = Participant.getFirstParticipants(1);
             return Response.status(200).entity(allParticipant).build();
 	}
         
@@ -42,9 +42,9 @@ public class ParticipantResource{
         * get participant by ID
         */
 	@GET
-	@Path("/{id}")
+	@Path("/{id:[0-9]+}")
         @Produces("application/json")
-	public Response getParticipant(@PathParam("id") String id ) {
+	public Response getParticipant(@PathParam("id") Long id ) {
             Entity participant = Participant.getParticipant(id);
             return Response.status(200).entity(participant).build();
 	}

@@ -42,9 +42,9 @@ public class ActivityResource{
         * get activity by ID
         */
 	@GET
-	@Path("/{id}")
+	@Path("/{id:[0-9]+}")
         @Produces("application/json")
-	public Response getActivity(@PathParam("id") String id ) {
+	public Response getActivity(@PathParam("id") Long id ) {
             Entity activity = Activity.getActivity(id);
             return Response.status(200).entity(activity).build();
 	}

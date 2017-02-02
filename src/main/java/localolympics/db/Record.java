@@ -483,6 +483,24 @@ public class Record {
 		}
 		return record;
 	}
+        
+        /**
+	 * Get the record based on a string containing its long ID.
+	 * 
+	 * @param recordID a {@link Long} containing the ID key (a <code>long</code> number)
+	 * @return A GAE {@link Entity} for the Record or <code>null</code> if none or error.
+	 */
+	public static Entity getRecord(Long recordID) {
+		Entity record = null;
+		try {
+			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+			Key recordKey = KeyFactory.createKey(ENTITY_KIND, recordID);
+			record = datastore.get(recordKey);
+		} catch (Exception e) {
+			// TODO log the error
+		}
+		return record;
+	}
 
 	
 	

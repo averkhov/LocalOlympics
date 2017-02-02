@@ -42,9 +42,9 @@ public class RecordResource{
         * get record by ID
         */
 	@GET
-	@Path("/{id}")
+	@Path("/{id:[0-9]+}")
         @Produces("application/json")
-	public Response getRecord(@PathParam("id") String id ) {
+	public Response getRecord(@PathParam("id") Long id ) {
             Entity record = Record.getRecord(id);
             return Response.status(200).entity(record).build();
 	}
